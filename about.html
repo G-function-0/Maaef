@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaef Studios | About</title>
-    
+    <title>Maaef Media House | About</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
-    
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --brand-red: #C41E3A;
@@ -35,9 +38,13 @@
         body.use-custom-cursor {
             cursor: none;
         }
-        .serif { font-family: 'Playfair Display', serif; }
 
-        .cursor-dot, .cursor-circle {
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cursor-dot,
+        .cursor-circle {
             position: fixed;
             top: 0;
             left: 0;
@@ -45,24 +52,28 @@
             border-radius: 50%;
             z-index: 10000;
             pointer-events: none;
-            opacity: 0; 
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
-        body.use-custom-cursor .cursor-dot, 
+
+        body.use-custom-cursor .cursor-dot,
         body.use-custom-cursor .cursor-circle {
             opacity: 1;
         }
+
         .cursor-dot {
             width: 8px;
             height: 8px;
             background: white;
         }
+
         .cursor-circle {
             width: 40px;
             height: 40px;
             border: 1px solid rgba(255, 255, 255, 0.5);
             transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
         }
+
         body.hovering .cursor-circle {
             width: 80px;
             height: 80px;
@@ -75,7 +86,7 @@
             transform: translateY(-100%);
             transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        
+
         .menu-link span {
             display: block;
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -87,19 +98,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 5; 
-            pointer-events: auto; 
+            z-index: 5;
+            pointer-events: auto;
             cursor: crosshair;
         }
-        
-        ::-webkit-scrollbar { width: 0px; }
-        
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
         .noise-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; 
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
             z-index: 9999;
-            opacity: 0.04; 
+            opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -159,8 +175,13 @@
         }
 
         @keyframes scroll-ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .founder-section {
@@ -230,7 +251,7 @@
             left: -2.5rem;
             font-size: 8rem;
             color: rgba(255, 255, 255, 0.06);
-            font-family: 'Times New Roman', Times, serif; 
+            font-family: 'Times New Roman', Times, serif;
             z-index: -1;
             line-height: 1;
         }
@@ -263,35 +284,42 @@
                 grid-template-columns: 1fr;
                 gap: 4rem;
             }
+
             .founder-image-wrapper {
                 aspect-ratio: 16 / 9;
             }
+
             .founder-quote::before {
                 top: -3rem;
                 left: -1.5rem;
                 font-size: 6rem;
             }
-            .nav-links { display: none; }
-        }
 
+            .nav-links {
+                display: none;
+            }
+        }
     </style>
 </head>
+
 <body class="antialiased font-['Inter']">
 
     <div class="cursor-dot"></div>
     <div class="cursor-circle"></div>
     <div class="noise-overlay"></div>
 
-    <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white">
+    <nav
+        class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white">
         <a href="index.html" class="text-2xl font-bold tracking-tighter hover-trigger relative z-[60]">
             Maaef<span class="text-red-600">.</span>
         </a>
-        
+
         <div class="flex items-center gap-6 z-[60]">
-            <a href="contact.html" class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+            <a href="contact.html"
+                class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
                 Start Project
             </a>
-            
+
             <button onclick="toggleMenu()" class="group flex flex-col items-end gap-[6px] w-12 hover-trigger p-2">
                 <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
                 <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -299,31 +327,43 @@
         </div>
     </nav>
 
-    <div id="kinetic-menu" class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
+    <div id="kinetic-menu"
+        class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
         <canvas id="drawing-canvas"></canvas>
-        <div class="absolute inset-0 opacity-20 pointer-events-none z-0" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+        <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
+            style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
         <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
-            <a href="index.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+            <a href="index.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
                 <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Home</span>
-                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
             </a>
-            <a href="about.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+            <a href="about.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
                 <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Studio</span>
-                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
             </a>
-            <a href="services.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+            <a href="services.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
                 <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Expertise</span>
-                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
             </a>
-            <a href="contact.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+            <a href="contact.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
                 <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Contact</span>
-                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
             </a>
         </div>
-        <div class="absolute bottom-28 text-[10px] uppercase tracking-[0.3em] text-neutral-700 animate-pulse pointer-events-none">
+        <div
+            class="absolute bottom-28 text-[10px] uppercase tracking-[0.3em] text-neutral-700 animate-pulse pointer-events-none">
             [ LEAVE A TRACE ]
         </div>
-        <div class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
+        <div
+            class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
             <span>Lucknow, IN</span>
             <span id="live-clock">00:00:00</span>
         </div>
@@ -337,35 +377,46 @@
                 <span class="hover-trigger">We turn brands into revenue.</span>
             </h1>
         </section>
-    
+
         <section class="ticker-section">
             <div class="ticker-content">
-                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span class="text-red-500">•</span> 
-                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span class="text-red-500">•</span>
+                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span
+                    class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span
+                    class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span
+                    class="text-red-500">•</span>
+                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span
+                    class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span
+                    class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span
+                    class="text-red-500">•</span>
             </div>
         </section>
-    
+
         <section class="founder-section">
             <span class="section-label">01 // The Architect</span>
-            
+
             <div class="founder-grid">
-                
+
                 <div class="founder-image-wrapper hover-trigger">
-                    </div>
-    
+                </div>
+
                 <div class="founder-content">
                     <h2 class="founder-quote">
-                        Growth doesn't happen by accident. It happens when you stop acting like a creator and start acting like an infrastructure.
+                        Growth doesn't happen by accident. It happens when you stop acting like a creator and start
+                        acting like an infrastructure.
                     </h2>
-                    
+
                     <div class="founder-bio">
-                        <p>Maaef Studios wasn't built to make pretty pictures. It was built to solve the fundamental problem of modern brands: turning fleeting attention into a predictable, scalable revenue machine.</p>
-                        <p>We operate as a fully integrated growth engine. By combining relentless aesthetic standards with ruthless performance marketing, we bridge the gap between creative ambition and bottom-line reality.</p>
+                        <p>Maaef Media House wasn't built to make pretty pictures. It was built to solve the fundamental
+                            problem of modern brands: turning fleeting attention into a predictable, scalable revenue
+                            machine.</p>
+                        <p>We operate as a fully integrated growth engine. By combining relentless aesthetic standards
+                            with ruthless performance marketing, we bridge the gap between creative ambition and
+                            bottom-line reality.</p>
                     </div>
-                    
+
                     <div class="founder-name">Your Name Here / Founder & Director</div>
                 </div>
-    
+
             </div>
         </section>
     </main>
@@ -383,7 +434,7 @@
                 }
                 dot.style.left = e.clientX + 'px';
                 dot.style.top = e.clientY + 'px';
-                
+
                 setTimeout(() => {
                     circle.style.left = e.clientX + 'px';
                     circle.style.top = e.clientY + 'px';
@@ -400,21 +451,21 @@
             const ctx = canvas.getContext('2d');
             let isMenuOpen = false;
             let drawing = false;
-            let paths = []; 
+            let paths = [];
 
             function resizeCanvas() {
-                if(!canvas) return;
+                if (!canvas) return;
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
             }
             window.addEventListener('resize', resizeCanvas);
             resizeCanvas();
 
-            window.toggleMenu = function() {
+            window.toggleMenu = function () {
                 const line1 = document.getElementById('line1');
                 const line2 = document.getElementById('line2');
                 isMenuOpen = !isMenuOpen;
-                
+
                 if (isMenuOpen) {
                     menu.style.transform = 'translateY(0)';
                     line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
@@ -427,22 +478,22 @@
                     line2.style.transform = 'none';
                     line2.style.width = '66%';
                     paths = [];
-                    if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
                 }
             };
 
-            if(canvas) {
+            if (canvas) {
                 canvas.addEventListener('mousedown', (e) => {
                     drawing = true;
-                    paths.push({ points: [{x: e.clientX, y: e.clientY}], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+                    paths.push({ points: [{ x: e.clientX, y: e.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
                 });
                 canvas.addEventListener('mousemove', (e) => {
                     if (!drawing) return;
-                    paths[paths.length - 1].points.push({x: e.clientX, y: e.clientY});
+                    paths[paths.length - 1].points.push({ x: e.clientX, y: e.clientY });
                 });
                 window.addEventListener('mouseup', () => {
                     drawing = false;
-                    if(paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+                    if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
                 });
             }
 
@@ -451,7 +502,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
-                ctx.shadowColor = '#C41E3A'; 
+                ctx.shadowColor = '#C41E3A';
 
                 for (let i = paths.length - 1; i >= 0; i--) {
                     const path = paths[i];
@@ -469,8 +520,8 @@
                     let currentWidth = 3;
                     let currentBlur = 10;
                     if (path.state === 'drawing' || path.state === 'pulsing') {
-                        currentWidth += path.pulseVal * 5; 
-                        currentBlur += path.pulseVal * 25; 
+                        currentWidth += path.pulseVal * 5;
+                        currentBlur += path.pulseVal * 25;
                     }
 
                     ctx.lineWidth = currentWidth;
@@ -489,14 +540,14 @@
 
             function updateClock() {
                 const now = new Date();
-                const timeString = now.toLocaleTimeString('en-US', { 
-                    hour12: false, 
-                    hour: '2-digit', 
-                    minute: '2-digit', 
-                    second: '2-digit' 
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
                 });
                 const clockEl = document.getElementById('live-clock');
-                if(clockEl) clockEl.innerText = timeString;
+                if (clockEl) clockEl.innerText = timeString;
             }
             setInterval(updateClock, 1000);
             updateClock();
@@ -504,4 +555,5 @@
     </script>
 
 </body>
+
 </html>

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaef Studios | Engineering Attention</title>
-    
+    <title>Maaef Media House | Engineering Attention</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
-    
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+
     <style>
         /* --- CORE VARIABLES --- */
         :root {
@@ -32,10 +35,13 @@
             cursor: none;
         }
 
-        .serif { font-family: 'Playfair Display', serif; }
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
 
         /* --- CUSTOM CURSOR --- */
-        .cursor-dot, .cursor-circle {
+        .cursor-dot,
+        .cursor-circle {
             position: fixed;
             top: 0;
             left: 0;
@@ -43,11 +49,11 @@
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
-            opacity: 0; 
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        body.use-custom-cursor .cursor-dot, 
+        body.use-custom-cursor .cursor-dot,
         body.use-custom-cursor .cursor-circle {
             opacity: 1;
         }
@@ -79,7 +85,7 @@
             color: white;
             transition: all 0.2s ease;
         }
-        
+
         .glow-white:hover {
             text-shadow: 0 0 10px white, 0 0 20px white;
             color: white;
@@ -102,6 +108,7 @@
         .perspective-container {
             perspective: 1000px;
         }
+
         .floating-card {
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
@@ -113,7 +120,7 @@
             transform: translateY(-100%);
             transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        
+
         .menu-link span {
             display: block;
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -126,8 +133,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 5; 
-            pointer-events: auto; 
+            z-index: 5;
+            pointer-events: auto;
             cursor: crosshair;
         }
 
@@ -135,20 +142,24 @@
         .accordion-item {
             transition: all 0.4s ease;
         }
+
         .accordion-img {
             height: 0;
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         .accordion-item:hover .accordion-img {
             height: 300px;
             opacity: 1;
             margin-top: 2rem;
             margin-bottom: 2rem;
         }
+
         .spotlight-group:hover .accordion-item {
             opacity: 0.3;
         }
+
         .spotlight-group:hover .accordion-item:hover {
             opacity: 1;
             border-color: #C41E3A;
@@ -160,16 +171,21 @@
             transition: opacity 0.4s ease;
             pointer-events: none;
         }
+
         #team-manifesto {
             transition: opacity 0.4s ease;
         }
+
         .showing-member #team-manifesto {
             opacity: 0;
         }
+
         .showing-member #team-preview {
             opacity: 1;
         }
-        
-        ::-webkit-scrollbar { width: 0px; }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
     </style>
 </head>
