@@ -436,10 +436,17 @@
 
         .manifesto-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 4rem;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .manifesto-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
 
         .manifesto-item {
@@ -458,10 +465,18 @@
 
         .manifesto-head {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             line-height: 1.1;
             color: #fff;
             margin-bottom: 1rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .manifesto-head:hover {
+            text-shadow: 0 0 15px rgba(196, 30, 58, 0.7), 0 0 30px rgba(196, 30, 58, 0.3);
+            transform: translateX(10px);
+            color: #fff;
         }
 
         .manifesto-body {
@@ -523,6 +538,14 @@
             line-height: 1;
             margin-bottom: 2.5rem;
             letter-spacing: -0.02em;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .story-title:hover {
+            text-shadow: 0 0 20px rgba(196, 30, 58, 0.8), 0 0 40px rgba(196, 30, 58, 0.4);
+            transform: scale(1.02);
+            color: #fff;
         }
 
         .story-text {
@@ -713,7 +736,7 @@
                 <div class="story-item" id="story-1">
                     <div class="story-content">
                         <span class="story-index">01 / ORIGIN</span>
-                        <h2 class="story-title">Born from a<br><span class="r">simple desire.</span></h2>
+                        <h2 class="story-title hover-trigger">Born from a<br><span class="r">simple desire.</span></h2>
                         <p class="story-text">It started with a single thought: to create something real in an era of
                             digital noise. A commitment to engineering attention that matters.</p>
                     </div>
@@ -724,8 +747,8 @@
                 <div class="story-item reverse" id="story-2">
                     <div class="story-content">
                         <span class="story-index">02 / COLLECTIVE</span>
-                        <h2 class="story-title"><span class="dim">Curated artists.</span><br>Different corners.<br><span
-                                class="mid ital">One city.</span></h2>
+                        <h2 class="story-title hover-trigger"><span class="dim">Curated artists.</span><br>Different
+                            corners.<br><span class="mid ital">One city.</span></h2>
                         <p class="story-text">They found themselves in Lucknow — united by a shared restlessness. A
                             collective of minds from different disciplines, coming together for a common vision.</p>
                     </div>
@@ -736,7 +759,8 @@
                 <div class="story-item" id="story-3">
                     <div class="story-content">
                         <span class="story-index">03 / VISION</span>
-                        <h2 class="story-title">More than<br><span class="dim ital">individual</span><br>expression.
+                        <h2 class="story-title hover-trigger">More than<br><span
+                                class="dim ital">individual</span><br>expression.
                         </h2>
                         <p class="story-text">To bridge the gap between art and media. We believe that authentic
                             storytelling combined with strategic media planning creates undeniable impact.</p>
@@ -748,7 +772,8 @@
                 <div class="story-item reverse" id="story-4">
                     <div class="story-content">
                         <span class="story-index">04 / REACH</span>
-                        <h2 class="story-title">Across borders.<br><span class="dim">Disciplines.</span><br>Cultures.
+                        <h2 class="story-title hover-trigger">Across borders.<br><span
+                                class="dim">Disciplines.</span><br>Cultures.
                         </h2>
                         <p class="story-text">Always looking forward. Expanding globally while staying rooted in our
                             core values. We don't just tell stories; we help brands evolve.</p>
@@ -760,7 +785,8 @@
                 <div class="story-item justify-center text-center" id="story-5"
                     style="display: flex; flex-direction: column; align-items: center;">
                     <span class="story-index">05 / IDENTITY</span>
-                    <h2 class="story-title" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h2 class="story-title hover-trigger"
+                        style="max-width: 800px; margin-left: auto; margin-right: auto;">
                         <span class="dim">That something</span><br>became...<br>
                         <span class="text-white mt-8 block">Maaef <span class="r">Studios.</span></span>
                     </h2>
@@ -772,23 +798,25 @@
             <div class="manifesto-grid">
                 <div class="manifesto-item">
                     <div class="manifesto-index">01</div>
-                    <h3 class="manifesto-head">Born from a<br><span class="r">simple desire.</span></h3>
+                    <h3 class="manifesto-head hover-trigger">Born from a<br><span class="r">simple desire.</span></h3>
                     <p class="manifesto-body">To create something real.</p>
                 </div>
                 <div class="manifesto-item">
                     <div class="manifesto-index">02</div>
-                    <h3 class="manifesto-head"><span class="dim">Curated artists.</span><br>Different corners.<br><span
-                            class="mid ital">One city.</span></h3>
+                    <h3 class="manifesto-head hover-trigger"><span class="dim">Curated artists.</span><br>Different
+                        corners.<br><span class="mid ital">One city.</span></h3>
                     <p class="manifesto-body">They found themselves in Lucknow — united by a shared restlessness.</p>
                 </div>
                 <div class="manifesto-item">
                     <div class="manifesto-index">03</div>
-                    <h3 class="manifesto-head">More than<br><span class="dim ital">individual</span><br>expression.</h3>
+                    <h3 class="manifesto-head hover-trigger">More than<br><span
+                            class="dim ital">individual</span><br>expression.</h3>
                     <p class="manifesto-body">To bridge art and media. Local roots and global reach.</p>
                 </div>
                 <div class="manifesto-item">
                     <div class="manifesto-index">04</div>
-                    <h3 class="manifesto-head">Across borders.<br><span class="dim">Disciplines.</span><br>Cultures.
+                    <h3 class="manifesto-head hover-trigger">Across borders.<br><span
+                            class="dim">Disciplines.</span><br>Cultures.
                     </h3>
                     <p class="manifesto-body">Always looking forward. Expanding globally. Telling better stories.</p>
                 </div>
