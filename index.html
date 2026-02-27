@@ -73,12 +73,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: filter 1s ease;
+        }
+
+        #intro-stage.blurred-bg #intro-bg-video {
+            filter: blur(15px);
+        }
+
+        #intro-stage.blurred-bg #intro-bg-overlay {
+            background: rgba(0, 0, 0, .75);
         }
 
         #intro-bg-overlay {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, .55);
+            transition: background 1s ease;
         }
 
         #intro-vignette {
@@ -860,6 +870,7 @@
                     hintEl.style.opacity = '0';
                     hintEl.style.pointerEvents = 'none';
                     skipEl.style.opacity = '0';
+                    introEl.classList.add('blurred-bg');
                 }
                 step++;
                 if (step <= TOTAL_BEATS) showBeat(step);
