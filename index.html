@@ -398,6 +398,11 @@
             filter: blur(8px);
             transform: scale(1.08);
             opacity: 1;
+            transition: filter 1.5s ease;
+        }
+
+        #h-video.clear-blur {
+            filter: blur(0px) !important;
         }
 
         #h-image {
@@ -1036,16 +1041,28 @@
                 }
                 resolveText();
 
+                const heroVideo = document.getElementById('h-video');
+                let blurTimeout;
+
                 if (headerContainer) {
                     headerContainer.addEventListener('mouseenter', () => {
                         headerContainer.classList.add('glow-active');
                         clearInterval(glitchInterval);
                         glitchInterval = setInterval(randomScramble, 50);
+
+                        // Clear hero video blur
+                        clearTimeout(blurTimeout);
+                        if (heroVideo) heroVideo.classList.add('clear-blur');
                     });
                     headerContainer.addEventListener('mouseleave', () => {
                         headerContainer.classList.remove('glow-active');
                         clearInterval(glitchInterval);
                         resolveText();
+
+                        // Re-blur hero video after 2 seconds
+                        blurTimeout = setTimeout(() => {
+                            if (heroVideo) heroVideo.classList.remove('clear-blur');
+                        }, 2000);
                     });
                 }
 
