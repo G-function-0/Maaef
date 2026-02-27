@@ -1,0 +1,188 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Custom Cursor
+            const dot = document.querySelector('.cursor-dot');
+            const circle = document.querySelector('.cursor-circle');
+            let cursorEnabled = false;
+
+            document.addEventListener('mousemove', (e) => {
+                if (!cursorEnabled) {
+                    document.body.classList.add('use-custom-cursor');
+                    cursorEnabled = true;
+                }
+                dot.style.left = e.clientX + 'px';
+                dot.style.top = e.clientY + 'px';
+                
+                setTimeout(() => {
+                    circle.style.left = e.clientX + 'px';
+                    circle.style.top = e.clientY + 'px';
+                }, 50);
+            });
+
+            // 2. Hover Triggers
+            document.querySelectorAll('.hover-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+            // 3. INFINITE GLITCH LOGIC
+            const headerText = document.getElementById('scramble-text');
+            const headerContainer = document.getElementById('hero-header');
+            const chars = '!<>-_\\/[]{}—=+*^?#________';
+            const finalCookie = 'Maaef';
+            let glitchInterval;
+
+            function randomScramble() {
+                headerText.innerText = finalCookie.split('').map(() => {
+                    return chars[Math.floor(Math.random() * chars.length)]
+                }).join('');
+            }
+
+            function resolveText() {
+                let iterations = 0;
+                const interval = setInterval(() => {
+                    headerText.innerText = finalCookie.split('').map((letter, index) => {
+                        if(index < iterations) return finalCookie[index];
+                        return chars[Math.floor(Math.random() * chars.length)]
+                    }).join('');
+                    if(iterations >= finalCookie.length) clearInterval(interval);
+                    iterations += 1/3;
+                }, 30);
+            }
+
+            resolveText();
+
+            if(headerContainer) {
+                headerContainer.addEventListener('mouseenter', () => {
+                    headerContainer.classList.add('glow-active');
+                    clearInterval(glitchInterval);
+                    glitchInterval = setInterval(randomScramble, 50);
+                });
+
+                headerContainer.addEventListener('mouseleave', () => {
+                    headerContainer.classList.remove('glow-active');
+                    clearInterval(glitchInterval);
+                    resolveText();
+                });
+            }
+
+            // 4. HERO VIDEO REVEAL
+            const heroWrapper = document.getElementById('hero-wrapper');
+            const heroVideo = document.getElementById('hero-video');
+            if (heroWrapper && heroVideo) {
+                heroWrapper.addEventListener('mouseenter', () => heroVideo.classList.add('is-active'));
+                heroWrapper.addEventListener('mouseleave', () => heroVideo.classList.remove('is-active'));
+            }
+
+            // 5. KINETIC MENU & NEON DRAWING
+            const menu = document.getElementById('kinetic-menu');
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            let isMenuOpen = false;
+            let drawing = false;
+            let paths = []; 
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            window.toggleMenu = function() {
+                const line1 = document.getElementById('line1');
+                const line2 = document.getElementById('line2');
+                isMenuOpen = !isMenuOpen;
+                
+                if (isMenuOpen) {
+                    menu.style.transform = 'translateY(0)';
+                    line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
+                    line2.style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                    line2.style.width = '100%';
+                    requestAnimationFrame(animateDrawing);
+                } else {
+                    menu.style.transform = 'translateY(-100%)';
+                    line1.style.transform = 'none';
+                    line2.style.transform = 'none';
+                    line2.style.width = '66%';
+                    paths = [];
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            };
+
+            canvas.addEventListener('mousedown', (e) => {
+                drawing = true;
+                paths.push({ points: [{x: e.clientX, y: e.clientY}], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+            });
+            canvas.addEventListener('mousemove', (e) => {
+                if (!drawing) return;
+                paths[paths.length - 1].points.push({x: e.clientX, y: e.clientY});
+            });
+            window.addEventListener('mouseup', () => {
+                drawing = false;
+                if(paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+            });
+
+            function animateDrawing() {
+                if (!isMenuOpen) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowColor = '#C41E3A'; 
+
+                for (let i = paths.length - 1; i >= 0; i--) {
+                    const path = paths[i];
+                    if (path.points.length < 2) continue;
+
+                    if (path.state === 'pulsing') {
+                        path.pulseVal += 0.08 * path.pulseDir;
+                        if (path.pulseVal >= 1) { path.pulseVal = 1; path.pulseDir = -1; }
+                        if (path.pulseVal <= 0) { path.pulseVal = 0; path.pulseDir = 1; path.pulseCount++; }
+                        if (path.pulseCount >= 2) path.state = 'fading';
+                    } else if (path.state === 'fading') {
+                        path.opacity -= 0.02;
+                    }
+
+                    let currentWidth = 3;
+                    let currentBlur = 10;
+                    if (path.state === 'drawing' || path.state === 'pulsing') {
+                        currentWidth += path.pulseVal * 5; 
+                        currentBlur += path.pulseVal * 25; 
+                    }
+
+                    ctx.lineWidth = currentWidth;
+                    ctx.shadowBlur = currentBlur;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${path.opacity})`;
+
+                    ctx.beginPath();
+                    ctx.moveTo(path.points[0].x, path.points[0].y);
+                    for (let j = 1; j < path.points.length; j++) { ctx.lineTo(path.points[j].x, path.points[j].y); }
+                    ctx.stroke();
+
+                    if (path.opacity <= 0) paths.splice(i, 1);
+                }
+                requestAnimationFrame(animateDrawing);
+            }
+
+            // 6. LIVE CLOCK
+            function updateClock() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour12: false, 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit' 
+                });
+                const clockEl = document.getElementById('live-clock');
+                if(clockEl) clockEl.innerText = timeString;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
+    </script>
+</body>
+</html>

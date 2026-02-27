@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaef Studios | Engineering Attention</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --red: #C41E3A;
+            --dark: #050505;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            background: var(--dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            cursor: default;
+        }
+
+        html.intro-done,
+        body.intro-done {
+            overflow: auto;
+            height: auto;
+        }
+
+        body.use-custom-cursor {
+            cursor: none;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        #intro-stage {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: var(--dark);
+            overflow: hidden;
+        }
+
+        #intro-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        #intro-bg-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #intro-bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+        }
+
+        #intro-vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, .75) 100%);
+        }
+
+        #scroll-hint {
+            position: absolute;
+            bottom: 3.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .8rem;
+            transition: opacity .6s ease;
+        }
+
+        #scroll-hint span {
+            font-size: .6rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .3);
+        }
+
+        .hint-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, .35));
+            animation: hintDrop 2s ease infinite;
+        }
+
+        @keyframes hintDrop {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top;
+                opacity: 1;
+            }
+
+            50% {
+                transform: scaleY(1);
+                transform-origin: top;
+            }
+
+            51% {
+                transform-origin: bottom;
+            }
+
+            100% {
+                transform: scaleY(0);
+                transform-origin: bottom;
+                opacity: 0;
+            }
+        }
+
+        #skip-btn {
+            position: absolute;
+            bottom: 3.5rem;
+            right: 3rem;
+            font-size: .6rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .2);
+            cursor: pointer;
+            transition: color .3s;
+            border: none;
+            background: transparent;
+        }
+
+        #skip-btn:hover {
+            color: rgba(255, 255, 255, .5);
+        }
+
+        #step-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            background: var(--red);
+            width: 0%;
+            transition: width .7s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        #beats-wrap {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 5vw 0 8vw;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            #beats-wrap {
+                padding: 0 6vw;
+            }
+        }
+
+        .beat {
+            position: absolute;
+            max-width: min(860px, 85vw);
+            opacity: 0;
+            transform: translateY(56px);
+            transition: opacity .85s ease, transform .85s cubic-bezier(.16, 1, .3, 1);
+            will-change: opacity, transform;
+        }
+
+        .beat.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .beat.out {
+            opacity: 0;
+            transform: translateY(-36px);
+            transition: opacity .45s ease, transform .45s ease;
+        }
+
+        .beat-index {
+            font-family: 'Courier New', monospace;
+            font-size: .6rem;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .18);
+            margin-bottom: 1.4rem;
+        }
+
+        .beat-label {
+            font-size: .65rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .25);
+            margin-bottom: 1rem;
+        }
+
+        .beat-head {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7.5vw, 7.2rem);
+            line-height: .88;
+            letter-spacing: -.01em;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .beat-body {
+            font-size: clamp(.9rem, 1.4vw, 1.1rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, .35);
+            max-width: 380px;
+            border-left: 2px solid var(--red);
+            padding-left: 1.2rem;
+            line-height: 1.65;
+        }
+
+        .r {
+            color: var(--red);
+        }
+
+        .dim {
+            color: rgba(255, 255, 255, .22);
+        }
+
+        .mid {
+            color: rgba(255, 255, 255, .55);
+        }
+
+        .ital {
+            font-style: italic;
+        }
+
+        #logo-stage {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        #logo-blast {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            font-weight: 700;
+            letter-spacing: -.02em;
+            color: #fff;
+            white-space: nowrap;
+            will-change: transform, opacity, filter;
+            line-height: 1;
+        }
+
+        #logo-blast em {
+            color: var(--red);
+            font-style: normal;
+        }
+
+        #red-flood,
+        #white-flash {
+            position: absolute;
+            inset: 0;
+            background: var(--red);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #white-flash {
+            background: #fff;
+        }
+
+        #homepage {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .5s ease;
+        }
+
+        #homepage.alive {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .cursor-dot,
+        .cursor-circle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        body.use-custom-cursor .cursor-dot,
+        body.use-custom-cursor .cursor-circle {
+            opacity: 1;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+        }
+
+        .cursor-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, .5);
+            transition: width .3s, height .3s, background .3s, opacity .3s;
+        }
+
+        body.hovering .cursor-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(196, 30, 58, .45);
+            border-color: transparent;
+            mix-blend-mode: difference;
+        }
+
+        #kinetic-menu {
+            transform: translateY(-100%);
+            transition: transform .8s cubic-bezier(.7, 0, .3, 1);
+        }
+
+        .menu-link span {
+            display: block;
+            transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+
+        .hero-wrap {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4rem;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .hero-wrap {
+                padding: 0 1.5rem;
+            }
+        }
+
+        #h-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(8px);
+            transform: scale(1.08);
+            opacity: 1;
+        }
+
+        #h-image {
+            display: none;
+        }
+
+        .glow-active {
+            text-shadow: 0 0 10px var(--red), 0 0 30px var(--red);
+            transition: all .2s;
+        }
+
+        .hero-scroll-cue {
+            position: absolute;
+            bottom: 3rem;
+            left: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .hero-scroll-cue span {
+            font-size: .6rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .25);
+            writing-mode: vertical-rl;
+        }
+
+        .scroll-bar {
+            width: 1px;
+            height: 52px;
+            background: linear-gradient(to bottom, transparent, white);
+            animation: hintDrop 2s ease infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: .4;
+        }
+
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .manifesto-item {
+            border-left: 2px solid var(--red);
+            padding-left: 1.5rem;
+        }
+
+        .manifesto-index {
+            font-family: 'Courier New', monospace;
+            font-size: .6rem;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .18);
+            margin-bottom: 1rem;
+        }
+
+        .manifesto-head {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .manifesto-body {
+            font-size: .9rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.65;
+        }
+
+        /* --- STORY SECTION STYLES --- */
+        .story-section {
+            padding: 10vw 0;
+            background: #050505;
+            position: relative;
+        }
+
+        .story-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5vw;
+        }
+
+        .story-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15vw;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .story-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .story-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .story-content {
+            width: 45%;
+        }
+
+        .story-spacer {
+            width: 55%;
+        }
+
+        .story-index {
+            font-family: 'Courier New', monospace;
+            font-size: .7rem;
+            letter-spacing: .3em;
+            color: var(--red);
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .story-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            line-height: 1;
+            margin-bottom: 2.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .story-text {
+            font-size: clamp(1rem, 1.2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.7;
+            max-width: 480px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 2rem;
+        }
+
+        @media (max-width: 768px) {
+
+            .story-item,
+            .story-item.reverse {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 20vw;
+            }
+
+            .story-content,
+            .story-spacer {
+                width: 100%;
+            }
+
+            .story-spacer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <div id="intro-stage">
+        <div id="intro-bg">
+            <video id="intro-bg-video" autoplay loop muted playsinline>
+                <source src="trailer.mp4" type="video/mp4">
+            </video>
+            <div id="intro-bg-overlay"></div>
+        </div>
+        <div id="intro-vignette"></div>
+
+        <div id="beats-wrap">
+            <div class="beat" id="beat-1">
+                <div class="beat-index">01 / 05</div>
+                <div class="beat-label">The Beginning</div>
+                <h2 class="beat-head">Born from a<br><span class="r">simple desire.</span></h2>
+                <p class="beat-body">To create something real.</p>
+            </div>
+            <div class="beat" id="beat-2">
+                <div class="beat-index">02 / 05</div>
+                <div class="beat-label">The Encounter</div>
+                <h2 class="beat-head"><span class="dim">Curated artists.</span><br>Different corners.<br><span
+                        class="mid ital">One city.</span></h2>
+                <p class="beat-body">They found themselves in Lucknow — united by a shared restlessness.</p>
+            </div>
+            <div class="beat" id="beat-3">
+                <div class="beat-index">03 / 05</div>
+                <div class="beat-label">The Want</div>
+                <h2 class="beat-head">More than<br><span class="dim ital">individual</span><br>expression.</h2>
+                <p class="beat-body">To bridge art and media. Local roots and global reach.</p>
+            </div>
+            <div class="beat" id="beat-4">
+                <div class="beat-index">04 / 05</div>
+                <div class="beat-label">The Mission</div>
+                <h2 class="beat-head">Across borders.<br><span class="dim">Disciplines.</span><br>Cultures.</h2>
+                <p class="beat-body">Always looking forward. Expanding globally. Telling better stories.</p>
+            </div>
+            <div class="beat" id="beat-5">
+                <div class="beat-index">05 / 05</div>
+                <div class="beat-label">The Name</div>
+                <h2 class="beat-head"><span class="dim">That something</span><br>became...</h2>
+            </div>
+        </div>
+
+        <div id="logo-stage">
+            <div id="logo-blast">Maaef<em>.</em></div>
+        </div>
+
+        <div id="red-flood"></div>
+        <div id="white-flash"></div>
+        <div id="scroll-hint">
+            <span>Scroll to begin</span>
+            <div class="hint-line"></div>
+        </div>
+        <button id="skip-btn" onclick="skipIntro()">Skip ↓</button>
+        <div id="step-bar"></div>
+    </div>
+
+    <div id="homepage">
+
+        <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center text-white">
+            <a href="index.html" class="text-2xl font-bold tracking-tighter hover-trigger relative z-[60]">
+                Maaef<span class="text-red-600">.</span>
+            </a>
+            <div class="flex items-center gap-6 z-[60]">
+                <a href="contact.html"
+                    class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+                    Start Project
+                </a>
+                <button onclick="toggleMenu()" class="group flex flex-col items-end gap-[6px] w-12 hover-trigger p-2">
+                    <span id="line1"
+                        class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                    <span id="line2"
+                        class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </button>
+            </div>
+        </nav>
+
+        <div id="kinetic-menu"
+            class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
+            <canvas id="drawing-canvas"></canvas>
+            <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
+                style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+            <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
+                <a href="index.html" onclick="toggleMenu()"
+                    class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                    <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Home</span>
+                    <span
+                        class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
+                </a>
+                <a href="about.html" onclick="toggleMenu()"
+                    class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                    <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Studio</span>
+                    <span
+                        class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
+                </a>
+                <a href="services.html" onclick="toggleMenu()"
+                    class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                    <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Expertise</span>
+                    <span
+                        class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
+                </a>
+                <a href="contact.html" onclick="toggleMenu()"
+                    class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                    <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Contact</span>
+                    <span
+                        class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
+                </a>
+            </div>
+            <div
+                class="absolute bottom-28 text-[10px] uppercase tracking-[0.3em] text-neutral-700 animate-pulse pointer-events-none">
+                [ LEAVE A TRACE ]
+            </div>
+            <div
+                class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
+                <span>Lucknow, IN</span>
+                <span id="live-clock">00:00:00</span>
+            </div>
+        </div>
+
+        <section class="hero-wrap">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <video id="h-video" autoplay loop muted playsinline>
+                    <source src="trailer.mp4" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-black/60"></div>
+            </div>
+
+            <div class="hero-scroll-cue hidden md:flex z-30">
+                <span>Explore</span>
+                <div class="scroll-bar"></div>
+            </div>
+            <div class="absolute bottom-12 right-12 z-30">
+                <span class="text-[10px] uppercase tracking-[.3em]" style="color:rgba(255,255,255,.25)">Lucknow, IN —
+                    Est. 2024</span>
+            </div>
+
+            <div id="hero-wrapper" class="relative z-30 mt-10 md:mt-20 w-fit">
+                <h1 id="hero-header"
+                    class="hover-trigger w-fit serif text-6xl md:text-[10rem] mb-4 leading-[.85] mix-blend-overlay opacity-90 transition-all duration-300">
+                    <span id="scramble-text">Maaef</span><br>
+                    <span class="italic text-white opacity-100">Studios.</span>
+                </h1>
+                <p
+                    class="text-gray-300 text-base md:text-xl max-w-lg font-light leading-relaxed border-l-2 border-red-600 pl-6 mt-6 md:mt-8 pointer-events-none">
+                    We engineer attention. A new-era media house.
+                </p>
+            </div>
+        </section>
+        <section class="story-section">
+            <div class="story-container">
+                <!-- 01 / Origin -->
+                <div class="story-item" id="story-1">
+                    <div class="story-content">
+                        <span class="story-index">01 / ORIGIN</span>
+                        <h2 class="story-title">Born from a<br><span class="r">simple desire.</span></h2>
+                        <p class="story-text">It started with a single thought: to create something real in an era of
+                            digital noise. A commitment to engineering attention that matters.</p>
+                    </div>
+                    <div class="story-spacer"></div>
+                </div>
+
+                <!-- 02 / Collective -->
+                <div class="story-item reverse" id="story-2">
+                    <div class="story-content">
+                        <span class="story-index">02 / COLLECTIVE</span>
+                        <h2 class="story-title"><span class="dim">Curated artists.</span><br>Different corners.<br><span
+                                class="mid ital">One city.</span></h2>
+                        <p class="story-text">They found themselves in Lucknow — united by a shared restlessness. A
+                            collective of minds from different disciplines, coming together for a common vision.</p>
+                    </div>
+                    <div class="story-spacer"></div>
+                </div>
+
+                <!-- 03 / Vision -->
+                <div class="story-item" id="story-3">
+                    <div class="story-content">
+                        <span class="story-index">03 / VISION</span>
+                        <h2 class="story-title">More than<br><span class="dim ital">individual</span><br>expression.
+                        </h2>
+                        <p class="story-text">To bridge the gap between art and media. We believe that authentic
+                            storytelling combined with strategic media planning creates undeniable impact.</p>
+                    </div>
+                    <div class="story-spacer"></div>
+                </div>
+
+                <!-- 04 / Reach -->
+                <div class="story-item reverse" id="story-4">
+                    <div class="story-content">
+                        <span class="story-index">04 / REACH</span>
+                        <h2 class="story-title">Across borders.<br><span class="dim">Disciplines.</span><br>Cultures.
+                        </h2>
+                        <p class="story-text">Always looking forward. Expanding globally while staying rooted in our
+                            core values. We don't just tell stories; we help brands evolve.</p>
+                    </div>
+                    <div class="story-spacer"></div>
+                </div>
+
+                <!-- 05 / Identity -->
+                <div class="story-item justify-center text-center" id="story-5"
+                    style="display: flex; flex-direction: column; align-items: center;">
+                    <span class="story-index">05 / IDENTITY</span>
+                    <h2 class="story-title" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                        <span class="dim">That something</span><br>became...<br>
+                        <span class="text-white mt-8 block">Maaef <span class="r">Studios.</span></span>
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+        <section class="manifesto-wrap py-20 px-6 md:px-12 bg-[#050505]">
+            <div class="manifesto-grid">
+                <div class="manifesto-item">
+                    <div class="manifesto-index">01</div>
+                    <h3 class="manifesto-head">Born from a<br><span class="r">simple desire.</span></h3>
+                    <p class="manifesto-body">To create something real.</p>
+                </div>
+                <div class="manifesto-item">
+                    <div class="manifesto-index">02</div>
+                    <h3 class="manifesto-head"><span class="dim">Curated artists.</span><br>Different corners.<br><span
+                            class="mid ital">One city.</span></h3>
+                    <p class="manifesto-body">They found themselves in Lucknow — united by a shared restlessness.</p>
+                </div>
+                <div class="manifesto-item">
+                    <div class="manifesto-index">03</div>
+                    <h3 class="manifesto-head">More than<br><span class="dim ital">individual</span><br>expression.</h3>
+                    <p class="manifesto-body">To bridge art and media. Local roots and global reach.</p>
+                </div>
+                <div class="manifesto-item">
+                    <div class="manifesto-index">04</div>
+                    <h3 class="manifesto-head">Across borders.<br><span class="dim">Disciplines.</span><br>Cultures.
+                    </h3>
+                    <p class="manifesto-body">Always looking forward. Expanding globally. Telling better stories.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="border-t border-white/[.05] py-8 px-6 md:px-12 flex justify-between items-center bg-[#050505]">
+            <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.12)">© Maaef Studios
+                2025</span>
+            <span onclick="window.scrollTo({top:0,behavior:'smooth'})"
+                class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger"
+                style="color:rgba(255,255,255,.12)">↑ Top</span>
+            <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.12)">Lucknow, IN</span>
+        </div>
+
+    </div>
+
+    <script>
+        (function () {
+            const TOTAL_BEATS = 5;
+            let step = 0, busy = false, done = false, lastWheel = 0;
+
+            const introEl = document.getElementById('intro-stage');
+            const homepageEl = document.getElementById('homepage');
+            const hintEl = document.getElementById('scroll-hint');
+            const skipEl = document.getElementById('skip-btn');
+            const barEl = document.getElementById('step-bar');
+            const logoEl = document.getElementById('logo-blast');
+            const redEl = document.getElementById('red-flood');
+            const flashEl = document.getElementById('white-flash');
+
+            gsap.set(logoEl, { opacity: 0, y: 200, rotateX: 32, rotateZ: -4, scale: 0.55, transformPerspective: 950, transformOrigin: 'center bottom' });
+
+            if (sessionStorage.getItem('maaef-seen')) {
+                skipIntroImmediate();
+            }
+
+            function advance() {
+                if (busy || done) return;
+                if (step === 0) {
+                    hintEl.style.opacity = '0';
+                    hintEl.style.pointerEvents = 'none';
+                    skipEl.style.opacity = '0';
+                }
+                step++;
+                if (step <= TOTAL_BEATS) showBeat(step);
+                else explode();
+            }
+
+            function showBeat(n) {
+                busy = true;
+                if (n > 1) {
+                    const prev = document.getElementById('beat-' + (n - 1));
+                    if (prev) {
+                        prev.classList.remove('in');
+                        prev.classList.add('out');
+                        setTimeout(() => prev.classList.remove('out'), 500);
+                    }
+                }
+                barEl.style.width = ((n / (TOTAL_BEATS + 1)) * 100) + '%';
+                setTimeout(() => {
+                    const beat = document.getElementById('beat-' + n);
+                    if (beat) beat.classList.add('in');
+                    setTimeout(() => { busy = false; }, n === TOTAL_BEATS ? 1000 : 900);
+                }, n === 1 ? 80 : 350);
+            }
+
+            function explode() {
+                busy = true;
+                barEl.style.width = '100%';
+                const last = document.getElementById('beat-' + TOTAL_BEATS);
+                if (last) { last.classList.remove('in'); last.classList.add('out'); }
+
+                const tl = gsap.timeline({ onComplete: revealHomepage });
+                tl.to(logoEl, { opacity: 1, y: 0, rotateX: 0, rotateZ: 0, scale: 1, duration: 1.35, ease: 'power3.out', delay: 0.5 })
+                    .to(logoEl, { scale: 1.06, duration: 0.28, ease: 'sine.inOut', yoyo: true, repeat: 1 })
+                    .to(logoEl, { scale: 1.18, duration: 0.32, ease: 'power2.inOut' })
+                    .to(logoEl, { scale: 38, opacity: 0, filter: 'blur(18px)', duration: 0.72, ease: 'power4.in' })
+                    .to(redEl, { opacity: 1, duration: 0.35, ease: 'none' }, '-=0.62')
+                    .to({}, { duration: 0.55 })
+                    .to(flashEl, { opacity: .95, duration: 0.07, ease: 'none' })
+                    .to(flashEl, { opacity: 0, duration: 0.14, ease: 'none' });
+            }
+
+            function revealHomepage() {
+                sessionStorage.setItem('maaef-seen', '1');
+                gsap.to(redEl, {
+                    opacity: 0, duration: 0.7, ease: 'power2.inOut',
+                    onStart: () => {
+                        introEl.style.transition = 'opacity 0.7s ease';
+                        introEl.style.opacity = '0';
+                        homepageEl.style.opacity = '0';
+                        homepageEl.classList.add('alive');
+                    },
+                    onComplete: () => {
+                        introEl.style.display = 'none';
+                        gsap.to(homepageEl, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+                        document.documentElement.classList.add('intro-done');
+                        document.body.classList.add('intro-done');
+                        done = true;
+                        busy = false;
+                        initHomepage();
+                    }
+                });
+            }
+
+            window.skipIntro = function () {
+                if (done) return;
+                busy = true;
+                gsap.to(introEl, {
+                    opacity: 0, duration: 0.5, ease: 'power2.inOut',
+                    onComplete: () => {
+                        introEl.style.display = 'none';
+                        homepageEl.classList.add('alive');
+                        gsap.to(homepageEl, { opacity: 1, duration: 0.5 });
+                        document.documentElement.classList.add('intro-done');
+                        document.body.classList.add('intro-done');
+                        sessionStorage.setItem('maaef-seen', '1');
+                        done = true; busy = false;
+                        initHomepage();
+                    }
+                });
+            };
+
+            function skipIntroImmediate() {
+                introEl.style.display = 'none';
+                homepageEl.classList.add('alive');
+                homepageEl.style.opacity = '1';
+                document.documentElement.classList.add('intro-done');
+                document.body.classList.add('intro-done');
+                done = true;
+                initHomepage();
+            }
+
+            window.addEventListener('wheel', (e) => {
+                if (done) return;
+                e.preventDefault();
+                if (busy) return;
+                const now = Date.now();
+                if (now - lastWheel < 750) return;
+                if (e.deltaY < 0) return;
+                lastWheel = now;
+                advance();
+            }, { passive: false });
+
+            let touchY = 0;
+            window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+            window.addEventListener('touchend', e => {
+                if (done || busy) return;
+                if (touchY - e.changedTouches[0].clientY > 45) advance();
+            }, { passive: true });
+
+            window.addEventListener('keydown', e => {
+                if (done || busy) return;
+                if (['ArrowDown', 'Space', 'PageDown', 'Enter'].includes(e.code)) {
+                    e.preventDefault(); advance();
+                }
+                if (e.code === 'Escape') skipIntro();
+            });
+
+            function initHomepage() {
+                const dot = document.querySelector('.cursor-dot');
+                const circle = document.querySelector('.cursor-circle');
+                let cursorEnabled = false;
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!cursorEnabled) {
+                        document.body.classList.add('use-custom-cursor');
+                        cursorEnabled = true;
+                    }
+                    dot.style.left = e.clientX + 'px';
+                    dot.style.top = e.clientY + 'px';
+                    setTimeout(() => {
+                        circle.style.left = e.clientX + 'px';
+                        circle.style.top = e.clientY + 'px';
+                    }, 50);
+                });
+
+                document.querySelectorAll('.hover-trigger').forEach(trigger => {
+                    trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                    trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+                });
+
+                const headerText = document.getElementById('scramble-text');
+                const headerContainer = document.getElementById('hero-header');
+                const chars = '!<>-_\/[]{}—=+*^?#________';
+                const finalCookie = 'Maaef';
+                let glitchInterval;
+
+                function randomScramble() {
+                    if (!headerText) return;
+                    headerText.innerText = finalCookie.split('').map(() => chars[Math.floor(Math.random() * chars.length)]).join('');
+                }
+
+                function resolveText() {
+                    if (!headerText) return;
+                    let iterations = 0;
+                    const interval = setInterval(() => {
+                        headerText.innerText = finalCookie.split('').map((letter, index) => {
+                            if (index < iterations) return finalCookie[index];
+                            return chars[Math.floor(Math.random() * chars.length)]
+                        }).join('');
+                        if (iterations >= finalCookie.length) clearInterval(interval);
+                        iterations += 1 / 3;
+                    }, 30);
+                }
+                resolveText();
+
+                if (headerContainer) {
+                    headerContainer.addEventListener('mouseenter', () => {
+                        headerContainer.classList.add('glow-active');
+                        clearInterval(glitchInterval);
+                        glitchInterval = setInterval(randomScramble, 50);
+                    });
+                    headerContainer.addEventListener('mouseleave', () => {
+                        headerContainer.classList.remove('glow-active');
+                        clearInterval(glitchInterval);
+                        resolveText();
+                    });
+                }
+
+                const menu = document.getElementById('kinetic-menu');
+                const canvas = document.getElementById('drawing-canvas');
+                const ctx = canvas.getContext('2d');
+                let isMenuOpen = false, drawing = false, paths = [];
+
+                function resizeCanvas() {
+                    if (!canvas) return;
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                window.toggleMenu = function () {
+                    const line1 = document.getElementById('line1');
+                    const line2 = document.getElementById('line2');
+                    isMenuOpen = !isMenuOpen;
+                    if (isMenuOpen) {
+                        menu.style.transform = 'translateY(0)';
+                        line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
+                        line2.style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                        line2.style.width = '100%';
+                        requestAnimationFrame(animateDrawing);
+                    } else {
+                        menu.style.transform = 'translateY(-100%)';
+                        line1.style.transform = 'none';
+                        line2.style.transform = 'none';
+                        line2.style.width = '66%';
+                        paths = [];
+                        if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+                };
+
+                if (canvas) {
+                    canvas.addEventListener('mousedown', (e) => {
+                        drawing = true;
+                        paths.push({ points: [{ x: e.clientX, y: e.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+                    });
+                    canvas.addEventListener('mousemove', (e) => {
+                        if (!drawing) return;
+                        paths[paths.length - 1].points.push({ x: e.clientX, y: e.clientY });
+                    });
+                    window.addEventListener('mouseup', () => {
+                        drawing = false;
+                        if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+                    });
+                }
+
+                function animateDrawing() {
+                    if (!isMenuOpen || !ctx) return;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.shadowColor = '#C41E3A';
+
+                    for (let i = paths.length - 1; i >= 0; i--) {
+                        const path = paths[i];
+                        if (path.points.length < 2) continue;
+                        if (path.state === 'pulsing') {
+                            path.pulseVal += 0.08 * path.pulseDir;
+                            if (path.pulseVal >= 1) { path.pulseVal = 1; path.pulseDir = -1; }
+                            if (path.pulseVal <= 0) { path.pulseVal = 0; path.pulseDir = 1; path.pulseCount++; }
+                            if (path.pulseCount >= 2) path.state = 'fading';
+                        } else if (path.state === 'fading') {
+                            path.opacity -= 0.02;
+                        }
+
+                        let currentWidth = 3 + path.pulseVal * 5;
+                        let currentBlur = 10 + path.pulseVal * 25;
+                        ctx.lineWidth = currentWidth;
+                        ctx.shadowBlur = currentBlur;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${path.opacity})`;
+
+                        ctx.beginPath();
+                        ctx.moveTo(path.points[0].x, path.points[0].y);
+                        for (let j = 1; j < path.points.length; j++) {
+                            ctx.lineTo(path.points[j].x, path.points[j].y);
+                        }
+                        ctx.stroke();
+
+                        if (path.opacity <= 0) {
+                            paths.splice(i, 1);
+                        }
+                    }
+                    requestAnimationFrame(animateDrawing);
+                }
+
+                function updateClock() {
+                    const clockEl = document.getElementById('live-clock');
+                    if (clockEl) {
+                        clockEl.innerText = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    }
+                }
+                setInterval(updateClock, 1000);
+                updateClock();
+
+                // GSAP ScrollTrigger for Story Items
+                gsap.registerPlugin(ScrollTrigger);
+
+                document.querySelectorAll('.story-item').forEach((item, i) => {
+                    gsap.to(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        },
+                        opacity: 1,
+                        visibility: "visible",
+                        y: 0,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        delay: 0.1
+                    });
+                });
+            }
+
+            if (done) {
+                initHomepage();
+            }
+
+        })();
+    </script>
+</body>
+
+</html>

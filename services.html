@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaef Studios | Services</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-red: #C41E3A;
+            --brand-dark: #050505;
+            --bg-color: #030303;
+            --card-bg: #080808;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --border-color: #222222;
+            --accent-glow: rgba(255, 0, 85, 0.15);
+            /* Subtle red/magenta glow */
+            --accent-border: #ff0055;
+            --font-stack: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body.use-custom-cursor {
+            cursor: none;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cursor-dot,
+        .cursor-circle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.use-custom-cursor .cursor-dot,
+        body.use-custom-cursor .cursor-circle {
+            opacity: 1;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+        }
+
+        .cursor-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+        }
+
+        body.hovering .cursor-circle {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(196, 30, 58, 0.5);
+            border-color: transparent;
+            mix-blend-mode: difference;
+        }
+
+        #kinetic-menu {
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .menu-link span {
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        /* --- FILM GRAIN OVERLAY --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- PILLAR SECTIONS --- */
+        .pillar-section {
+            padding: 8vw 5vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pillar-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .pillar-title {
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .pillar-title:hover {
+            text-shadow: 3px 0px 0px rgba(0, 255, 255, 0.5), -3px 0px 0px rgba(255, 0, 255, 0.5);
+        }
+
+        .pillar-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: 35% 1fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-border);
+            box-shadow: 0 0 30px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .pilot .card-title {
+            font-size: 2rem;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        .list-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            color: #b0b0b0;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        ul li::before {
+            content: '›';
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .btn {
+            margin-top: auto;
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: none;
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background-color: #111;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #222;
+        }
+
+        .btn-primary {
+            background-color: var(--text-main);
+            color: #000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.02);
+        }
+
+        .custom-section {
+            padding: 8vw 5vw;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .custom-header {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 4rem;
+        }
+
+        .custom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .custom-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .custom-card:hover {
+            border-color: #555;
+            background-color: #111;
+        }
+
+        .custom-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .custom-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .custom-price {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        @media (max-width: 1024px) {
+            .pillar-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .custom-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .custom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased font-['Inter']">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+    <div class="noise-overlay"></div>
+
+    <nav
+        class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white">
+        <a href="index.html" class="text-2xl font-bold tracking-tighter hover-trigger relative z-[60]">
+            Maaef<span class="text-red-600">.</span>
+        </a>
+
+        <div class="flex items-center gap-6 z-[60]">
+            <a href="contact.html"
+                class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+                Start Project
+            </a>
+
+            <button onclick="toggleMenu()" class="group flex flex-col items-end gap-[6px] w-12 hover-trigger p-2">
+                <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="kinetic-menu"
+        class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
+        <canvas id="drawing-canvas"></canvas>
+        <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
+            style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+        <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
+            <a href="index.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Home</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
+            </a>
+            <a href="about.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Studio</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
+            </a>
+            <a href="services.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Expertise</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
+            </a>
+            <a href="contact.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Contact</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
+            </a>
+        </div>
+        <div
+            class="absolute bottom-28 text-[10px] uppercase tracking-[0.3em] text-neutral-700 animate-pulse pointer-events-none">
+            [ LEAVE A TRACE ]
+        </div>
+        <div
+            class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
+            <span>Lucknow, IN</span>
+            <span id="live-clock">00:00:00</span>
+        </div>
+    </div>
+
+    <main class="pt-32">
+        <section class="pillar-section">
+            <div class="pillar-header">
+                <h1 class="pillar-title">Pillar 1 — Social<br>Presence & Brand<br>Readiness.</h1>
+                <p class="pillar-subtitle">Build trust. Position authority. Make your brand conversion-ready.</p>
+            </div>
+
+            <div class="pillar-grid">
+                <div class="card pilot hover-trigger">
+                    <div>
+                        <div class="card-tag">2 Weeks</div>
+                        <h2 class="card-title">Pilot Sprint</h2>
+                        <p class="card-desc">For new brands or those with a messy online presence.</p>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h3 class="list-title">What's Included</h3>
+                    <ul>
+                        <li>Brand Strategy & Story</li>
+                        <li>Visual Brand Identity (Logo, Palette)</li>
+                        <li>Social Profile Optimization</li>
+                        <li>Starter Content (1 video, 2 graphics)</li>
+                        <li>Campaign Blueprint</li>
+                    </ul>
+
+                    <div class="divider"></div>
+
+                    <h3 class="list-title">Results</h3>
+                    <ul style="margin-bottom: 2.5rem;">
+                        <li>Professional brand presence</li>
+                        <li>Clear, resonant messaging</li>
+                        <li>Ready to scale growth</li>
+                    </ul>
+
+                    <a href="contact.html?plan=Pillar 1 - Pilot Sprint"
+                        class="btn btn-secondary hover-trigger block">Start Pilot Sprint</a>
+                </div>
+
+                <div class="card flagship hover-trigger">
+                    <div>
+                        <div class="card-tag">Monthly Retainer</div>
+                        <h2 class="card-title">Brand Infrastructure System</h2>
+                        <p class="card-desc">For brands that want to build long-term authority and consistency.</p>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h3 class="list-title">What's Included</h3>
+                    <ul>
+                        <li>Ongoing brand design & positioning updates</li>
+                        <li>2–3 high-quality content posts per week</li>
+                        <li>Active profile growth optimization</li>
+                        <li>Mini brand campaigns & strategic launches</li>
+                        <li>Monthly analytics & strategy calls</li>
+                    </ul>
+
+                    <div class="divider"></div>
+
+                    <h3 class="list-title">Results</h3>
+                    <ul style="margin-bottom: 2.5rem;">
+                        <li>Strong, undeniable brand authority</li>
+                        <li>Growing audience trust and loyalty</li>
+                        <li>A consistent flow of inbound interest</li>
+                    </ul>
+
+                    <a href="contact.html?plan=Pillar 1 - Flagship" class="btn btn-primary hover-trigger block">Deploy
+                        Flagship</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="pillar-section">
+            <div class="pillar-header">
+                <h1 class="pillar-title">Pillar 2 — Inbound<br>Growth Engine.</h1>
+                <p class="pillar-subtitle">Turn content into a predictable lead machine.</p>
+            </div>
+
+            <div class="pillar-grid">
+                <div class="card pilot hover-trigger">
+                    <div>
+                        <div class="card-tag">3 Weeks</div>
+                        <h2 class="card-title">Brand Activation Sprint</h2>
+                        <p class="card-desc">Testing inbound lead generation fast.</p>
+                    </div>
+                    <div class="divider"></div>
+                    <h3 class="list-title">What's Included</h3>
+                    <ul>
+                        <li>Content Blitz (6 videos, 3 posts)</li>
+                        <li>Ad Test Campaign</li>
+                        <li>Lead Capture System</li>
+                        <li>Performance Tracking</li>
+                    </ul>
+                    <div class="divider"></div>
+                    <h3 class="list-title">Results</h3>
+                    <ul style="margin-bottom: 2.5rem;">
+                        <li>First inbound leads</li>
+                        <li>Content that resonates</li>
+                        <li>Data on winning audiences</li>
+                    </ul>
+                    <a href="contact.html?plan=Pillar 2 - Pilot Sprint"
+                        class="btn btn-secondary hover-trigger block">Start Pilot Sprint</a>
+                </div>
+
+                <div class="card flagship hover-trigger">
+                    <div>
+                        <div class="card-tag">Monthly Retainer</div>
+                        <h2 class="card-title">Inbound Authority Retainer</h2>
+                        <p class="card-desc">For brands that want steady, scalable inbound clients.</p>
+                    </div>
+                    <div class="divider"></div>
+                    <h3 class="list-title">What's Included</h3>
+                    <ul>
+                        <li>10–15 short videos/month</li>
+                        <li>8–10 feed posts</li>
+                        <li>Ongoing ad management</li>
+                        <li>Funnel optimization</li>
+                        <li>Community nurturing</li>
+                        <li>Weekly analytics</li>
+                    </ul>
+                    <div class="divider"></div>
+                    <h3 class="list-title">Results</h3>
+                    <ul style="margin-bottom: 2.5rem;">
+                        <li>Predictable inbound pipeline</li>
+                        <li>Lower cost per lead</li>
+                        <li>Strong niche authority</li>
+                    </ul>
+                    <a href="contact.html?plan=Pillar 2 - Flagship" class="btn btn-primary hover-trigger block">Deploy
+                        Flagship</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="pillar-section" style="border-bottom: none;">
+            <div class="pillar-header">
+                <h1 class="pillar-title">Pillar 3 — Direct<br>Sales & ROI Engine.</h1>
+                <p class="pillar-subtitle">Book qualified sales calls every week.</p>
+            </div>
+
+            <div class="pillar-grid">
+                <div class="card pilot hover-trigger">
+                    <div>
+                        <div class="card-tag">3 Weeks</div>
+                        <h2 class="card-title">Outbound Lead Sprint</h2>
+                        <p class="card-desc">Fast client acquisition & quick wins.</p>
+                    </div>
+                    <div class="divider"></div>
+                    <h3 class="list-title">What's Included</h3>
+                    <ul>
+                        <li>ICP & Market Targeting</li>
+                        <li>Lead Database (100–150 prospects)</li>
+                        <li>Outreach Campaigns (LinkedIn/IG)</li>
+                        <li>Booking & Reporting</li>
+                    </ul>
+                    <div class="divider"></div>
+                    <h3 class="list-title">Results</h3>
+                    <ul style="margin-bottom: 2.5rem;">
+                        <li>5–10 booked meetings</li>
+                        <li>Validated outreach strategy</li>
+                        <li>Quick revenue opportunities</li>
+                    </ul>
+                    <a href="contact.html?plan=Pillar 3 - Pilot Sprint"
+                        class="btn btn-secondary hover-trigger block">Start Pilot Sprint</a>
+                </div>
+
+                <div class="card flagship hover-trigger">
+                    <div>
+                        <div class="card-tag">Monthly Retainer</div>
+                        <h2 class="card-title">Revenue Accelerator System</h2>
+                        <p class="card-desc">Building a consistent, automated sales pipeline.</p>
+                    </div>
+                    <div class="divider"></div>
+                    <h3 class="list-title">What's Included</h3>
+                    <ul>
+                        <li>100+ new leads every week</li>
+                        <li>Scaled outreach sequences</li>
+                        <li>Performance ad campaigns</li>
+                        <li>CRM automation</li>
+                        <li>Sales coordination</li>
+                    </ul>
+                    <div class="divider"></div>
+                    <h3 class="list-title">Results</h3>
+                    <ul style="margin-bottom: 2.5rem;">
+                        <li>15+ qualified meetings/month</li>
+                        <li>Predictable ROI</li>
+                        <li>Faster deal flow</li>
+                        <li>Revenue growth system</li>
+                    </ul>
+                    <a href="contact.html?plan=Pillar 3 - Flagship" class="btn btn-primary hover-trigger block">Deploy
+                        Flagship</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="custom-section">
+            <h2 class="custom-header">Custom Add-Ons & A La Carte</h2>
+
+            <div class="custom-grid">
+                <div class="custom-card hover-trigger">
+                    <h3 class="custom-title">Custom Service 1</h3>
+                    <p class="custom-desc">A brief, one-sentence description of what this specialized add-on provides.
+                    </p>
+                    <div class="custom-price">[Custom Quote]</div>
+                </div>
+                <div class="custom-card hover-trigger">
+                    <h3 class="custom-title">Custom Service 2</h3>
+                    <p class="custom-desc">A brief, one-sentence description of what this specialized add-on provides.
+                    </p>
+                    <div class="custom-price">[Custom Quote]</div>
+                </div>
+                <div class="custom-card hover-trigger">
+                    <h3 class="custom-title">Custom Service 3</h3>
+                    <p class="custom-desc">A brief, one-sentence description of what this specialized add-on provides.
+                    </p>
+                    <div class="custom-price">[Starting at $1500]</div>
+                </div>
+                <div class="custom-card hover-trigger">
+                    <h3 class="custom-title">Custom Service 4</h3>
+                    <p class="custom-desc">A brief, one-sentence description of what this specialized add-on provides.
+                    </p>
+                    <div class="custom-price">[Custom Quote]</div>
+                </div>
+                <div class="custom-card hover-trigger">
+                    <h3 class="custom-title">Custom Service 5</h3>
+                    <p class="custom-desc">A brief, one-sentence description of what this specialized add-on provides.
+                    </p>
+                    <div class="custom-price">[Starting at $2500]</div>
+                </div>
+                <div class="custom-card hover-trigger">
+                    <h3 class="custom-title">Custom Service 6</h3>
+                    <p class="custom-desc">A brief, one-sentence description of what this specialized add-on provides.
+                    </p>
+                    <div class="custom-price">[Custom Quote]</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dot = document.querySelector('.cursor-dot');
+            const circle = document.querySelector('.cursor-circle');
+            let cursorEnabled = false;
+
+            document.addEventListener('mousemove', (e) => {
+                if (!cursorEnabled) {
+                    document.body.classList.add('use-custom-cursor');
+                    cursorEnabled = true;
+                }
+                dot.style.left = e.clientX + 'px';
+                dot.style.top = e.clientY + 'px';
+
+                setTimeout(() => {
+                    circle.style.left = e.clientX + 'px';
+                    circle.style.top = e.clientY + 'px';
+                }, 50);
+            });
+
+            document.querySelectorAll('.hover-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+            const menu = document.getElementById('kinetic-menu');
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            let isMenuOpen = false;
+            let drawing = false;
+            let paths = [];
+
+            function resizeCanvas() {
+                if (!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            window.toggleMenu = function () {
+                const line1 = document.getElementById('line1');
+                const line2 = document.getElementById('line2');
+                isMenuOpen = !isMenuOpen;
+
+                if (isMenuOpen) {
+                    menu.style.transform = 'translateY(0)';
+                    line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
+                    line2.style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                    line2.style.width = '100%';
+                    requestAnimationFrame(animateDrawing);
+                } else {
+                    menu.style.transform = 'translateY(-100%)';
+                    line1.style.transform = 'none';
+                    line2.style.transform = 'none';
+                    line2.style.width = '66%';
+                    paths = [];
+                    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            };
+
+            if (canvas) {
+                canvas.addEventListener('mousedown', (e) => {
+                    drawing = true;
+                    paths.push({ points: [{ x: e.clientX, y: e.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+                });
+                canvas.addEventListener('mousemove', (e) => {
+                    if (!drawing) return;
+                    paths[paths.length - 1].points.push({ x: e.clientX, y: e.clientY });
+                });
+                window.addEventListener('mouseup', () => {
+                    drawing = false;
+                    if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+                });
+            }
+
+            function animateDrawing() {
+                if (!isMenuOpen || !ctx) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowColor = '#C41E3A';
+
+                for (let i = paths.length - 1; i >= 0; i--) {
+                    const path = paths[i];
+                    if (path.points.length < 2) continue;
+
+                    if (path.state === 'pulsing') {
+                        path.pulseVal += 0.08 * path.pulseDir;
+                        if (path.pulseVal >= 1) { path.pulseVal = 1; path.pulseDir = -1; }
+                        if (path.pulseVal <= 0) { path.pulseVal = 0; path.pulseDir = 1; path.pulseCount++; }
+                        if (path.pulseCount >= 2) path.state = 'fading';
+                    } else if (path.state === 'fading') {
+                        path.opacity -= 0.02;
+                    }
+
+                    let currentWidth = 3;
+                    let currentBlur = 10;
+                    if (path.state === 'drawing' || path.state === 'pulsing') {
+                        currentWidth += path.pulseVal * 5;
+                        currentBlur += path.pulseVal * 25;
+                    }
+
+                    ctx.lineWidth = currentWidth;
+                    ctx.shadowBlur = currentBlur;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${path.opacity})`;
+
+                    ctx.beginPath();
+                    ctx.moveTo(path.points[0].x, path.points[0].y);
+                    for (let j = 1; j < path.points.length; j++) { ctx.lineTo(path.points[j].x, path.points[j].y); }
+                    ctx.stroke();
+
+                    if (path.opacity <= 0) paths.splice(i, 1);
+                }
+                requestAnimationFrame(animateDrawing);
+            }
+
+            function updateClock() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                const clockEl = document.getElementById('live-clock');
+                if (clockEl) clockEl.innerText = timeString;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaef Studios | Contact Us</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <style>
+        :root {
+            --brand-red: #C41E3A;
+            --brand-dark: #050505;
+        }
+
+        body {
+            background-color: var(--brand-dark);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body.use-custom-cursor {
+            cursor: none;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cursor-dot,
+        .cursor-circle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.use-custom-cursor .cursor-dot,
+        body.use-custom-cursor .cursor-circle {
+            opacity: 1;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+        }
+
+        .cursor-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+        }
+
+        body.hovering .cursor-circle {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(196, 30, 58, 0.5);
+            border-color: transparent;
+            mix-blend-mode: difference;
+        }
+
+        #kinetic-menu {
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .menu-link span {
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <nav
+        class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white">
+        <a href="index.html" class="text-2xl font-bold tracking-tighter hover-trigger relative z-[60]">
+            Maaef<span class="text-red-600">.</span>
+        </a>
+
+        <div class="flex items-center gap-6 z-[60]">
+            <a href="contact.html"
+                class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+                Start Project
+            </a>
+
+            <button onclick="toggleMenu()" class="group flex flex-col items-end gap-[6px] w-12 hover-trigger p-2">
+                <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="kinetic-menu"
+        class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
+        <canvas id="drawing-canvas"></canvas>
+        <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
+            style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+        <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
+            <a href="index.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Home</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
+            </a>
+            <a href="about.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Studio</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
+            </a>
+            <a href="services.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Expertise</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
+            </a>
+            <a href="contact.html" onclick="toggleMenu()"
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Contact</span>
+                <span
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
+            </a>
+        </div>
+        <div
+            class="absolute bottom-28 text-[10px] uppercase tracking-[0.3em] text-neutral-700 animate-pulse pointer-events-none">
+            [ LEAVE A TRACE ]
+        </div>
+        <div
+            class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
+            <span>Lucknow, IN</span>
+            <span id="live-clock">00:00:00</span>
+        </div>
+    </div>
+
+    <footer id="contact"
+        class="min-h-screen flex items-center justify-center bg-black relative overflow-hidden py-20 px-6">
+        <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
+            style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+        <div class="w-full max-w-4xl z-10 relative">
+            <h2 class="text-xs uppercase tracking-[0.3em] text-red-600 mb-20 text-center">Start the Project</h2>
+            <div id="form-container">
+                <div id="step-1" class="form-step transition-all duration-700">
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-6">Step 01 / 03</label>
+                    <h3 class="serif text-5xl md:text-7xl mb-12 leading-tight">What should we<br>call you?</h3>
+                    <input type="text" id="input-name" placeholder="Your Name"
+                        class="w-full bg-transparent border-b border-white/20 text-3xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                    <div class="flex justify-end mt-12">
+                        <button onclick="nextStep(1)"
+                            class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
+                            Next Step <span class="text-2xl group-hover:translate-x-2 transition-transform">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-2" class="form-step hidden opacity-0 translate-y-10 transition-all duration-700">
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-6">Step 02 / 03</label>
+                    <h3 class="serif text-5xl md:text-7xl mb-12 leading-tight">Where can we<br>reach you?</h3>
+                    <input type="email" id="input-email" placeholder="your@email.com"
+                        class="w-full bg-transparent border-b border-white/20 text-3xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                    <div class="flex justify-between items-center mt-12">
+                        <button onclick="prevStep(2)"
+                            class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
+                            <span class="text-2xl group-hover:-translate-x-2 transition-transform">←</span> Back
+                        </button>
+                        <button onclick="nextStep(2)"
+                            class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
+                            Next Step <span class="text-2xl group-hover:translate-x-2 transition-transform">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-3" class="form-step hidden opacity-0 translate-y-10 transition-all duration-700">
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-6">Step 03 / 03</label>
+                    <h3 class="serif text-5xl md:text-7xl mb-12 leading-tight">Tell us about<br>your project.</h3>
+                    <input type="text" id="input-requirements" placeholder="Your requirements..."
+                        class="w-full bg-transparent border-b border-white/20 text-3xl md:text-4xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                    <div class="flex justify-between items-center mt-12">
+                        <button onclick="prevStep(3)"
+                            class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
+                            <span class="text-2xl group-hover:-translate-x-2 transition-transform">←</span> Back
+                        </button>
+                        <button onclick="submitForm()"
+                            class="px-12 py-4 bg-red-600 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition duration-300 hover-trigger">
+                            Submit Inquiry
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-success"
+                    class="form-step hidden opacity-0 translate-y-10 transition-all duration-700 text-center flex flex-col items-center justify-center">
+                    <h3 class="serif text-6xl md:text-8xl mb-6 text-white leading-tight">Received.</h3>
+                    <p class="text-gray-400 text-lg md:text-xl uppercase tracking-widest">We'll take it from here.</p>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="absolute bottom-8 w-full flex justify-between px-6 md:px-12 text-[10px] uppercase tracking-widest text-gray-700 pointer-events-none">
+            <span>Maaef Studios</span>
+            <span onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                class="cursor-pointer pointer-events-auto hover-trigger glow-white transition-all duration-300">
+                Back to Top
+            </span>
+            <span>Lucknow, IN</span>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // New: Handle URL parameters for pre-filling requirements
+            const urlParams = new URLSearchParams(window.location.search);
+            const planParam = urlParams.get('plan');
+            if (planParam) {
+                const inputReq = document.getElementById('input-requirements');
+                if (inputReq) {
+                    inputReq.value = planParam;
+                }
+            }
+
+            const dot = document.querySelector('.cursor-dot');
+            const circle = document.querySelector('.cursor-circle');
+            let cursorEnabled = false;
+
+            document.addEventListener('mousemove', (e) => {
+                if (!cursorEnabled) {
+                    document.body.classList.add('use-custom-cursor');
+                    cursorEnabled = true;
+                }
+                dot.style.left = e.clientX + 'px';
+                dot.style.top = e.clientY + 'px';
+
+                setTimeout(() => {
+                    circle.style.left = e.clientX + 'px';
+                    circle.style.top = e.clientY + 'px';
+                }, 50);
+            });
+
+            document.querySelectorAll('.hover-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+            window.nextStep = function (current) {
+                const currentStep = document.getElementById(`step-${current}`);
+                const nextStep = document.getElementById(`step-${current + 1}`);
+                if (currentStep && nextStep) {
+                    currentStep.classList.add('opacity-0', 'translate-y-10');
+                    setTimeout(() => {
+                        currentStep.classList.add('hidden');
+                        nextStep.classList.remove('hidden');
+                        setTimeout(() => {
+                            nextStep.classList.remove('opacity-0', 'translate-y-10');
+                        }, 50);
+                    }, 500);
+                }
+            };
+
+            window.prevStep = function (current) {
+                const currentStep = document.getElementById(`step-${current}`);
+                const prevStep = document.getElementById(`step-${current - 1}`);
+                if (currentStep && prevStep) {
+                    currentStep.classList.add('opacity-0', 'translate-y-10');
+                    setTimeout(() => {
+                        currentStep.classList.add('hidden');
+                        prevStep.classList.remove('hidden');
+                        setTimeout(() => {
+                            prevStep.classList.remove('opacity-0', 'translate-y-10');
+                        }, 50);
+                    }, 500);
+                }
+            };
+
+            window.submitForm = function () {
+                const step3 = document.getElementById('step-3');
+                const stepSuccess = document.getElementById('step-success');
+                const name = document.getElementById('input-name').value;
+                const email = document.getElementById('input-email').value;
+                const requirements = document.getElementById('input-requirements').value;
+
+                if (!name || !email || !requirements) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+
+                // --- EmailJS Configuration ---
+                const serviceID = 'service_jxszk8v';
+                const ownerTemplateID = 'template_5kwfycv';
+                const customerTemplateID = 'template_5h4bd8a';
+                const publicKey = 'WGbmv9T440K0YXwC9';
+
+                emailjs.init(publicKey);
+
+                const templateParams = {
+                    name: name,
+                    email: email,
+                    selectedServices: requirements, // Mapped to the original variable for compatibility
+                    email_body_owner: `
+                        <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border: 1px solid #C41E3A;">
+                            <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #C41E3A; margin-bottom: 20px;">New Inquiry Received</h2>
+                            <hr style="border: 0; border-top: 1px solid #222; margin: 20px 0;">
+                            <p style="font-size: 16px; line-height: 1.6; color: #aaa;">You have a new lead from Maaef Studios contact form.</p>
+                            <div style="margin-top: 30px;">
+                                <p><strong>Name:</strong> ${name}</p>
+                                <p><strong>Email:</strong> ${email}</p>
+                                <p><strong>Project Requirements:</strong> ${requirements}</p>
+                            </div>
+                            <div style="margin-top: 40px; font-size: 12px; color: #444; text-align: center; letter-spacing: 2px; text-transform: uppercase;">
+                                Maaef Studios | Lucknow, IN
+                            </div>
+                        </div>
+                    `,
+                    email_body_customer: `
+                        <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border-bottom: 4px solid #C41E3A;">
+                            <div style="text-align: center; margin-bottom: 40px;">
+                                <h1 style="font-size: 24px; font-weight: bold; letter-spacing: -1px;">Maaef<span style="color: #C41E3A;">.</span></h1>
+                            </div>
+                            <h2 style="font-family: 'Playfair Display', serif; font-size: 40px; margin-bottom: 20px; line-height: 1.2;">Hello, ${name}.</h2>
+                            <p style="font-size: 18px; line-height: 1.6; color: #ccc; margin-bottom: 30px;">
+                                We've received your inquiry regarding <strong>${requirements}</strong>. 
+                                Our team is already reviewing your details and will get back to you shortly to start something extraordinary.
+                            </p>
+                            <div style="background-color: #111; padding: 20px; border-left: 2px solid #C41E3A; margin-bottom: 40px;">
+                                <p style="margin: 0; font-style: italic; color: #888;">"Great things are done by a series of small things brought together."</p>
+                            </div>
+                            <p style="font-size: 14px; color: #666; margin-bottom: 10px;">Best regards,</p>
+                            <p style="font-size: 16px; font-weight: 600; color: #fff; margin: 0;">The Maaef Team</p>
+                            <div style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #222; font-size: 10px; color: #444; text-align: center; letter-spacing: 2px; text-transform: uppercase;">
+                                Lucknow, IN • Studio • Expertise • Contact
+                            </div>
+                        </div>
+                    `
+                };
+
+                const submitBtn = document.querySelector('#step-3 button');
+                const originalBtnText = submitBtn.innerText;
+                submitBtn.innerText = 'Sending...';
+                submitBtn.disabled = true;
+
+                const sendOwner = emailjs.send(serviceID, ownerTemplateID, templateParams);
+                const sendCustomer = emailjs.send(serviceID, customerTemplateID, templateParams);
+
+                Promise.all([sendOwner, sendCustomer])
+                    .then(() => {
+                        step3.classList.add('opacity-0', 'translate-y-10');
+                        setTimeout(() => {
+                            step3.classList.add('hidden');
+                            stepSuccess.classList.remove('hidden');
+                            setTimeout(() => {
+                                stepSuccess.classList.remove('opacity-0', 'translate-y-10');
+                            }, 50);
+                        }, 500);
+                    })
+                    .catch((error) => {
+                        console.error('EmailJS Error:', error);
+                        alert('Something went wrong. Please try again later.');
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                    });
+            };
+
+            const inputName = document.getElementById('input-name');
+            const inputEmail = document.getElementById('input-email');
+            const inputReq = document.getElementById('input-requirements');
+
+            if (inputName) {
+                inputName.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        nextStep(1);
+                    }
+                });
+            }
+
+            if (inputEmail) {
+                inputEmail.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        nextStep(2);
+                    }
+                });
+            }
+
+            if (inputReq) {
+                inputReq.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        submitForm();
+                    }
+                });
+            }
+
+            const menu = document.getElementById('kinetic-menu');
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            let isMenuOpen = false;
+            let drawing = false;
+            let paths = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            window.toggleMenu = function () {
+                const line1 = document.getElementById('line1');
+                const line2 = document.getElementById('line2');
+                isMenuOpen = !isMenuOpen;
+
+                if (isMenuOpen) {
+                    menu.style.transform = 'translateY(0)';
+                    line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
+                    line2.style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                    line2.style.width = '100%';
+                    requestAnimationFrame(animateDrawing);
+                } else {
+                    menu.style.transform = 'translateY(-100%)';
+                    line1.style.transform = 'none';
+                    line2.style.transform = 'none';
+                    line2.style.width = '66%';
+                    paths = [];
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            };
+
+            canvas.addEventListener('mousedown', (e) => {
+                drawing = true;
+                paths.push({ points: [{ x: e.clientX, y: e.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+            });
+            canvas.addEventListener('mousemove', (e) => {
+                if (!drawing) return;
+                paths[paths.length - 1].points.push({ x: e.clientX, y: e.clientY });
+            });
+            window.addEventListener('mouseup', () => {
+                drawing = false;
+                if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+            });
+
+            function animateDrawing() {
+                if (!isMenuOpen) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowColor = '#C41E3A';
+
+                for (let i = paths.length - 1; i >= 0; i--) {
+                    const path = paths[i];
+                    if (path.points.length < 2) continue;
+
+                    if (path.state === 'pulsing') {
+                        path.pulseVal += 0.08 * path.pulseDir;
+                        if (path.pulseVal >= 1) { path.pulseVal = 1; path.pulseDir = -1; }
+                        if (path.pulseVal <= 0) { path.pulseVal = 0; path.pulseDir = 1; path.pulseCount++; }
+                        if (path.pulseCount >= 2) path.state = 'fading';
+                    } else if (path.state === 'fading') {
+                        path.opacity -= 0.02;
+                    }
+
+                    let currentWidth = 3;
+                    let currentBlur = 10;
+                    if (path.state === 'drawing' || path.state === 'pulsing') {
+                        currentWidth += path.pulseVal * 5;
+                        currentBlur += path.pulseVal * 25;
+                    }
+
+                    ctx.lineWidth = currentWidth;
+                    ctx.shadowBlur = currentBlur;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${path.opacity})`;
+
+                    ctx.beginPath();
+                    ctx.moveTo(path.points[0].x, path.points[0].y);
+                    for (let j = 1; j < path.points.length; j++) { ctx.lineTo(path.points[j].x, path.points[j].y); }
+                    ctx.stroke();
+
+                    if (path.opacity <= 0) paths.splice(i, 1);
+                }
+                requestAnimationFrame(animateDrawing);
+            }
+
+            function updateClock() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                const clockEl = document.getElementById('live-clock');
+                if (clockEl) clockEl.innerText = timeString;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
+    </script>
+</body>
+
+</html>

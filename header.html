@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaef Studios | Engineering Attention</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --brand-red: #C41E3A;
+            --brand-dark: #050505;
+        }
+
+        /* --- GLOBAL RESET --- */
+        body {
+            background-color: var(--brand-dark);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Hide system cursor when custom one is active */
+        body.use-custom-cursor {
+            cursor: none;
+        }
+
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot, .cursor-circle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+
+        body.use-custom-cursor .cursor-dot, 
+        body.use-custom-cursor .cursor-circle {
+            opacity: 1;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+        }
+
+        .cursor-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+        }
+
+        body.hovering .cursor-circle {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(196, 30, 58, 0.5);
+            border-color: transparent;
+            mix-blend-mode: difference;
+        }
+
+        /* --- TEXT GLOW --- */
+        .glow-active {
+            text-shadow: 0 0 10px var(--brand-red), 0 0 30px var(--brand-red), 0 0 50px var(--brand-red);
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .glow-white:hover {
+            text-shadow: 0 0 10px white, 0 0 20px white;
+            color: white;
+        }
+
+        /* --- HERO FOG EFFECT --- */
+        .video-fog {
+            filter: blur(20px) brightness(0.4);
+            transform: scale(1.1);
+            transition: all 0.6s ease-out;
+            will-change: filter, transform;
+        }
+
+        .video-fog.is-active {
+            filter: blur(0px) brightness(1.0) !important;
+            transform: scale(1.0) !important;
+        }
+
+        /* --- 3D TILT CARDS --- */
+        .perspective-container {
+            perspective: 1000px;
+        }
+        .floating-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        /* --- KINETIC MENU --- */
+        #kinetic-menu {
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        
+        .menu-link span {
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Drawing Canvas inside Menu */
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; 
+            pointer-events: auto; 
+            cursor: crosshair;
+        }
+
+        /* --- ACCORDION LIST STYLES (SPOTLIGHT) --- */
+        .accordion-item {
+            transition: all 0.4s ease;
+        }
+        .accordion-img {
+            height: 0;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .accordion-item:hover .accordion-img {
+            height: 300px;
+            opacity: 1;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .spotlight-group:hover .accordion-item {
+            opacity: 0.3;
+        }
+        .spotlight-group:hover .accordion-item:hover {
+            opacity: 1;
+            border-color: #C41E3A;
+        }
+
+        /* --- TEAM REVEAL ANIMATIONS --- */
+        #team-preview {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        #team-manifesto {
+            transition: opacity 0.4s ease;
+        }
+        .showing-member #team-manifesto {
+            opacity: 0;
+        }
+        .showing-member #team-preview {
+            opacity: 1;
+        }
+        
+        ::-webkit-scrollbar { width: 0px; }
+    </style>
+</head>

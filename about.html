@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaef Studios | About</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --brand-red: #C41E3A;
+            --brand-dark: #050505;
+            --bg-color: #050505;
+            --text-main: #f4f4f4;
+            --text-muted: #888888;
+            --border-color: #222222;
+            --font-stack: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            position: relative;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body.use-custom-cursor {
+            cursor: none;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+
+        .cursor-dot, .cursor-circle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+        body.use-custom-cursor .cursor-dot, 
+        body.use-custom-cursor .cursor-circle {
+            opacity: 1;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+        }
+        .cursor-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+        }
+        body.hovering .cursor-circle {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(196, 30, 58, 0.5);
+            border-color: transparent;
+            mix-blend-mode: difference;
+        }
+
+        #kinetic-menu {
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        
+        .menu-link span {
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; 
+            pointer-events: auto; 
+            cursor: crosshair;
+        }
+        
+        ::-webkit-scrollbar { width: 0px; }
+        
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; 
+            z-index: 9999;
+            opacity: 0.04; 
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 5vw;
+        }
+
+        .manifesto-text {
+            font-size: clamp(3.5rem, 8vw, 9rem);
+            font-weight: 900;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            max-width: 1400px;
+            color: #333333;
+            cursor: default;
+        }
+
+        .manifesto-text span {
+            display: block;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .manifesto-text span:hover {
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .ticker-section {
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+            overflow: hidden;
+            background: #000;
+            white-space: nowrap;
+            position: relative;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .ticker-content {
+            display: inline-block;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            animation: scroll-ticker 30s linear infinite;
+        }
+
+        .ticker-content span {
+            padding: 0 2rem;
+            color: var(--text-main);
+        }
+
+        @keyframes scroll-ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .founder-section {
+            padding: 15vw 5vw;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 4rem;
+            display: block;
+        }
+
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 40% 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .founder-image-wrapper {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background-color: #111;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .founder-image-wrapper::after {
+            content: "FOUNDER PORTRAIT (Grayscale / High Contrast)";
+            color: #444;
+            font-size: 1rem;
+            text-align: center;
+            padding: 2rem;
+            position: absolute;
+        }
+
+        .founder-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .founder-quote {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2.5rem;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .founder-quote::before {
+            content: '"';
+            position: absolute;
+            top: -4rem;
+            left: -2.5rem;
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.06);
+            font-family: 'Times New Roman', Times, serif; 
+            z-index: -1;
+            line-height: 1;
+        }
+
+        .founder-bio {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: #b0b0b0;
+            max-width: 650px;
+        }
+
+        .founder-bio p {
+            margin-bottom: 1.5rem;
+        }
+
+        .founder-name {
+            margin-top: 2rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            display: inline-block;
+        }
+
+        @media (max-width: 900px) {
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            .founder-image-wrapper {
+                aspect-ratio: 16 / 9;
+            }
+            .founder-quote::before {
+                top: -3rem;
+                left: -1.5rem;
+                font-size: 6rem;
+            }
+            .nav-links { display: none; }
+        }
+
+    </style>
+</head>
+<body class="antialiased font-['Inter']">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+    <div class="noise-overlay"></div>
+
+    <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white">
+        <a href="index.html" class="text-2xl font-bold tracking-tighter hover-trigger relative z-[60]">
+            Maaef<span class="text-red-600">.</span>
+        </a>
+        
+        <div class="flex items-center gap-6 z-[60]">
+            <a href="contact.html" class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+                Start Project
+            </a>
+            
+            <button onclick="toggleMenu()" class="group flex flex-col items-end gap-[6px] w-12 hover-trigger p-2">
+                <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="kinetic-menu" class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
+        <canvas id="drawing-canvas"></canvas>
+        <div class="absolute inset-0 opacity-20 pointer-events-none z-0" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+        <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
+            <a href="index.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Home</span>
+                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
+            </a>
+            <a href="about.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Studio</span>
+                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
+            </a>
+            <a href="services.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Expertise</span>
+                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
+            </a>
+            <a href="contact.html" onclick="toggleMenu()" class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
+                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Contact</span>
+                <span class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
+            </a>
+        </div>
+        <div class="absolute bottom-28 text-[10px] uppercase tracking-[0.3em] text-neutral-700 animate-pulse pointer-events-none">
+            [ LEAVE A TRACE ]
+        </div>
+        <div class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
+            <span>Lucknow, IN</span>
+            <span id="live-clock">00:00:00</span>
+        </div>
+    </div>
+
+    <main class="pt-24">
+        <section class="hero-section">
+            <h1 class="manifesto-text">
+                <span class="hover-trigger">We engineer attention.</span>
+                <span class="hover-trigger">We build infrastructure.</span>
+                <span class="hover-trigger">We turn brands into revenue.</span>
+            </h1>
+        </section>
+    
+        <section class="ticker-section">
+            <div class="ticker-content">
+                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span class="text-red-500">•</span> 
+                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span class="text-red-500">•</span>
+            </div>
+        </section>
+    
+        <section class="founder-section">
+            <span class="section-label">01 // The Architect</span>
+            
+            <div class="founder-grid">
+                
+                <div class="founder-image-wrapper hover-trigger">
+                    </div>
+    
+                <div class="founder-content">
+                    <h2 class="founder-quote">
+                        Growth doesn't happen by accident. It happens when you stop acting like a creator and start acting like an infrastructure.
+                    </h2>
+                    
+                    <div class="founder-bio">
+                        <p>Maaef Studios wasn't built to make pretty pictures. It was built to solve the fundamental problem of modern brands: turning fleeting attention into a predictable, scalable revenue machine.</p>
+                        <p>We operate as a fully integrated growth engine. By combining relentless aesthetic standards with ruthless performance marketing, we bridge the gap between creative ambition and bottom-line reality.</p>
+                    </div>
+                    
+                    <div class="founder-name">Your Name Here / Founder & Director</div>
+                </div>
+    
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dot = document.querySelector('.cursor-dot');
+            const circle = document.querySelector('.cursor-circle');
+            let cursorEnabled = false;
+
+            document.addEventListener('mousemove', (e) => {
+                if (!cursorEnabled) {
+                    document.body.classList.add('use-custom-cursor');
+                    cursorEnabled = true;
+                }
+                dot.style.left = e.clientX + 'px';
+                dot.style.top = e.clientY + 'px';
+                
+                setTimeout(() => {
+                    circle.style.left = e.clientX + 'px';
+                    circle.style.top = e.clientY + 'px';
+                }, 50);
+            });
+
+            document.querySelectorAll('.hover-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+
+            const menu = document.getElementById('kinetic-menu');
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            let isMenuOpen = false;
+            let drawing = false;
+            let paths = []; 
+
+            function resizeCanvas() {
+                if(!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            window.toggleMenu = function() {
+                const line1 = document.getElementById('line1');
+                const line2 = document.getElementById('line2');
+                isMenuOpen = !isMenuOpen;
+                
+                if (isMenuOpen) {
+                    menu.style.transform = 'translateY(0)';
+                    line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
+                    line2.style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                    line2.style.width = '100%';
+                    requestAnimationFrame(animateDrawing);
+                } else {
+                    menu.style.transform = 'translateY(-100%)';
+                    line1.style.transform = 'none';
+                    line2.style.transform = 'none';
+                    line2.style.width = '66%';
+                    paths = [];
+                    if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            };
+
+            if(canvas) {
+                canvas.addEventListener('mousedown', (e) => {
+                    drawing = true;
+                    paths.push({ points: [{x: e.clientX, y: e.clientY}], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+                });
+                canvas.addEventListener('mousemove', (e) => {
+                    if (!drawing) return;
+                    paths[paths.length - 1].points.push({x: e.clientX, y: e.clientY});
+                });
+                window.addEventListener('mouseup', () => {
+                    drawing = false;
+                    if(paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+                });
+            }
+
+            function animateDrawing() {
+                if (!isMenuOpen || !ctx) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowColor = '#C41E3A'; 
+
+                for (let i = paths.length - 1; i >= 0; i--) {
+                    const path = paths[i];
+                    if (path.points.length < 2) continue;
+
+                    if (path.state === 'pulsing') {
+                        path.pulseVal += 0.08 * path.pulseDir;
+                        if (path.pulseVal >= 1) { path.pulseVal = 1; path.pulseDir = -1; }
+                        if (path.pulseVal <= 0) { path.pulseVal = 0; path.pulseDir = 1; path.pulseCount++; }
+                        if (path.pulseCount >= 2) path.state = 'fading';
+                    } else if (path.state === 'fading') {
+                        path.opacity -= 0.02;
+                    }
+
+                    let currentWidth = 3;
+                    let currentBlur = 10;
+                    if (path.state === 'drawing' || path.state === 'pulsing') {
+                        currentWidth += path.pulseVal * 5; 
+                        currentBlur += path.pulseVal * 25; 
+                    }
+
+                    ctx.lineWidth = currentWidth;
+                    ctx.shadowBlur = currentBlur;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${path.opacity})`;
+
+                    ctx.beginPath();
+                    ctx.moveTo(path.points[0].x, path.points[0].y);
+                    for (let j = 1; j < path.points.length; j++) { ctx.lineTo(path.points[j].x, path.points[j].y); }
+                    ctx.stroke();
+
+                    if (path.opacity <= 0) paths.splice(i, 1);
+                }
+                requestAnimationFrame(animateDrawing);
+            }
+
+            function updateClock() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour12: false, 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit' 
+                });
+                const clockEl = document.getElementById('live-clock');
+                if(clockEl) clockEl.innerText = timeString;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
+    </script>
+
+</body>
+</html>
