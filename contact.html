@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaef Studios | Contact Us</title>
+    <title>Maaef Media House | Contact Us</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -235,7 +235,7 @@
 
         <div
             class="absolute bottom-8 w-full flex justify-between px-6 md:px-12 text-[10px] uppercase tracking-widest text-gray-700 pointer-events-none">
-            <span>Maaef Studios</span>
+            <span>Maaef Media House</span>
             <span onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
                 class="cursor-pointer pointer-events-auto hover-trigger glow-white transition-all duration-300">
                 Back to Top
@@ -320,11 +320,12 @@
                 const requirements = document.getElementById('input-requirements').value;
 
                 if (!name || !email || !requirements) {
-                    alert('Please fill out all fields.');
+                    alert('Please provide your name, email, and requirements.');
                     return;
                 }
 
                 // --- EmailJS Configuration ---
+                // Credentials from your snippet
                 const serviceID = 'service_jxszk8v';
                 const ownerTemplateID = 'template_5kwfycv';
                 const customerTemplateID = 'template_5h4bd8a';
@@ -335,19 +336,19 @@
                 const templateParams = {
                     name: name,
                     email: email,
-                    selectedServices: requirements, // Mapped to the original variable for compatibility
+                    selectedServices: requirements, // Mapped to your template variable
                     email_body_owner: `
                         <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border: 1px solid #C41E3A;">
                             <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #C41E3A; margin-bottom: 20px;">New Inquiry Received</h2>
                             <hr style="border: 0; border-top: 1px solid #222; margin: 20px 0;">
-                            <p style="font-size: 16px; line-height: 1.6; color: #aaa;">You have a new lead from Maaef Studios contact form.</p>
+                            <p style="font-size: 16px; line-height: 1.6; color: #aaa;">You have a new lead from Maaef Media House contact form.</p>
                             <div style="margin-top: 30px;">
                                 <p><strong>Name:</strong> ${name}</p>
                                 <p><strong>Email:</strong> ${email}</p>
-                                <p><strong>Project Requirements:</strong> ${requirements}</p>
+                                <p><strong>Inquiry For:</strong> ${requirements}</p>
                             </div>
                             <div style="margin-top: 40px; font-size: 12px; color: #444; text-align: center; letter-spacing: 2px; text-transform: uppercase;">
-                                Maaef Studios | Lucknow, IN
+                                Maaef Media House | Lucknow, IN
                             </div>
                         </div>
                     `,
