@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAAEF // CLIENT ARCHIVE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red: #C41E3A;
+            --dark: #050505;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Video Background */
+        #bg-video-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Glossy "Clients" Text */
+        .glossy-reveal {
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to bottom, #fff 30%, rgba(255, 255, 255, 0.4) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.15));
+            position: relative;
+            z-index: 10;
+            transition: opacity 0.8s ease, filter 0.8s ease;
+        }
+
+        .glossy-reveal::after {
+            content: 'Clients';
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            filter: blur(40px);
+            opacity: 0.3;
+            background: linear-gradient(to bottom, var(--red) 0%, transparent 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Central Highlight Circle */
+        .central-display {
+            position: relative;
+            width: min(400px, 80vw);
+            height: min(400px, 80vw);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .central-display.active {
+            opacity: 1;
+            transform: scale(1);
+            border-color: var(--red);
+            background: rgba(196, 30, 58, 0.05);
+            box-shadow: 0 0 40px rgba(196, 30, 58, 0.15);
+        }
+
+        .central-display img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+            transition: all 0.5s ease;
+        }
+
+        /* Carousel Item (Circular) */
+        .brand-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .brand-circle {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        .brand-circle:hover,
+        .brand-circle.active {
+            border-color: var(--red);
+            background: rgba(196, 30, 58, 0.1);
+            box-shadow: 0 0 20px rgba(196, 30, 58, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .brand-circle img {
+            width: 55%;
+            height: 55%;
+            object-fit: contain;
+            opacity: 0.5;
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .brand-circle:hover img,
+        .brand-circle.active img {
+            opacity: 1;
+            filter: brightness(1.2);
+        }
+
+        .carousel-container {
+            position: absolute;
+            bottom: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            padding: 0 2rem;
+            z-index: 20;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                gap: 0.5rem;
+                bottom: 2vh;
+            }
+        }
+
+        /* Mute Button Toggle */
+        .mute-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            pointer-events: auto;
+        }
+
+        .mute-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--red);
+        }
+
+        /* UI Overlays */
+        .page-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="bg-video-container">
+        <video id="main-video" loop muted playsinline>
+            <source src="dummy/dummyvideo.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="page-overlay">
+        <!-- Initial Display -->
+        <h1 id="initial-text" class="glossy-reveal serif cursor-default">Clients</h1>
+    </div>
+
+    <!-- Mute Toggle -->
+    <button id="mute-btn" class="mute-toggle" title="Toggle Sound">
+        <svg id="mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+    </button>
+
+    <!-- Carousel 3-1-3 -->
+    <div class="carousel-container pointer-events-auto">
+        <!-- 3 Left Brands -->
+        <div class="brand-circle brand-item" data-brand="Cyberdyne" data-color="#00ccff"
+            data-video="dummy/dummyvideo.mp4">
+            <img src="dummy/l1.jpg" alt="Brand 1">
+        </div>
+        <div class="brand-circle brand-item" data-brand="Weyland" data-color="#ffcc00" data-video="trailer.mp4">
+            <img src="dummy/l2.jpg" alt="Brand 2">
+        </div>
+        <div class="brand-circle brand-item" data-brand="Tyrell" data-color="#ff3300" data-video="dummy/dummyvideo.mp4">
+            <img src="dummy/l1.jpg" alt="Brand 3">
+        </div>
+
+        <!-- 1 Central Large Display / Maaef Logo -->
+        <div id="display-container"
+            class="central-display brand-circle active !w-[180px] !h-[180px] md:!w-[240px] md:!h-[240px] pointer-events-none">
+            <img id="active-logo" src="logo.png" alt="Maaef" class="!w-[70%] !h-[70%] !opacity-100">
+        </div>
+
+        <!-- 3 Right Brands -->
+        <div class="brand-circle brand-item" data-brand="Umbrella" data-color="#ffffff" data-video="trailer.mp4">
+            <img src="dummy/l2.jpg" alt="Brand 4">
+        </div>
+        <div class="brand-circle brand-item" data-brand="Aperture" data-color="#3399ff"
+            data-video="dummy/dummyvideo.mp4">
+            <img src="dummy/l1.jpg" alt="Brand 5">
+        </div>
+        <div class="brand-circle brand-item" data-brand="Oscorp" data-color="#33ff33" data-video="trailer.mp4">
+            <img src="dummy/l2.jpg" alt="Brand 6">
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('main-video');
+        const muteBtn = document.getElementById('mute-btn');
+        const muteIcon = document.getElementById('mute-icon');
+        const initialText = document.getElementById('initial-text');
+        const displayContainer = document.getElementById('display-container');
+        const activeLogo = document.getElementById('active-logo');
+        const bgContainer = document.getElementById('bg-video-container');
+        const brandItems = document.querySelectorAll('.brand-item');
+
+        let isMuted = true;
+        let interactionStarted = false;
+
+        // Brand interaction
+        brandItems.forEach(item => {
+            const handleInteract = () => {
+                const brandImg = item.querySelector('img').getAttribute('src');
+                const brandVideo = item.dataset.video;
+
+                if (!interactionStarted) {
+                    interactionStarted = true;
+                    // Hide "Clients"
+                    gsap.to(initialText, {
+                        opacity: 0,
+                        y: -50,
+                        scale: 0.9,
+                        duration: 1.2,
+                        ease: "power3.inOut",
+                        onComplete: () => {
+                            initialText.style.display = 'none';
+                        }
+                    });
+
+                    // Reveal Background
+                    gsap.to(bgContainer, { opacity: 0.35, duration: 2 });
+                }
+
+                // Update Display Image with transition
+                if (activeLogo.getAttribute('src') !== brandImg) {
+                    gsap.to(activeLogo, {
+                        opacity: 0,
+                        scale: 0.8,
+                        duration: 0.3,
+                        onComplete: () => {
+                            activeLogo.src = brandImg;
+                            gsap.to(activeLogo, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
+                        }
+                    });
+                }
+
+                // Update Video
+                const currentSource = video.querySelector('source').getAttribute('src');
+                if (currentSource !== brandVideo) {
+                    gsap.to(bgContainer, {
+                        opacity: 0, duration: 0.5, onComplete: () => {
+                            video.querySelector('source').setAttribute('src', brandVideo);
+                            video.load();
+                            video.play();
+                            gsap.to(bgContainer, { opacity: 0.35, duration: 1 });
+                        }
+                    });
+                } else {
+                    video.play();
+                }
+
+                // Update active state
+                brandItems.forEach(b => b.classList.remove('active'));
+                item.classList.add('active');
+            };
+
+            item.addEventListener('mouseenter', handleInteract);
+            item.addEventListener('click', handleInteract);
+        });
+
+        // Mute Toggle Logic
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            video.muted = isMuted;
+
+            if (isMuted) {
+                muteIcon.innerHTML = `
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                `;
+            } else {
+                muteIcon.innerHTML = `
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                `;
+            }
+        });
+
+        // Subtle parallax movement on initial text
+        document.addEventListener('mousemove', (e) => {
+            if (!interactionStarted) {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                gsap.to(initialText, { x: moveX, y: moveY, duration: 0.5 });
+            }
+        });
+
+    </script>
+</body>
+
+</html>
