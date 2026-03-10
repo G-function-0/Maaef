@@ -103,6 +103,36 @@
             cursor: crosshair;
         }
 
+        /* Menu Toggle Logo Hover Effect */
+        .menu-open #menu-logo-toggle {
+            opacity: 1;
+            scale: 1;
+            pointer-events: auto;
+        }
+
+        .menu-open #hamburger-lines {
+            opacity: 0;
+            scale: 0.5;
+            pointer-events: none;
+        }
+
+        .menu-toggle-img {
+            filter: brightness(0) invert(1);
+            /* Ensure it's white initially */
+        }
+
+        button:hover .menu-toggle-img {
+            filter: none;
+            /* Reset to original or custom color */
+            /* Precise var(--red) filter */
+            filter: invert(18%) sepia(91%) saturate(3644%) hue-rotate(338deg) brightness(85%) contrast(93%);
+        }
+
+        .menu-open .nav-logo-link {
+            opacity: 0;
+            pointer-events: none;
+        }
+
         ::-webkit-scrollbar {
             width: 0px;
         }
@@ -309,8 +339,9 @@
     <div class="noise-overlay"></div>
 
     <nav
-        class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white">
-        <a href="index.html" class="hover-trigger relative z-[60]">
+        class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500"
+        id="main-nav">
+        <a href="index.html" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
             <img src="logo.png" alt="Maaef Logo" class="h-8 w-auto">
         </a>
 
@@ -320,9 +351,16 @@
                 Start Project
             </a>
 
-            <button onclick="toggleMenu()" class="group flex flex-col items-end gap-[6px] w-12 hover-trigger p-2">
-                <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
-                <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            <button onclick="toggleMenu()"
+                class="group relative flex flex-col items-end justify-center w-12 h-12 hover-trigger p-2">
+                <div id="hamburger-lines" class="flex flex-col items-end gap-[6px] w-full transition-all duration-300">
+                    <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                    <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </div>
+                <div id="menu-logo-toggle"
+                    class="absolute inset-0 flex items-center justify-center opacity-0 scale-50 transition-all duration-500 pointer-events-none">
+                    <img src="logo.png" alt="Menu Logo" class="h-14 w-auto transition-all duration-300 menu-toggle-img">
+                </div>
             </button>
         </div>
     </nav>
@@ -364,8 +402,8 @@
         </div>
         <div
             class="absolute bottom-12 flex justify-between w-full px-12 text-xs uppercase tracking-widest text-gray-600 pointer-events-none">
-            <span>Lucknow, IN</span>
-            <span id="live-clock">00:00:00</span>
+            <span>26.86478567352451, 81.0101077355821</span>
+            <span id="live-clock">0000000000000</span>
         </div>
     </div>
 
@@ -462,21 +500,15 @@
             resizeCanvas();
 
             window.toggleMenu = function () {
-                const line1 = document.getElementById('line1');
-                const line2 = document.getElementById('line2');
                 isMenuOpen = !isMenuOpen;
 
                 if (isMenuOpen) {
+                    document.body.classList.add('menu-open');
                     menu.style.transform = 'translateY(0)';
-                    line1.style.transform = 'rotate(45deg) translate(5px, 6px)';
-                    line2.style.transform = 'rotate(-45deg) translate(5px, -6px)';
-                    line2.style.width = '100%';
                     requestAnimationFrame(animateDrawing);
                 } else {
+                    document.body.classList.remove('menu-open');
                     menu.style.transform = 'translateY(-100%)';
-                    line1.style.transform = 'none';
-                    line2.style.transform = 'none';
-                    line2.style.width = '66%';
                     paths = [];
                     if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
                 }
@@ -539,17 +571,12 @@
             }
 
             function updateClock() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('en-US', {
-                    hour12: false,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
                 const clockEl = document.getElementById('live-clock');
-                if (clockEl) clockEl.innerText = timeString;
+                if (clockEl) {
+                    clockEl.innerText = Date.now();
+                }
             }
-            setInterval(updateClock, 1000);
+            setInterval(updateClock, 50);
             updateClock();
         });
     </script>
