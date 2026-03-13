@@ -502,8 +502,8 @@
 
         /* ─── EXPANDED PANEL ─── */
         #panel {
-            position: fixed; inset: 0;
-            background: var(--exp-bg);
+            position: absolute; inset: 0;
+            background: transparent;
             z-index: 800;
             opacity: 0;
             pointer-events: none;
@@ -530,8 +530,9 @@
             transition: background 0.5s ease, opacity 0.6s ease;
             animation: blobDrift 14s ease-in-out infinite alternate;
             z-index: 0;
+            display: none;
         }
-        #panel.open .panel-bg { opacity: 0.18; }
+        #panel.open .panel-bg { opacity: 0; display: none; }
 
         /* ─── LEFT COL — vertical title, frosted, like the tile ─── */
         .panel-title-col {
@@ -541,7 +542,7 @@
             border-right: 1px solid var(--exp-tile-border);
             /* same frost as the tiles */
             background: rgba(13,13,13,0.45);
-            backdrop-filter: blur(20px) saturate(1.3);
+            backdrop-filter: blur(20px);
             z-index: 2;
             opacity: 0;
             transition: opacity 0.5s 0.15s ease;
