@@ -406,7 +406,8 @@
             align-items: center;
             justify-content: center;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-            opacity: 1;
+            opacity: 0;
+            /* Hidden initially, revealed on interaction */
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 15;
             pointer-events: none;
@@ -522,8 +523,7 @@
     <div class="cursor-circle"></div>
     <div class="noise-overlay"></div>
 
-    <nav
-        class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500"
+    <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500"
         id="main-nav">
         <a href="index.html" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
             <img src="logo.png" alt="Maaef Logo" class="h-8 w-auto">
@@ -538,8 +538,10 @@
             <button onclick="toggleMenu()"
                 class="group relative flex flex-col items-end justify-center w-12 h-12 hover-trigger p-2">
                 <div id="hamburger-lines" class="flex flex-col items-end gap-[6px] w-full transition-all duration-300">
-                    <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
-                    <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                    <span id="line1"
+                        class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                    <span id="line2"
+                        class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </div>
                 <div id="menu-logo-toggle"
                     class="absolute inset-0 flex items-center justify-center opacity-0 scale-50 transition-all duration-500 pointer-events-none">
@@ -592,58 +594,14 @@
     </div>
 
     <main class="pt-24">
-        <section class="hero-section">
-            <h1 class="manifesto-text">
-                <span class="hover-trigger">We engineer attention.</span>
-                <span class="hover-trigger">We build infrastructure.</span>
-                <span class="hover-trigger">We turn brands into revenue.</span>
-            </h1>
-        </section>
-
-        <section class="ticker-section">
-            <div class="ticker-content">
-                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span
-                    class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span
-                    class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span
-                    class="text-red-500">•</span>
-                STRATEGISTS <span class="text-red-500">•</span> PERFORMANCE MARKETERS <span
-                    class="text-red-500">•</span> EDITORS <span class="text-red-500">•</span> MOTION DESIGNERS <span
-                    class="text-red-500">•</span> BRAND ARCHITECTS <span class="text-red-500">•</span> COPYWRITERS <span
-                    class="text-red-500">•</span>
-            </div>
-        </section>
-
-        <section class="founder-section">
-            <span class="section-label">01 // The Architect</span>
-
-            <div class="founder-grid">
-
-                <div class="founder-image-wrapper hover-trigger">
-                </div>
-
-                <div class="founder-content">
-                    <h2 class="founder-quote">
-                        Growth doesn't happen by accident. It happens when you stop acting like a creator and start
-                        acting like an infrastructure.
-                    </h2>
-
-                    <div class="founder-bio">
-                        <p>Maaef Media House wasn't built to make pretty pictures. It was built to solve the fundamental
-                            problem of modern brands: turning fleeting attention into a predictable, scalable revenue
-                            machine.</p>
-                        <p>We operate as a fully integrated growth engine. By combining relentless aesthetic standards
-                            with ruthless performance marketing, we bridge the gap between creative ambition and
-                            bottom-line reality.</p>
-                    </div>
-
-                    <div class="founder-name">Your Name Here / Founder & Director</div>
-                </div>
-
-            </div>
-        </section>
-
         <!-- PINHOLE BRAND SHOWCASE SECTION -->
-        <section class="pinhole-section">
+        <section class="pinhole-section relative">
+            <div class="absolute top-[15%] left-0 w-full text-center z-20 pointer-events-none px-6">
+                <h3 class="text-3xl uppercase tracking-[0.3em] text-red-600 mb-4">People who trusted us with their
+                    vision. </h3>
+                <h2 class="serif text-4xl md:text-5xl mb-4 text-white"></h2>
+                <p class="text-gray-400 text-lg">A few logos we like.</p>
+            </div>
             <div id="pinhole-bg-container">
                 <video id="pinhole-main-video" loop muted playsinline>
                     <source src="dummy/dummyvideo.mp4" type="video/mp4">
@@ -860,6 +818,9 @@
                                     pinholeInitialText.style.display = 'none';
                                 }
                             });
+
+                            // Reveal Central Circle
+                            gsap.to(pinholeDisplayContainer, { opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.4 });
 
                             // Reveal Background
                             gsap.to(pinholeBgContainer, { opacity: 0.35, duration: 2 });
