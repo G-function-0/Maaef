@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maaef — Expertise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+        @font-face {
+            font-family: 'Panchang';
+            src: url('dummy/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Verdana';
+            src: url('dummy/Verdana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #e8352a;
+    --bg: #111111;
+    --fg: #f0ede8;
+    --muted: rgba(240,237,232,0.35);
+    --tile-border: rgba(240,237,232,0.07);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Verdana', sans-serif;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  /* ─── GRAIN OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    z-index: 200;
+    mix-blend-mode: normal;
+    transition: opacity 0.3s ease;
+  }
+  nav.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .logo {
+    font-family: 'Panchang', sans-serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--red); }
+
+  .nav-right {
+    display: flex; align-items: center; gap: 32px;
+  }
+  .nav-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .nav-lines {
+    display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+  }
+  .nav-lines span {
+    display: block; width: 22px; height: 1px; background: var(--fg);
+  }
+  .nav-lines span:last-child { width: 14px; }
+
+  /* ─── TILES CONTAINER ─── */
+  #tiles {
+    position: fixed; inset: 0;
+    display: flex;
+    transition: opacity 0.4s ease;
+  }
+
+  /* ─── WebGL FLUID CANVAS BACKGROUND ─── */
+  .tile {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    border-right: 1px solid var(--tile-border);
+    cursor: pointer;
+    transition: flex 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+    background: transparent;
+  }
+  .tile:last-child { border-right: none; }
+
+  /* ─── FROST — heavy dark veil at rest, lifts on hover ─── */
+  .tile-frost {
+    position: absolute; inset: 0;
+    background: rgba(17,17,17,0.91);
+    transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  .tile:hover .tile-frost {
+    background: rgba(17,17,17,0.18);
+  }
+
+  /* tile-bg kept in HTML but hidden — no longer used for colour */
+  .tile-bg { display: none; }
+
+  @keyframes blobDrift {
+    0%   { transform: translate(0%, 0%) scale(1); }
+    100% { transform: translate(5%, 10%) scale(1.05); }
+  }
+
+  /* Tile content */
+  .tile-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tile-number {
+    position: absolute;
+    bottom: 36px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.2em; color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .tile-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'Panchang', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--fg);
+    transition: color 0.4s ease, text-shadow 0.4s ease, letter-spacing 0.5s ease;
+    user-select: none;
+  }
+
+  .tile:hover .tile-label {
+    color: #fff;
+    text-shadow: 0 0 60px rgba(255,255,255,0.12);
+    letter-spacing: 0.02em;
+  }
+
+  .tile-tagline {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 18px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .tile:hover .tile-tagline { opacity: 1; }
+
+  /* hover line accent */
+  .tile::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .tile:hover::after { transform: scaleX(1); }
+
+  /* ─── EXPANDED PANEL ─── */
+  #panel {
+    position: absolute; inset: 0;
+    background: transparent;
+    z-index: 800;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.55s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+  }
+  #panel.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ─── PANEL BLOB (carries tile colour into panel) ─── */
+  .panel-bg {
+    position: fixed;
+    width: 600px; height: 600px;
+    left: -80px; top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0;
+    pointer-events: none;
+    transition: background 0.5s ease, opacity 0.6s ease;
+    animation: blobDrift 14s ease-in-out infinite alternate;
+    z-index: 0;
+    display: none;
+  }
+  #panel.open .panel-bg { opacity: 0; display: none; }
+
+  /* ─── LEFT COL — vertical title, frosted, like the tile ─── */
+  .panel-title-col {
+    position: sticky; top: 0;
+    width: 130px; height: 100vh; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-right: 1px solid var(--tile-border);
+    /* same frost as the tiles */
+    background: rgba(13,13,13,0.45);
+    backdrop-filter: blur(20px);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s 0.15s ease;
+  }
+  #panel.open .panel-title-col { opacity: 1; }
+
+  /* red hairline at bottom of title col — same as tile hover accent */
+  .panel-title-col::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--red);
+    transform: scaleX(0); transform-origin: center;
+    transition: transform 0.8s 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  #panel.open .panel-title-col::after { transform: scaleX(1); }
+
+  .panel-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'Panchang', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--fg);
+    user-select: none;
+  }
+
+  /* ─── RIGHT COL — content ─── */
+  .panel-inner {
+    position: relative; z-index: 2;
+    flex: 1;
+    min-height: 100vh;
+    padding: 80px 72px 80px 60px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  /* eyebrow — small red label */
+  .panel-eyebrow {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.5s 0.2s ease, transform 0.5s 0.2s ease;
+  }
+  .panel-eyebrow::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--red); opacity: 0.6; flex-shrink: 0;
+  }
+  #panel.open .panel-eyebrow { opacity: 1; transform: translateY(0); }
+
+  /* thin red rule */
+  .panel-divider {
+    width: 0; height: 1px;
+    background: var(--red);
+    margin-bottom: 40px;
+    transition: width 0.7s 0.35s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+  #panel.open .panel-divider { width: 48px; }
+
+  /* description */
+  .panel-desc {
+    font-size: 14px; font-weight: 300; line-height: 1.85;
+    max-width: 500px;
+    color: rgba(240,237,232,0.55);
+    margin-bottom: 64px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.55s 0.3s ease, transform 0.55s 0.3s ease;
+  }
+  #panel.open .panel-desc { opacity: 1; transform: translateY(0); }
+
+  /* ─── SERVICES LIST ─── */
+  .services-grid {
+    display: flex; flex-direction: column; gap: 0;
+    border-top: 1px solid var(--tile-border);
+  }
+
+  .service-item {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 0 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--tile-border);
+    align-items: start;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.45s ease, transform 0.45s ease,
+                background 0.25s ease, padding 0.25s ease;
+    cursor: default;
+  }
+  .service-item:hover {
+    background: rgba(240,237,232,0.025);
+    padding-left: 12px; padding-right: 12px;
+  }
+  /* red dot appears on hover */
+  .service-item::before {
+    content: '';
+    position: absolute; left: 0; top: 50%;
+    width: 3px; height: 3px; border-radius: 50%;
+    background: var(--red); opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease;
+  }
+  .service-item { position: relative; }
+  .service-item:hover::before { opacity: 1; }
+
+  #panel.open .service-item { opacity: 1; transform: translateY(0); }
+  #panel.open .service-item:nth-child(1) { transition-delay: 0.35s; }
+  #panel.open .service-item:nth-child(2) { transition-delay: 0.42s; }
+  #panel.open .service-item:nth-child(3) { transition-delay: 0.49s; }
+  #panel.open .service-item:nth-child(4) { transition-delay: 0.56s; }
+  #panel.open .service-item:nth-child(5) { transition-delay: 0.63s; }
+
+  .service-num {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.18em; color: var(--red);
+    padding-top: 4px;
+    opacity: 0.7;
+  }
+
+  .service-text h3 {
+    font-family: 'Panchang', sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    color: var(--fg);
+  }
+  .service-text p {
+    font-size: 11px; font-weight: 400; line-height: 1.7;
+    color: rgba(240,237,232,0.38);
+  }
+
+  /* ─── CLOSE BUTTON ─── */
+  .panel-close {
+    position: fixed; top: 28px; right: 40px;
+    width: 44px; height: 44px;
+    border: 1px solid var(--tile-border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    background: rgba(13,13,13,0.6);
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s, transform 0.35s, background 0.3s;
+    z-index: 1100;
+  }
+  .panel-close:hover {
+    border-color: var(--red);
+    background: rgba(232,53,42,0.1);
+    transform: rotate(90deg);
+  }
+  .panel-close svg { width: 13px; height: 13px; stroke: var(--fg); stroke-width: 1.5; }
+  .page-label {
+    position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; font-weight: 600; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--muted);
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- EXPERTISE EMBEDDED SECTION -->
+<section id="expertise-section" style="position: relative; overflow: hidden; background: #000;">
+    <canvas id="fluid-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Maaef<span>.</span></div>
+  <div class="nav-right">
+    <span class="nav-label">Start Project</span>
+    <div class="nav-lines">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- TILES -->
+<div id="tiles">
+
+  <div class="tile" data-index="0" onclick="openPanel(0)">
+    <div class="tile-bg"></div>
+    <div class="tile-frost"></div>
+    <div class="tile-content">
+      <span class="tile-label">Video</span>
+      <span class="tile-tagline">Motion & Film</span>
+    </div>
+    <span class="tile-number">01</span>
+  </div>
+
+  <div class="tile" data-index="1" onclick="openPanel(1)">
+    <div class="tile-bg"></div>
+    <div class="tile-frost"></div>
+    <div class="tile-content">
+      <span class="tile-label">Web</span>
+      <span class="tile-tagline">Digital Presence</span>
+    </div>
+    <span class="tile-number">02</span>
+  </div>
+
+  <div class="tile" data-index="2" onclick="openPanel(2)">
+    <div class="tile-bg"></div>
+    <div class="tile-frost"></div>
+    <div class="tile-content">
+      <span class="tile-label">Design</span>
+      <span class="tile-tagline">Visual Identity</span>
+    </div>
+    <span class="tile-number">03</span>
+  </div>
+
+  <div class="tile" data-index="3" onclick="openPanel(3)">
+    <div class="tile-bg"></div>
+    <div class="tile-frost"></div>
+    <div class="tile-content">
+      <span class="tile-label">Photo</span>
+      <span class="tile-tagline">Stills & Stories</span>
+    </div>
+    <span class="tile-number">04</span>
+  </div>
+
+  <div class="tile" data-index="4" onclick="openPanel(4)">
+    <div class="tile-bg"></div>
+    <div class="tile-frost"></div>
+    <div class="tile-content">
+      <span class="tile-label">Brand</span>
+      <span class="tile-tagline">Strategy & Voice</span>
+    </div>
+    <span class="tile-number">05</span>
+  </div>
+
+</div>
+
+<!-- EXPANDED PANEL -->
+<div id="panel">
+  <div class="panel-bg" id="panelBg"></div>
+
+  <!-- Vertical title — left column -->
+  <div class="panel-title-col">
+    <span class="panel-title" id="panelTitle">Video</span>
+  </div>
+
+  <!-- Close button -->
+  <div class="panel-close" onclick="closePanel()">
+    <svg viewBox="0 0 24 24" fill="none">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </div>
+
+  <!-- Content — right column -->
+  <div class="panel-inner">
+    <div class="panel-eyebrow" id="panelEyebrow">Expertise</div>
+    <div class="panel-divider"></div>
+    <p class="panel-desc" id="panelDesc">Loading...</p>
+    <div class="services-grid" id="panelServices"></div>
+  </div>
+</div>
+
+<div class="page-label">Expertise — Maaef Media House</div>
+
+<script>
+const data = [
+  {
+    title: 'Video',
+    eyebrow: 'Motion & Film',
+    desc: 'We create cinematic content that moves people — literally and emotionally. From brand films to social reels, every frame is crafted to communicate something true.',
+    bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+    services: [
+      { name: 'Brand Films', desc: 'Long-form cinematic narratives that define how the world sees you.' },
+      { name: 'Social Content', desc: 'Scroll-stopping reels and shorts optimised for every platform.' },
+      { name: 'Documentary', desc: 'Real stories told with craft, restraint, and honesty.' },
+      { name: 'Event Coverage', desc: 'Capturing moments that deserve to be remembered.' },
+      { name: 'Motion Graphics', desc: 'Typography, data, and brand elements brought to life.' },
+    ]
+  },
+  {
+    title: 'Web',
+    eyebrow: 'Digital Presence',
+    desc: 'Digital experiences that feel inevitable — like they could never have been built any other way. We design and develop with equal obsession.',
+    bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+    services: [
+      { name: 'UI/UX Design', desc: 'Interfaces rooted in behaviour and refined by intuition.' },
+      { name: 'Development', desc: 'Clean, performant code that lives up to the design.' },
+      { name: 'Webflow / CMS', desc: 'Powerful sites your team can actually manage.' },
+      { name: 'E-Commerce', desc: 'Stores built to convert without losing the brand.' },
+      { name: 'Maintenance', desc: 'Ongoing care so your site stays fast and current.' },
+    ]
+  },
+  {
+    title: 'Design',
+    eyebrow: 'Visual Identity',
+    desc: 'Identity systems that hold together across every touchpoint. We think in systems, not just symbols — because a logo is only as strong as what surrounds it.',
+    bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+    services: [
+      { name: 'Brand Identity', desc: 'Logo, colour, type — the full visual language.' },
+      { name: 'Print & Packaging', desc: 'Tangible brand expressions that stand out on shelf.' },
+      { name: 'Social Templates', desc: 'Cohesive, editable systems for your team.' },
+      { name: 'Presentations', desc: 'Pitch decks and reports that actually get read.' },
+      { name: 'Environmental', desc: 'Wayfinding, signage, and space branding.' },
+    ]
+  },
+  {
+    title: 'Photo',
+    eyebrow: 'Stills & Stories',
+    desc: 'Photography that earns its place — no filler, no stock. Every shoot is a considered visual argument for why your brand deserves attention.',
+    bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+    services: [
+      { name: 'Product Photography', desc: 'Clean, contextual images that drive purchase decisions.' },
+      { name: 'Portrait & Team', desc: 'Faces that humanise the brand, shot with respect.' },
+      { name: 'Editorial', desc: 'Magazine-quality stories for campaigns and press.' },
+      { name: 'Architecture', desc: 'Spaces photographed with patience and precision.' },
+      { name: 'Events', desc: 'Candid and directed coverage that captures the energy.' },
+    ]
+  },
+  {
+    title: 'Brand',
+    eyebrow: 'Strategy & Voice',
+    desc: 'Before any pixel is placed, the thinking has to be right. We help brands find — or reclaim — a clear, honest, and distinctive position in the world.',
+    bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+    services: [
+      { name: 'Brand Strategy', desc: 'Positioning, purpose, and audience mapped with clarity.' },
+      { name: 'Naming', desc: 'Words that stick, travel, and own their space.' },
+      { name: 'Tone of Voice', desc: 'A writing style as recognisable as your logo.' },
+      { name: 'Campaign Concepting', desc: 'Big ideas that unify every medium and moment.' },
+      { name: 'Brand Audits', desc: 'Honest assessment of what is and is not working.' },
+    ]
+  }
+];
+
+let isOpen = false;
+
+function openPanel(idx) {
+  if (isOpen) return;
+  isOpen = true;
+  const d = data[idx];
+  document.getElementById('panelEyebrow').textContent = d.eyebrow;
+  document.getElementById('panelTitle').textContent = d.title;
+  document.getElementById('panelDesc').textContent = d.desc;
+  document.getElementById('panelBg').style.background = d.bgColor;
+
+  const grid = document.getElementById('panelServices');
+  grid.innerHTML = '';
+  d.services.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'service-item';
+    el.innerHTML = `
+      <span class="service-num">${String(i+1).padStart(2,'0')}</span>
+      <div class="service-text">
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+      </div>`;
+    grid.appendChild(el);
+  });
+
+  // push tiles out
+  const tiles = document.querySelectorAll('.tile');
+  tiles.forEach((t, i) => {
+    const dir = i < idx ? -1 : (i > idx ? 1 : 0);
+    t.style.transition = 'transform 0.7s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease';
+    if (i === idx) {
+      t.style.transform = 'scaleX(0)';
+      t.style.opacity = '0';
+    } else {
+      t.style.transform = `translateX(${dir * 120}%)`;
+      t.style.opacity = '0';
+    }
+  });
+
+  document.querySelector('nav').classList.add('hidden');
+
+  setTimeout(() => {
+    document.getElementById('panel').classList.add('open');
+  }, 200);
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  document.querySelector('nav').classList.remove('hidden');
+  isOpen = false;
+
+  const tiles = document.querySelectorAll('.tile');
+  setTimeout(() => {
+    tiles.forEach(t => {
+      t.style.transition = 'transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s 0.1s ease';
+      t.style.transform = '';
+      t.style.opacity = '';
+    });
+  }, 100);
+}
+
+// keyboard escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && isOpen) closePanel();
+});
+</script>
+
+    <script src="./pavel-fluid.js"></script>
+</body>
+</html>

@@ -16,6 +16,22 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <style>
+
+        @font-face {
+            font-family: 'Panchang';
+            src: url('dummy/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Verdana';
+            src: url('dummy/Verdana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --brand-red: #C41E3A;
             --brand-dark: #050505;
@@ -24,7 +40,7 @@
         body {
             background-color: var(--brand-dark);
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Verdana', sans-serif;
             overflow-x: hidden;
             cursor: default;
             user-select: none;
@@ -36,7 +52,7 @@
         }
 
         .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Panchang', sans-serif;
         }
 
         .cursor-dot,
@@ -168,34 +184,35 @@
     </nav>
 
     <div id="kinetic-menu"
+        style="isolation: isolate; will-change: transform;"
         class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
         <canvas id="drawing-canvas"></canvas>
         <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
             style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
         <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
             <a href="index.html" onclick="toggleMenu()"
-                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
-                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Home</span>
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
+                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Home</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Home</span>
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Home</span>
             </a>
             <a href="about.html" onclick="toggleMenu()"
-                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
-                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Studio</span>
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
+                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Studio</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Studio</span>
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Studio</span>
             </a>
             <a href="services.html" onclick="toggleMenu()"
-                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
-                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Expertise</span>
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
+                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Expertise</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 translate-y-full group-hover:translate-y-0">Expertise</span>
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Expertise</span>
             </a>
             <a href="contact.html" onclick="toggleMenu()"
-                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer h-[80px] md:h-[130px] pointer-events-auto">
-                <span class="serif text-6xl md:text-9xl text-white group-hover:-translate-y-full">Contact</span>
+                class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
+                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Contact</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 translate-y-full group-hover:translate-y-0">Contact</span>
+                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Contact</span>
             </a>
         </div>
         <div
@@ -218,9 +235,9 @@
             <div id="form-container">
                 <div id="step-1" class="form-step transition-all duration-700">
                     <label class="block text-xs uppercase tracking-widest text-gray-500 mb-6">Step 01 / 03</label>
-                    <h3 class="serif text-5xl md:text-7xl mb-12 leading-tight">What should we<br>call you?</h3>
+                    <h3 class="serif text-4xl md:text-7xl mb-12 leading-tight">What should we<br>call you?</h3>
                     <input type="text" id="input-name" placeholder="Your Name"
-                        class="w-full bg-transparent border-b border-white/20 text-3xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                        class="w-full bg-transparent border-b border-white/20 text-2xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
                     <div class="flex justify-end mt-12">
                         <button onclick="nextStep(1)"
                             class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
@@ -231,9 +248,9 @@
 
                 <div id="step-2" class="form-step hidden opacity-0 translate-y-10 transition-all duration-700">
                     <label class="block text-xs uppercase tracking-widest text-gray-500 mb-6">Step 02 / 03</label>
-                    <h3 class="serif text-5xl md:text-7xl mb-12 leading-tight">Where can we<br>reach you?</h3>
+                    <h3 class="serif text-4xl md:text-7xl mb-12 leading-tight">Where can we<br>reach you?</h3>
                     <input type="email" id="input-email" placeholder="your@email.com"
-                        class="w-full bg-transparent border-b border-white/20 text-3xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                        class="w-full bg-transparent border-b border-white/20 text-2xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
                     <div class="flex justify-between items-center mt-12">
                         <button onclick="prevStep(2)"
                             class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
@@ -248,9 +265,9 @@
 
                 <div id="step-3" class="form-step hidden opacity-0 translate-y-10 transition-all duration-700">
                     <label class="block text-xs uppercase tracking-widest text-gray-500 mb-6">Step 03 / 03</label>
-                    <h3 class="serif text-5xl md:text-7xl mb-12 leading-tight">Tell us about<br>your project.</h3>
+                    <h3 class="serif text-4xl md:text-7xl mb-12 leading-tight">Tell us about<br>your project.</h3>
                     <input type="text" id="input-requirements" placeholder="Your requirements..."
-                        class="w-full bg-transparent border-b border-white/20 text-3xl md:text-4xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                        class="w-full bg-transparent border-b border-white/20 text-2xl md:text-4xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
                     <div class="flex justify-between items-center mt-12">
                         <button onclick="prevStep(3)"
                             class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
@@ -265,7 +282,7 @@
 
                 <div id="step-success"
                     class="form-step hidden opacity-0 translate-y-10 transition-all duration-700 text-center flex flex-col items-center justify-center">
-                    <h3 class="serif text-6xl md:text-8xl mb-6 text-white leading-tight">Received.</h3>
+                    <h3 class="serif text-4xl md:text-8xl mb-6 text-white leading-tight">Received.</h3>
                     <p class="text-gray-400 text-lg md:text-xl uppercase tracking-widest">We'll take it from here.</p>
                 </div>
             </div>
@@ -376,8 +393,8 @@
                     email: email,
                     selectedServices: requirements, // Mapped to your template variable
                     email_body_owner: `
-                        <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border: 1px solid #C41E3A;">
-                            <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #C41E3A; margin-bottom: 20px;">New Inquiry Received</h2>
+                        <div style="font-family: 'Verdana', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border: 1px solid #C41E3A;">
+                            <h2 style="font-family: 'Panchang', sans-serif; font-size: 32px; color: #C41E3A; margin-bottom: 20px;">New Inquiry Received</h2>
                             <hr style="border: 0; border-top: 1px solid #222; margin: 20px 0;">
                             <p style="font-size: 16px; line-height: 1.6; color: #aaa;">You have a new lead from Maaef Media House contact form.</p>
                             <div style="margin-top: 30px;">
@@ -391,11 +408,11 @@
                         </div>
                     `,
                     email_body_customer: `
-                        <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border-bottom: 4px solid #C41E3A;">
+                        <div style="font-family: 'Verdana', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #050505; color: #ffffff; border-bottom: 4px solid #C41E3A;">
                             <div style="text-align: center; margin-bottom: 40px;">
                                 <h1 style="font-size: 24px; font-weight: bold; letter-spacing: -1px;">Maaef<span style="color: #C41E3A;">.</span></h1>
                             </div>
-                            <h2 style="font-family: 'Playfair Display', serif; font-size: 40px; margin-bottom: 20px; line-height: 1.2;">Hello, ${name}.</h2>
+                            <h2 style="font-family: 'Panchang', sans-serif; font-size: 40px; margin-bottom: 20px; line-height: 1.2;">Hello, ${name}.</h2>
                             <p style="font-size: 18px; line-height: 1.6; color: #ccc; margin-bottom: 30px;">
                                 We've received your inquiry regarding <strong>${requirements}</strong>. 
                                 Our team is already reviewing your details and will get back to you shortly to start something extraordinary.
