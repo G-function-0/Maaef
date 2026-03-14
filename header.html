@@ -13,6 +13,22 @@
         rel="stylesheet">
 
     <style>
+
+        @font-face {
+            font-family: 'Panchang';
+            src: url('dummy/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Verdana';
+            src: url('dummy/Verdana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         /* --- CORE VARIABLES --- */
         :root {
             --brand-red: #C41E3A;
@@ -23,7 +39,7 @@
         body {
             background-color: var(--brand-dark);
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Verdana', sans-serif;
             overflow-x: hidden;
             cursor: default;
             user-select: none;
@@ -36,7 +52,7 @@
         }
 
         .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Panchang', sans-serif;
         }
 
         /* --- CUSTOM CURSOR --- */

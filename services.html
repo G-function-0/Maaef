@@ -13,6 +13,22 @@
         rel="stylesheet">
 
     <style>
+
+        @font-face {
+            font-family: 'Panchang';
+            src: url('dummy/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Verdana';
+            src: url('dummy/Verdana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --brand-red: #C41E3A;
             --brand-dark: #050505;
@@ -45,7 +61,7 @@
         }
 
         .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Panchang', sans-serif;
         }
 
         .cursor-dot,
@@ -396,7 +412,7 @@
             background: var(--exp-bg);
             color: var(--exp-fg);
             overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Verdana', sans-serif;
             cursor: default;
         }
 
@@ -459,8 +475,8 @@
             writing-mode: vertical-rl;
             text-orientation: mixed;
             transform: rotate(180deg);
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 3.5vw, 5rem);
+            font-family: 'Panchang', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 5rem);
             font-weight: 900;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -563,8 +579,8 @@
             writing-mode: vertical-rl;
             text-orientation: mixed;
             transform: rotate(180deg);
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.4rem, 3.5vw, 5rem);
+            font-family: 'Panchang', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 5rem);
             font-weight: 900;
             letter-spacing: -0.02em;
             line-height: 1;
@@ -666,7 +682,7 @@
         }
 
         .service-text h3 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Panchang', sans-serif;
             font-size: clamp(1rem, 1.4vw, 1.35rem);
             font-weight: 700;
             letter-spacing: -0.01em;

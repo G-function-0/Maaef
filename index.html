@@ -14,6 +14,22 @@
         rel="stylesheet">
 
     <style>
+
+        @font-face {
+            font-family: 'Panchang';
+            src: url('dummy/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Verdana';
+            src: url('dummy/Verdana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --red: #C41E3A;
             --dark: #050505;
@@ -34,7 +50,7 @@
         body {
             background: var(--dark);
             color: #fff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Verdana', sans-serif;
             overflow: hidden;
             height: 100vh;
             cursor: default;
@@ -51,7 +67,7 @@
         }
 
         .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Panchang', sans-serif;
         }
 
         #intro-stage {
@@ -228,8 +244,8 @@
         }
 
         .beat-head {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 7.5vw, 7.2rem);
+            font-family: 'Panchang', sans-serif;
+            font-size: clamp(1.8rem, 7.5vw, 7.2rem);
             line-height: .88;
             letter-spacing: -.01em;
             color: #fff;
@@ -274,8 +290,8 @@
         }
 
         #logo-blast {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 9vw, 8rem);
+            font-family: 'Panchang', sans-serif;
+            font-size: clamp(2rem, 9vw, 8rem);
             font-weight: 700;
             letter-spacing: -.02em;
             color: #fff;
@@ -479,8 +495,8 @@
         }
 
         .manifesto-head {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+            font-family: 'Panchang', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             line-height: 1.1;
             color: #fff;
             margin-bottom: 1rem;
@@ -548,8 +564,8 @@
         }
 
         .story-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-family: 'Panchang', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 5rem);
             line-height: 1;
             margin-bottom: 2.5rem;
             letter-spacing: -0.02em;
@@ -626,8 +642,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'Playfair Display', serif;
-            font-size: 25vw;
+            font-family: 'Panchang', sans-serif;
+            font-size: 20vw;
             font-weight: 700;
             color: rgba(255, 255, 255, 0.03);
             pointer-events: none;

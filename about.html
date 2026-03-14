@@ -13,6 +13,22 @@
         rel="stylesheet">
 
     <style>
+
+        @font-face {
+            font-family: 'Panchang';
+            src: url('dummy/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Verdana';
+            src: url('dummy/Verdana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --brand-red: #C41E3A;
             --brand-dark: #050505;
@@ -40,7 +56,7 @@
         }
 
         .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Panchang', sans-serif;
         }
 
         .cursor-dot,
@@ -157,7 +173,7 @@
         }
 
         .manifesto-text {
-            font-size: clamp(3.5rem, 8vw, 9rem);
+            font-size: clamp(2.5rem, 8vw, 9rem);
             font-weight: 900;
             line-height: 0.95;
             text-transform: uppercase;
@@ -191,7 +207,7 @@
 
         .ticker-content {
             display: inline-block;
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(1rem, 3vw, 2.5rem);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -265,7 +281,7 @@
         }
 
         .founder-quote {
-            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-size: clamp(1.5rem, 4vw, 3.5rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 2.5rem;
@@ -368,7 +384,7 @@
         }
 
         .glossy-reveal {
-            font-size: clamp(4rem, 12vw, 10rem);
+            font-size: clamp(2.5rem, 12vw, 10rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -0.02em;
