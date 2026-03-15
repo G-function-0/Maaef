@@ -945,27 +945,79 @@
                     style="display: flex; flex-direction: column; align-items: center;">
                     <div class="story-bg-text"></div>
                     <span class="story-index">05 / IDENTITY</span>
-                    <h2 class="story-title hover-trigger"
+                    <h2 class="story-title hover-trigger mb-6"
                         style="max-width: 800px; margin-left: auto; margin-right: auto; position: relative;">
-                        <span class="dim">That something became</span><br>
-                        <div class="mt-12 flex justify-center">
-                            <img src="logo.png" alt="Maaef Logo" class="h-64 w-auto logo-pulse">
-                        </div>
+                        <span class="dim">That something became</span>
                     </h2>
+                    <div class="flex justify-center items-center py-8 md:py-10 w-full">
+                        <img src="logo.png" alt="Maaef Logo" class="h-72 md:h-[24rem] w-auto logo-pulse drop-shadow-[0_0_60px_rgba(255,255,255,0.15)]">
+                    </div>
                 </div>
             </div>
         </section>
 
 
 
-        <div class="border-t border-white/[.05] py-8 px-6 md:px-12 flex justify-between items-center bg-[#050505]">
-            <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.12)">© Maaef Media House
-                2025</span>
-            <span onclick="window.scrollTo({top:0,behavior:'smooth'})"
-                class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger"
-                style="color:rgba(255,255,255,.12)">↑ Top</span>
-            <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.12)">Lucknow, IN</span>
-        </div>
+        <footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8 overflow-hidden border-t border-white/[.05]">
+            <!-- Noise overlay -->
+            <div class="absolute inset-0 opacity-[0.15] pointer-events-none z-0" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+            
+            <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
+                    <!-- Brand -->
+                    <div class="col-span-1 lg:col-span-2">
+                        <a href="index.html" class="inline-block hover-trigger mb-6">
+                            <img src="logo.png" alt="Maaef Logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                        </a>
+                        <p class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
+                            We engineer attention.<br>A new-era media house.
+                        </p>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div>
+                        <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
+                        <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
+                            <li><a href="index.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
+                            <li><a href="about.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Studio</a></li>
+                            <li><a href="services.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Expertise</a></li>
+                            <li><a href="contact.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Contact & Socials -->
+                    <div>
+                        <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
+                        <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
+                            <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
+                            <li class="pt-2"><a href="contact.html" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Big text CTA -->
+                <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer" onclick="window.location.href='contact.html'">
+                    <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:[-webkit-text-stroke:1px_rgba(196,30,58,0.8)]">Maaef.</h2>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none">
+                         <span class="text-white text-xl md:text-3xl serif tracking-widest bg-red-600 px-8 py-4 rounded-full shadow-[0_0_30px_rgba(196,30,58,0.5)]">LET'S TALK</span>
+                    </div>
+                </div>
+
+                <!-- Bottom bar -->
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
+                    <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2025 Maaef Media House</span>
+                    
+                    <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2" style="color:rgba(255,255,255,.3)">
+                        Made with <span class="text-red-600 group-hover:scale-125 transition-transform duration-300">❤</span> & Coffee by Humans
+                    </a>
+                    
+                    <div class="flex items-center gap-6">
+                         <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow, IN</span>
+                         <span onclick="window.scrollTo({top:0,behavior:'smooth'})" class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger" style="color:rgba(255,255,255,.25)">↑ Top</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
     </div>
 
