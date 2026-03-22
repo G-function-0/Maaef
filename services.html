@@ -809,6 +809,7 @@
             <div id="tiles" style="z-index: 1;">
                 <div class="tile hover-trigger" data-index="0" onclick="openPanel(0)">
                     <div class="tile-bg"></div>
+                    <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                     <span class="tile-label">Video</span>
@@ -819,6 +820,7 @@
 
                 <div class="tile hover-trigger" data-index="1" onclick="openPanel(1)">
                     <div class="tile-bg"></div>
+                    <video src="dummy/a1.mp4" autoplay loop muted playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                     <span class="tile-label">Web</span>
@@ -829,6 +831,7 @@
 
                 <div class="tile hover-trigger" data-index="2" onclick="openPanel(2)">
                     <div class="tile-bg"></div>
+                    <video src="dummy/a2.mp4" autoplay loop muted playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                     <span class="tile-label">Design</span>
@@ -839,6 +842,7 @@
 
                 <div class="tile hover-trigger" data-index="3" onclick="openPanel(3)">
                     <div class="tile-bg"></div>
+                    <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                     <span class="tile-label">Photo</span>
@@ -849,6 +853,7 @@
 
                 <div class="tile hover-trigger" data-index="4" onclick="openPanel(4)">
                     <div class="tile-bg"></div>
+                    <video src="dummy/a1.mp4" autoplay loop muted playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                     <span class="tile-label">Brand</span>
@@ -859,6 +864,7 @@
             </div>
 
             <!-- EXPANDED PANEL -->
+            <video id="panelVideo" autoplay loop muted playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0; transition: opacity 0.55s ease; pointer-events: none; mix-blend-mode: screen; z-index: 10;"></video>
             <div id="panel">
                 <div class="panel-bg" id="panelBg"></div>
 
@@ -928,9 +934,26 @@
             
             <!-- Big text CTA -->
             <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer" onclick="window.location.href='contact.html'">
-                <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:[-webkit-text-stroke:1px_rgba(196,30,58,0.8)]">Maaef.</h2>
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none">
-                     <span class="text-white text-xl md:text-3xl serif tracking-widest bg-red-600 px-8 py-4 rounded-full shadow-[0_0_30px_rgba(196,30,58,0.5)]">LET'S TALK</span>
+                <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:text-black group-hover:[-webkit-text-stroke:2px_rgba(196,30,58,1)]">Maaef.</h2>
+                
+                <style>
+                    @keyframes tapeSlideLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+                    @keyframes tapeSlideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+                </style>
+                <!-- Police Tape 1 -->
+                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-2 origin-center scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                     style="top: 40%;">
+                    <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
+                        <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
+                    </div>
+                </div>
+
+                <!-- Police Tape 2 -->
+                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-3 origin-center scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                     style="top: 55%;">
+                    <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
+                        <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
+                    </div>
                 </div>
             </div>
 
@@ -1079,6 +1102,7 @@
                 eyebrow: 'Motion & Film',
                 desc: 'We create cinematic content that moves people — literally and emotionally. From brand films to social reels, every frame is crafted to communicate something true.',
                 bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+                videoSrc: 'dummy/dummyvideo.mp4',
                 services: [
                 { name: 'Brand Films', desc: 'Long-form cinematic narratives that define how the world sees you.' },
                 { name: 'Social Content', desc: 'Scroll-stopping reels and shorts optimised for every platform.' },
@@ -1092,6 +1116,7 @@
                 eyebrow: 'Digital Presence',
                 desc: 'Digital experiences that feel inevitable — like they could never have been built any other way. We design and develop with equal obsession.',
                 bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+                videoSrc: 'dummy/a1.mp4',
                 services: [
                 { name: 'UI/UX Design', desc: 'Interfaces rooted in behaviour and refined by intuition.' },
                 { name: 'Development', desc: 'Clean, performant code that lives up to the design.' },
@@ -1105,6 +1130,7 @@
                 eyebrow: 'Visual Identity',
                 desc: 'Identity systems that hold together across every touchpoint. We think in systems, not just symbols — because a logo is only as strong as what surrounds it.',
                 bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+                videoSrc: 'dummy/a2.mp4',
                 services: [
                 { name: 'Brand Identity', desc: 'Logo, colour, type — the full visual language.' },
                 { name: 'Print & Packaging', desc: 'Tangible brand expressions that stand out on shelf.' },
@@ -1118,6 +1144,7 @@
                 eyebrow: 'Stills & Stories',
                 desc: 'Photography that earns its place — no filler, no stock. Every shoot is a considered visual argument for why your brand deserves attention.',
                 bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+                videoSrc: 'dummy/dummyvideo.mp4',
                 services: [
                 { name: 'Product Photography', desc: 'Clean, contextual images that drive purchase decisions.' },
                 { name: 'Portrait & Team', desc: 'Faces that humanise the brand, shot with respect.' },
@@ -1131,6 +1158,7 @@
                 eyebrow: 'Strategy & Voice',
                 desc: 'Before any pixel is placed, the thinking has to be right. We help brands find — or reclaim — a clear, honest, and distinctive position in the world.',
                 bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
+                videoSrc: 'dummy/a1.mp4',
                 services: [
                 { name: 'Brand Strategy', desc: 'Positioning, purpose, and audience mapped with clarity.' },
                 { name: 'Naming', desc: 'Words that stick, travel, and own their space.' },
@@ -1151,6 +1179,11 @@
             document.getElementById('panelTitle').textContent = d.title;
             document.getElementById('panelDesc').textContent = d.desc;
             document.getElementById('panelBg').style.background = d.bgColor;
+            const pv = document.getElementById('panelVideo');
+            if (pv) {
+                pv.src = d.videoSrc;
+                pv.style.opacity = '0.4';
+            }
 
             const grid = document.getElementById('panelServices');
             grid.innerHTML = '';
@@ -1200,6 +1233,8 @@
 
         function closePanel() {
             document.getElementById('panel').classList.remove('open');
+            const pv = document.getElementById('panelVideo');
+            if (pv) pv.style.opacity = '0';
             
             // Show main navigation again
             const mainNav = document.getElementById('main-nav');
