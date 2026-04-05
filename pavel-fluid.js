@@ -70,7 +70,7 @@ function pointerPrototype () {
     this.deltaY = 0;
     this.down = false;
     this.moved = false;
-    this.color = [30, 0, 300];
+    this.color = generateColor();
 }
 
 let pointers = [];
@@ -1545,11 +1545,21 @@ function correctDeltaY (delta) {
 }
 
 function generateColor () {
-    let c = HSVtoRGB(Math.random(), 1.0, 1.0);
-    c.r *= 0.15;
-    c.g *= 0.15;
-    c.b *= 0.15;
-    return c;
+    // Array of specific brand colors
+    const palettes = [
+        { r: 1.0, g: 0.15, b: 0.15 }, // Vibrant Red
+        { r: 0.77, g: 0.12, b: 0.23 }, // Brand Red (#C41E3A)
+        { r: 0.91, g: 0.21, b: 0.16 }, // Orange-Red (#e8352a)
+        { r: 0.5, g: 0.05, b: 0.05 }, // Dark Red
+        { r: 0.8, g: 0.8, b: 0.8 }    // Muted White
+    ];
+    let baseColor = palettes[Math.floor(Math.random() * palettes.length)];
+    
+    return {
+        r: baseColor.r * 0.15,
+        g: baseColor.g * 0.15,
+        b: baseColor.b * 0.15
+    };
 }
 
 function HSVtoRGB (h, s, v) {
