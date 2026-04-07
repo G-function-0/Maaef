@@ -610,7 +610,7 @@
         </div>
     </div>
 
-    <main class="pt-24">
+    <main>
         <!-- PINHOLE BRAND SHOWCASE SECTION -->
         <section class="pinhole-section relative">
             <div class="absolute top-[15%] left-0 w-full text-center z-20 pointer-events-none px-6">
@@ -625,11 +625,6 @@
                 </video>
             </div>
 
-            <div class="pinhole-overlay">
-                <!-- Initial Display -->
-                <h1 id="pinhole-initial-text" class="glossy-reveal serif cursor-default">Clients</h1>
-            </div>
-
             <!-- Mute Toggle -->
             <button id="pinhole-mute-btn" class="pinhole-mute-toggle" title="Toggle Sound">
                 <svg id="pinhole-mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -640,44 +635,55 @@
                 </svg>
             </button>
 
-            <!-- 1 Central Large Display / Maaef Logo -->
-            <div id="pinhole-display-container"
-                class="central-display !w-[180px] !h-[180px] md:!w-[280px] md:!h-[280px]">
-                <img id="pinhole-active-logo" src="logo.png" alt="Maaef" class="!w-[70%] !h-[70%] !opacity-100">
-            </div>
-
-            <!-- Carousel 3-1-3 -->
-            <div class="pinhole-carousel pointer-events-auto">
-                <!-- 3 Left Brands -->
-                <div class="brand-circle pinhole-brand-item active" data-brand="Maaef" data-color="#ff0000"
-                    data-video="trailer.mp4">
-                    <img src="logo.png" alt="Maaef Logo">
-                </div>
-                <div class="brand-circle pinhole-brand-item" data-brand="Cyberdyne" data-color="#00ccff"
-                    data-video="dummy/dummyvideo.mp4">
-                    <img src="dummy/l1.jpg" alt="Brand 1">
-                </div>
-                <div class="brand-circle pinhole-brand-item" data-brand="Weyland" data-color="#ffcc00"
-                    data-video="trailer.mp4">
-                    <img src="dummy/l2.jpg" alt="Brand 2">
-                </div>
-                <div class="brand-circle pinhole-brand-item" data-brand="Tyrell" data-color="#ff3300"
-                    data-video="dummy/dummyvideo.mp4">
-                    <img src="dummy/l1.jpg" alt="Brand 3">
-                </div>
-
-                <!-- 3 Right Brands -->
-                <div class="brand-circle pinhole-brand-item" data-brand="Umbrella" data-color="#ffffff"
-                    data-video="trailer.mp4">
-                    <img src="dummy/l2.jpg" alt="Brand 4">
-                </div>
-                <div class="brand-circle pinhole-brand-item" data-brand="Aperture" data-color="#3399ff"
-                    data-video="dummy/dummyvideo.mp4">
-                    <img src="dummy/l1.jpg" alt="Brand 5">
-                </div>
-                <div class="brand-circle pinhole-brand-item" data-brand="Oscorp" data-color="#33ff33"
-                    data-video="trailer.mp4">
-                    <img src="dummy/l2.jpg" alt="Brand 6">
+            <style>
+                #brand-slider-wrapper {
+                    touch-action: none;
+                    user-select: none;
+                }
+                #brand-slider {
+                    position: relative;
+                    width: 100vw;
+                    height: 300px;
+                }
+                .brand-card {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 15rem;
+                    height: 15rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    will-change: transform, left, opacity;
+                    cursor: grab;
+                }
+                .brand-card:active {
+                    cursor: grabbing;
+                }
+                .brand-card img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    pointer-events: none;
+                }
+                @media (max-width: 768px) {
+                    .brand-card { width: 10rem; height: 10rem; }
+                }
+            </style>
+            
+            <div class="absolute inset-0 flex flex-col justify-center w-full overflow-hidden pointer-events-auto z-20 pt-24" id="brand-slider-wrapper">
+                <div id="brand-slider">
+                    <!-- Exactly 3 fixed items -->
+                    <div class="brand-card" data-index="0" data-video="trailer.mp4">
+                        <img src="logo.png" alt="Maaef">
+                    </div>
+                    <div class="brand-card" data-index="1" data-video="dummy/dummyvideo.mp4">
+                        <img src="dummy/l1.jpg" alt="Brand 1" style="mix-blend-mode: lighten;">
+                    </div>
+                    <div class="brand-card" data-index="2" data-video="trailer.mp4">
+                        <img src="dummy/l2.jpg" alt="Brand 2" style="mix-blend-mode: lighten;">
+                    </div>
                 </div>
             </div>
         </section>
@@ -730,17 +736,33 @@
                     @keyframes tapeSlideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
                 </style>
                 <!-- Police Tape 1 -->
-                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-2 origin-center scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                     style="top: 40%;">
+                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                     style="top: 10%;">
                     <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
                         <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
                     </div>
                 </div>
 
                 <!-- Police Tape 2 -->
-                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-3 origin-center scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                     style="top: 55%;">
+                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-3 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                     style="top: 35%;">
                     <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
+                        <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
+                    </div>
+                </div>
+
+                <!-- Police Tape 3 -->
+                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-1 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                     style="top: 65%;">
+                    <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
+                        <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
+                    </div>
+                </div>
+
+                <!-- Police Tape 4 -->
+                <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                     style="top: 90%;">
+                    <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
                         <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
                     </div>
                 </div>
@@ -886,84 +908,21 @@
             const pinholeVideo = document.getElementById('pinhole-main-video');
             const pinholeMuteBtn = document.getElementById('pinhole-mute-btn');
             const pinholeMuteIcon = document.getElementById('pinhole-mute-icon');
-            const pinholeInitialText = document.getElementById('pinhole-initial-text');
-            const pinholeDisplayContainer = document.getElementById('pinhole-display-container');
-            const pinholeActiveLogo = document.getElementById('pinhole-active-logo');
             const pinholeBgContainer = document.getElementById('pinhole-bg-container');
-            const pinholeBrandItems = document.querySelectorAll('.pinhole-brand-item');
 
             let pinholeIsMuted = true;
-            let pinholeInteractionStarted = false;
 
-            if (pinholeBrandItems.length > 0) {
-                pinholeBrandItems.forEach(item => {
-                    const handlePinholeInteract = () => {
-                        const brandImg = item.querySelector('img').getAttribute('src');
-                        const brandVideo = item.dataset.video;
-
-                        if (!pinholeInteractionStarted) {
-                            pinholeInteractionStarted = true;
-                            // Hide "Clients"
-                            gsap.to(pinholeInitialText, {
-                                opacity: 0,
-                                y: -50,
-                                scale: 0.9,
-                                duration: 1.2,
-                                ease: "power3.inOut",
-                                onComplete: () => {
-                                    pinholeInitialText.style.display = 'none';
-                                }
-                            });
-
-                            // Reveal Central Circle
-                            gsap.to(pinholeDisplayContainer, { opacity: 1, duration: 1.2, ease: "power2.out", delay: 0.4 });
-
-                            // Reveal Background
-                            gsap.to(pinholeBgContainer, { opacity: 0.35, duration: 2 });
-                        }
-
-                        // Update Display Image with transition
-                        if (pinholeActiveLogo.getAttribute('src') !== brandImg) {
-                            gsap.to(pinholeActiveLogo, {
-                                opacity: 0,
-                                scale: 0.8,
-                                duration: 0.3,
-                                onComplete: () => {
-                                    pinholeActiveLogo.src = brandImg;
-                                    gsap.to(pinholeActiveLogo, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
-                                }
-                            });
-                        }
-
-                        // Update Video
-                        if (pinholeVideo && pinholeVideo.querySelector('source')) {
-                            const currentSource = pinholeVideo.querySelector('source').getAttribute('src');
-                            if (currentSource !== brandVideo) {
-                                gsap.to(pinholeBgContainer, {
-                                    opacity: 0, duration: 0.5, onComplete: () => {
-                                        pinholeVideo.querySelector('source').setAttribute('src', brandVideo);
-                                        pinholeVideo.load();
-                                        pinholeVideo.play();
-                                        gsap.to(pinholeBgContainer, { opacity: 0.35, duration: 1 });
-                                    }
-                                });
-                            } else {
-                                if (pinholeVideo.paused) pinholeVideo.play();
-                            }
-                        }
-
-                        // Update active state
-                        pinholeBrandItems.forEach(b => b.classList.remove('active'));
-                        item.classList.add('active');
-                    };
-
-                    item.addEventListener('mouseenter', handlePinholeInteract);
-                    item.addEventListener('click', handlePinholeInteract);
-                });
+            // Display background immediately in the new layout
+            if(pinholeBgContainer) {
+                gsap.to(pinholeBgContainer, { opacity: 0.35, duration: 2 });
+            }
+            if(pinholeVideo) {
+                const playPromise = pinholeVideo.play();
+                if (playPromise !== undefined) playPromise.catch(()=>{});
             }
 
             // Pinhole Mute Toggle Logic
-            if (pinholeMuteBtn) {
+            if (pinholeMuteBtn && pinholeVideo) {
                 pinholeMuteBtn.addEventListener('click', () => {
                     pinholeIsMuted = !pinholeIsMuted;
                     pinholeVideo.muted = pinholeIsMuted;
@@ -983,14 +942,127 @@
                 });
             }
 
-            // Subtle parallax movement on initial text
-            document.addEventListener('mousemove', (e) => {
-                if (!pinholeInteractionStarted && pinholeInitialText) {
-                    const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-                    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-                    gsap.to(pinholeInitialText, { x: moveX, y: moveY, duration: 0.5 });
+            // --- FIXED POSITION CONTINUOUS COVERFLOW LOGIC ---
+            const sliderWrapper = document.getElementById('brand-slider-wrapper');
+            const cards = document.querySelectorAll('.brand-card');
+            
+            if (sliderWrapper && cards.length === 3) {
+                let activeIndex = 0; 
+                let currentPos = 0;  
+                let targetPos = 0;   
+                let isDragging = false;
+                let startX = 0;
+                let dragStartPos = 0;
+
+                function render() {
+                    if (!isDragging) {
+                        currentPos += (targetPos - currentPos) * 0.15; // spring effect
+                    }
+                    
+                    cards.forEach((card, idx) => {
+                        let offset = ((idx - currentPos) % 3 + 3) % 3;
+                        if (offset > 1.5) offset -= 3; // mapping to [-1.5 to 1.5]
+                        
+                        let leftPct = 50 + (offset * 35); // -1 -> 15%, 0 -> 50%, 1 -> 85%
+                        
+                        let absOffset = Math.abs(offset);
+                        let scale = 1 - (absOffset * 0.5); // center has 1, extremes have 0.5
+                        scale = Math.max(0.4, Math.min(1, scale)); 
+                        
+                        let opacity = 1 - (absOffset * 0.6); // slight transparency on sides
+                        opacity = Math.max(0.2, Math.min(1, opacity));
+                        
+                        card.style.zIndex = Math.round(100 - absOffset * 10);
+                        
+                        gsap.set(card, {
+                            left: `${leftPct}%`,
+                            xPercent: -50,
+                            yPercent: -50,
+                            scale: scale,
+                            opacity: opacity
+                        });
+                    });
+                    
+                    requestAnimationFrame(render);
                 }
-            });
+                render();
+
+                function triggerSnapVideo() {
+                    activeIndex = Math.round(targetPos);
+                    targetPos = activeIndex;
+                    
+                    let realIndex = ((activeIndex % 3) + 3) % 3;
+                    
+                    const activeCard = Array.from(cards).find(c => parseInt(c.dataset.index) === realIndex);
+                    if (activeCard && pinholeVideo && pinholeBgContainer) {
+                        const newVideoSrc = activeCard.dataset.video;
+                        const sourceTag = pinholeVideo.querySelector('source');
+                        if (sourceTag && sourceTag.getAttribute('src') !== newVideoSrc) {
+                            gsap.to(pinholeBgContainer, {
+                                opacity: 0, duration: 0.3, onComplete: () => {
+                                    sourceTag.setAttribute('src', newVideoSrc);
+                                    pinholeVideo.load();
+                                    const playPromise = pinholeVideo.play();
+                                    if (playPromise !== undefined) playPromise.catch(()=>{});
+                                    gsap.to(pinholeBgContainer, { opacity: 0.35, duration: 0.8 });
+                                }
+                            });
+                        } else {
+                            // Ensure it plays if currently paused
+                            const p = pinholeVideo.play();
+                            if (p !== undefined) p.catch(()=>{});
+                        }
+                    }
+                }
+                
+                // Initialize Video for first card
+                triggerSnapVideo();
+
+                // Mouse events
+                sliderWrapper.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    startX = e.clientX;
+                    dragStartPos = currentPos;
+                    targetPos = currentPos;
+                });
+                window.addEventListener('mouseup', () => {
+                    if(!isDragging) return;
+                    isDragging = false;
+                    targetPos = Math.round(currentPos); // snap to nearest integer
+                    triggerSnapVideo();
+                });
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const deltaX = e.clientX - startX;
+                    const vw = window.innerWidth;
+                    const offsetPos = -(deltaX / (vw * 0.5)); 
+                    currentPos = dragStartPos + offsetPos;
+                    targetPos = currentPos; 
+                });
+
+                // Touch events
+                sliderWrapper.addEventListener('touchstart', (e) => {
+                    isDragging = true;
+                    startX = e.touches[0].clientX;
+                    dragStartPos = currentPos;
+                    targetPos = currentPos;
+                });
+                window.addEventListener('touchend', () => {
+                    if(!isDragging) return;
+                    isDragging = false;
+                    targetPos = Math.round(currentPos);
+                    triggerSnapVideo();
+                });
+                sliderWrapper.addEventListener('touchmove', (e) => {
+                    if(!isDragging) return;
+                    const deltaX = e.touches[0].clientX - startX;
+                    const vw = window.innerWidth;
+                    const offsetPos = -(deltaX / (vw * 0.5));
+                    currentPos = dragStartPos + offsetPos;
+                    targetPos = currentPos;
+                }, { passive: false });
+            }
         });
     </script>
 
