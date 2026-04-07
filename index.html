@@ -56,9 +56,15 @@
             cursor: default;
         }
 
-        html.intro-done,
+        html.intro-done {
+            overflow-y: auto;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
         body.intro-done {
-            overflow: auto;
+            overflow: visible;
             height: auto;
         }
 
@@ -397,6 +403,7 @@
             justify-content: center;
             padding: 0 4rem;
             overflow: hidden;
+            scroll-snap-align: start;
         }
 
         @media (max-width: 768px) {
@@ -519,7 +526,7 @@
 
         /* --- STORY SECTION STYLES --- */
         .story-section {
-            padding: 10vw 0;
+            padding: 0;
             background: #050505;
             position: relative;
         }
@@ -533,9 +540,12 @@
         .story-item {
             display: flex;
             align-items: center;
-            margin-bottom: 15vw;
+            min-height: 100vh;
+            margin-bottom: 0;
             opacity: 0;
             visibility: hidden;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
         }
 
         .story-item:last-child {
@@ -607,7 +617,8 @@
             .story-item.reverse {
                 flex-direction: column;
                 align-items: flex-start;
-                margin-bottom: 20vw;
+                justify-content: center;
+                margin-bottom: 0;
             }
 
             .story-content,
@@ -692,6 +703,10 @@
                 filter: drop-shadow(0 0 35px rgba(196, 30, 58, 0.7));
                 opacity: 1;
             }
+        }
+
+        #main-footer {
+            scroll-snap-align: start;
         }
     </style>
 </head>
@@ -1004,33 +1019,49 @@
                         @keyframes tapeSlideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
                     </style>
                     <!-- Police Tape 1 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                         style="top: 10%;">
+                    <div class="absolute left-[-25%] right-[-25%] w-[150%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 rotate-[15deg] origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                         style="top: -30%;">
                         <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
                             <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
                         </div>
                     </div>
 
                     <!-- Police Tape 2 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-3 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                         style="top: 35%;">
+                    <div class="absolute left-[-25%] right-[-25%] w-[150%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 -rotate-[20deg] origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                         style="top: -70%;">
                         <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
                             <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
                         </div>
                     </div>
 
                     <!-- Police Tape 3 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-1 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                         style="top: 65%;">
+                    <div class="absolute left-[-25%] right-[-25%] w-[150%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-[10deg] origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                         style="top: 110%;">
                         <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
                             <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
                         </div>
                     </div>
 
                     <!-- Police Tape 4 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                         style="top: 90%;">
+                    <div class="absolute left-[-25%] right-[-25%] w-[150%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-[25deg] origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                         style="top: 190%;">
                         <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
+                            <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
+                        </div>
+                    </div>
+
+                    <!-- Police Tape 5 -->
+                    <div class="absolute left-[-25%] right-[-25%] w-[150%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 rotate-[8deg] origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                         style="top: -20%;">
+                        <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
+                            <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
+                        </div>
+                    </div>
+
+                    <!-- Police Tape 6 -->
+                    <div class="absolute left-[-25%] right-[-25%] w-[150%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 -rotate-[15deg] origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                         style="top: -10%;">
+                        <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
                             <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
                         </div>
                     </div>
