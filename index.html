@@ -31,7 +31,7 @@
         }
 
         :root {
-            --red: #C41E3A;
+            --red: #c0251a;
             --dark: #050505;
         }
 
@@ -747,6 +747,7 @@
     <div id="intro-stage">
         <div id="intro-bg">
             <video id="intro-bg-video" autoplay loop muted playsinline>
+                <source src="trailer.mov" type="video/quicktime">
                 <source src="trailer.mp4" type="video/mp4">
             </video>
             <div id="intro-bg-overlay"></div>
@@ -1250,9 +1251,7 @@
                     .to(logoEl, { scale: 1.18, duration: 0.32, ease: 'power2.inOut' })
                     .to(logoEl, { scale: 38, opacity: 0, filter: 'blur(18px)', duration: 0.72, ease: 'power4.in' })
                     .to(redEl, { opacity: 1, duration: 0.35, ease: 'none' }, '-=0.62')
-                    .to({}, { duration: 0.55 })
-                    .to(flashEl, { opacity: .95, duration: 0.07, ease: 'none' })
-                    .to(flashEl, { opacity: 0, duration: 0.14, ease: 'none' });
+                    .to({}, { duration: 0.55 });
             }
 
             function revealHomepage() {

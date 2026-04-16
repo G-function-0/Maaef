@@ -654,8 +654,7 @@
 
         <div class="tile" data-index="0" onclick="openPanel(0)">
           <div class="tile-bg"></div>
-          <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline
-            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
+          <img src="f1-car-1.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Video</span>
@@ -666,8 +665,7 @@
 
         <div class="tile" data-index="1" onclick="openPanel(1)">
           <div class="tile-bg"></div>
-          <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline
-            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
+          <img src="f1-car-2.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Web</span>
@@ -678,8 +676,7 @@
 
         <div class="tile" data-index="2" onclick="openPanel(2)">
           <div class="tile-bg"></div>
-          <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline
-            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
+          <img src="f1-car-3.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Design</span>
@@ -690,8 +687,7 @@
 
         <div class="tile" data-index="3" onclick="openPanel(3)">
           <div class="tile-bg"></div>
-          <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline
-            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;"></video>
+          <img src="f1-car-4.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Photo</span>
@@ -702,8 +698,7 @@
 
         <div class="tile" data-index="4" onclick="openPanel(4)">
           <div class="tile-bg"></div>
-          <video src="dummy/dummyvideo.mp4" autoplay loop muted playsinline
-            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0.35; pointer-events: none;"></video>
+          <img src="f1-car-5.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Brand</span>
@@ -715,8 +710,7 @@
       </div>
 
       <!-- EXPANDED PANEL -->
-      <video id="panelVideo" autoplay loop muted playsinline
-        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0; transition: opacity 0.55s ease; pointer-events: none; mix-blend-mode: screen; z-index: 10;"></video>
+      <img id="panelImage" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0; transition: opacity 0.55s ease; pointer-events: none; mix-blend-mode: screen; z-index: 10;">
       <div id="panel">
         <div class="panel-bg" id="panelBg"></div>
 
@@ -887,7 +881,7 @@
         eyebrow: 'Motion & Film',
         desc: 'We create cinematic content that moves people — literally and emotionally. From brand films to social reels, every frame is crafted to communicate something true.',
         bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
-        videoSrc: 'dummy/dummyvideo.mp4',
+        imgSrc: 'f1-car-1.png',
         services: [
           { name: 'Brand Films', desc: 'Long-form cinematic narratives that define how the world sees you.' },
           { name: 'Social Content', desc: 'Scroll-stopping reels and shorts optimised for every platform.' },
@@ -901,7 +895,7 @@
         eyebrow: 'Digital Presence',
         desc: 'Digital experiences that feel inevitable — like they could never have been built any other way. We design and develop with equal obsession.',
         bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
-        videoSrc: 'dummy/a1.mp4',
+        imgSrc: 'f1-car-2.png',
         services: [
           { name: 'UI/UX Design', desc: 'Interfaces rooted in behaviour and refined by intuition.' },
           { name: 'Development', desc: 'Clean, performant code that lives up to the design.' },
@@ -915,7 +909,7 @@
         eyebrow: 'Visual Identity',
         desc: 'Identity systems that hold together across every touchpoint. We think in systems, not just symbols — because a logo is only as strong as what surrounds it.',
         bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
-        videoSrc: 'dummy/a2.mp4',
+        imgSrc: 'f1-car-3.png',
         services: [
           { name: 'Brand Identity', desc: 'Logo, colour, type — the full visual language.' },
           { name: 'Print & Packaging', desc: 'Tangible brand expressions that stand out on shelf.' },
@@ -929,7 +923,7 @@
         eyebrow: 'Stills & Stories',
         desc: 'Photography that earns its place — no filler, no stock. Every shoot is a considered visual argument for why your brand deserves attention.',
         bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
-        videoSrc: 'dummy/dummyvideo.mp4',
+        imgSrc: 'f1-car-4.png',
         services: [
           { name: 'Product Photography', desc: 'Clean, contextual images that drive purchase decisions.' },
           { name: 'Portrait & Team', desc: 'Faces that humanise the brand, shot with respect.' },
@@ -943,7 +937,7 @@
         eyebrow: 'Strategy & Voice',
         desc: 'Before any pixel is placed, the thinking has to be right. We help brands find — or reclaim — a clear, honest, and distinctive position in the world.',
         bgColor: 'radial-gradient(ellipse, #c0251a 0%, #6b0d08 50%, transparent 75%)',
-        videoSrc: 'dummy/a1.mp4',
+        imgSrc: 'f1-car-5.png',
         services: [
           { name: 'Brand Strategy', desc: 'Positioning, purpose, and audience mapped with clarity.' },
           { name: 'Naming', desc: 'Words that stick, travel, and own their space.' },
@@ -964,9 +958,9 @@
       document.getElementById('panelTitle').textContent = d.title;
       document.getElementById('panelDesc').textContent = d.desc;
       document.getElementById('panelBg').style.background = d.bgColor;
-      const pv = document.getElementById('panelVideo');
+      const pv = document.getElementById('panelImage');
       if (pv) {
-        pv.src = d.videoSrc;
+        pv.src = d.imgSrc;
         pv.style.opacity = '0.4';
       }
 
@@ -1009,8 +1003,10 @@
 
     function closePanel() {
       document.getElementById('panel').classList.remove('open');
-      const pv = document.getElementById('panelVideo');
-      if (pv) pv.style.opacity = '0';
+      const pv = document.getElementById('panelImage');
+      if (pv) {
+        pv.style.opacity = '0';
+              }
       document.querySelector('nav').classList.remove('hidden');
       const footer = document.getElementById('main-footer');
       if(footer) footer.style.display = '';
@@ -1030,6 +1026,8 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && isOpen) closePanel();
     });
+
+
   </script>
 
   <script src="./pavel-fluid.js?v=2"></script>
