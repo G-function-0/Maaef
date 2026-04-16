@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
         rel="stylesheet">
@@ -895,7 +897,7 @@
 
         <section class="hero-wrap">
             <div class="absolute inset-0 z-0 pointer-events-none">
-                <video id="h-video" autoplay loop muted playsinline>
+                <video id="h-video" loop muted playsinline preload="none">
                     <source src="trailer.mp4" type="video/mp4">
                 </video>
                 <div class="absolute inset-0 bg-black/60"></div>
@@ -1022,7 +1024,7 @@
                     <!-- Brand -->
                     <div class="col-span-1 lg:col-span-2">
                         <a href="index.html" class="inline-block hover-trigger mb-6">
-                            <img src="logo.png" alt="Maaef Logo"
+                            <img src="logo.png" alt="Maaef Logo" loading="lazy"
                                 class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
                         </a>
                         <p
@@ -1380,6 +1382,9 @@
                 resolveText();
 
                 const heroVideo = document.getElementById('h-video');
+                if (heroVideo) {
+                    heroVideo.play().catch(e => console.log('Video autoplay blocked:', e));
+                }
                 let blurTimeout;
 
                 if (headerContainer) {
