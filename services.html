@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaef Media House | Services</title>
+    <link rel="icon" type="image/png" href="logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -926,12 +927,12 @@
 
     <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500"
         id="main-nav">
-        <a href="index.html" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
+        <a href="/" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
             <img src="logo.png" alt="Maaef Logo" class="h-8 w-auto">
         </a>
 
         <div class="flex items-center gap-6 z-[60]">
-            <a href="contact.html"
+            <a href="/contact"
                 class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
                 Start Project
             </a>
@@ -958,28 +959,28 @@
         <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
             style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
         <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
-            <a href="index.html" onclick="toggleMenu()"
+            <a href="/" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span
                     class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Home</span>
                 <span
                     class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Home</span>
             </a>
-            <a href="about.html" onclick="toggleMenu()"
+            <a href="/about" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span
                     class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Studio</span>
                 <span
                     class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Studio</span>
             </a>
-            <a href="services.html" onclick="toggleMenu()"
+            <a href="/services" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span
                     class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Expertise</span>
                 <span
                     class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Expertise</span>
             </a>
-            <a href="contact.html" onclick="toggleMenu()"
+            <a href="/contact" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span
                     class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Contact</span>
@@ -1008,7 +1009,7 @@
             <div id="tiles" style="z-index: 1;">
                 <div class="tile hover-trigger" data-index="0" onclick="openPanel(0)">
                     <div class="tile-bg"></div>
-                    <img src="f1-car-1.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+                    <img src="f1-car-1.png" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                         <span class="tile-label">Video</span>
@@ -1019,7 +1020,7 @@
 
                 <div class="tile hover-trigger" data-index="1" onclick="openPanel(1)">
                     <div class="tile-bg"></div>
-                    <img src="f1-car-2.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+                    <img src="f1-car-2.png" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                         <span class="tile-label">Web</span>
@@ -1030,7 +1031,7 @@
 
                 <div class="tile hover-trigger" data-index="2" onclick="openPanel(2)">
                     <div class="tile-bg"></div>
-                    <img src="f1-car-3.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+                    <img src="f1-car-3.png" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                         <span class="tile-label">Design</span>
@@ -1041,7 +1042,7 @@
 
                 <div class="tile hover-trigger" data-index="3" onclick="openPanel(3)">
                     <div class="tile-bg"></div>
-                    <img src="f1-car-4.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+                    <img src="f1-car-4.png" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                         <span class="tile-label">Photo</span>
@@ -1052,7 +1053,7 @@
 
                 <div class="tile hover-trigger" data-index="4" onclick="openPanel(4)">
                     <div class="tile-bg"></div>
-                    <img src="f1-car-5.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+                    <img src="f1-car-5.png" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
                     <div class="tile-frost"></div>
                     <div class="tile-content">
                         <span class="tile-label">Brand</span>
@@ -1103,7 +1104,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
                 <!-- Brand -->
                 <div class="col-span-1 lg:col-span-2">
-                    <a href="index.html" class="inline-block hover-trigger mb-6">
+                    <a href="/" class="inline-block hover-trigger mb-6">
                         <img src="logo.png" alt="Maaef Logo"
                             class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
                     </a>
@@ -1117,16 +1118,16 @@
                 <div>
                     <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
                     <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
-                        <li><a href="index.html"
+                        <li><a href="/"
                                 class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a>
                         </li>
-                        <li><a href="about.html"
+                        <li><a href="/about"
                                 class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Studio</a>
                         </li>
-                        <li><a href="services.html"
+                        <li><a href="/services"
                                 class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Expertise</a>
                         </li>
-                        <li><a href="contact.html"
+                        <li><a href="/contact"
                                 class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a>
                         </li>
                     </ul>
@@ -1139,7 +1140,7 @@
                         <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer"
                                 class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a>
                         </li>
-                        <li class="pt-2"><a href="contact.html"
+                        <li class="pt-2"><a href="/contact"
                                 class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start
                                 Project</a></li>
                     </ul>
@@ -1148,7 +1149,7 @@
 
             <!-- Big text CTA -->
             <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer"
-                onclick="window.location.href='contact.html'">
+                onclick="window.location.href='/contact'">
                 <h2
                     class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:text-black group-hover:[-webkit-text-stroke:2px_rgba(196,30,58,1)]">
                     Maaef.</h2>
