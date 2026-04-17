@@ -181,6 +181,72 @@
             60% { transform: translateX(-5px); }
             80% { transform: translateX(5px); }
         }
+
+        /* --- Loading Animation --- */
+        .loading-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .loader-line {
+            width: 120px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+            margin-bottom: 2.5rem;
+        }
+
+        .loader-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -40%;
+            width: 40%;
+            height: 100%;
+            background: #C41E3A;
+            border-radius: 2px;
+            animation: loaderSlide 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes loaderSlide {
+            0%   { left: -40%; }
+            100% { left: 100%; }
+        }
+
+        .loader-pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #C41E3A;
+            animation: loaderPulse 1.4s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50%      { opacity: 1; transform: scale(1.8); }
+        }
+
+        .submit-error-msg {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #C41E3A;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .submit-error-msg.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -320,6 +386,15 @@
                     class="form-step hidden opacity-0 translate-y-10 transition-all duration-700 text-center flex flex-col items-center justify-center">
                     <h3 class="serif text-4xl md:text-8xl mb-6 text-white leading-tight">Received.</h3>
                     <p class="text-gray-400 text-lg md:text-xl uppercase tracking-widest">We'll take it from here.</p>
+                </div>
+
+                <div id="step-loading"
+                    class="form-step hidden opacity-0 translate-y-10 transition-all duration-700 loading-step">
+                    <div class="loader-pulse-dot"></div>
+                    <div class="loader-line"></div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-2">Transmitting</p>
+                    <p class="serif text-2xl md:text-4xl text-white/80">Hold tight.</p>
+                    <span id="submit-error" class="submit-error-msg">Something went wrong. Please try again.</span>
                 </div>
             </div>
         </div>
@@ -551,8 +626,6 @@
 
             window.submitForm = function () {
                 if (!validateStep(3)) return;
-                const step3 = document.getElementById('step-3');
-                const stepSuccess = document.getElementById('step-success');
                 const name = document.getElementById('input-name').value.trim();
                 const email = document.getElementById('input-email').value.trim();
                 const requirements = document.getElementById('input-requirements').value.trim();
@@ -607,19 +680,31 @@
                     `
                 };
 
-                const submitBtn = document.querySelector('#step-3 button');
-                const originalBtnText = submitBtn.innerText;
-                submitBtn.innerText = 'Sending...';
-                submitBtn.disabled = true;
+                const step3 = document.getElementById('step-3');
+                const stepLoading = document.getElementById('step-loading');
+                const stepSuccess = document.getElementById('step-success');
+                const submitErrorMsg = document.getElementById('submit-error');
+
+                // Transition to loading state
+                submitErrorMsg.classList.remove('visible');
+                step3.classList.add('opacity-0', 'translate-y-10');
+                setTimeout(() => {
+                    step3.classList.add('hidden');
+                    stepLoading.classList.remove('hidden');
+                    setTimeout(() => {
+                        stepLoading.classList.remove('opacity-0', 'translate-y-10');
+                    }, 50);
+                }, 500);
 
                 const sendOwner = emailjs.send(serviceID, ownerTemplateID, templateParams);
                 const sendCustomer = emailjs.send(serviceID, customerTemplateID, templateParams);
 
                 Promise.all([sendOwner, sendCustomer])
                     .then(() => {
-                        step3.classList.add('opacity-0', 'translate-y-10');
+                        // Loading -> Success
+                        stepLoading.classList.add('opacity-0', 'translate-y-10');
                         setTimeout(() => {
-                            step3.classList.add('hidden');
+                            stepLoading.classList.add('hidden');
                             stepSuccess.classList.remove('hidden');
                             setTimeout(() => {
                                 stepSuccess.classList.remove('opacity-0', 'translate-y-10');
@@ -628,9 +713,19 @@
                     })
                     .catch((error) => {
                         console.error('EmailJS Error:', error);
-                        alert('Something went wrong. Please try again later.');
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
+                        // Show error inline on loading screen, then transition back
+                        submitErrorMsg.classList.add('visible');
+                        setTimeout(() => {
+                            stepLoading.classList.add('opacity-0', 'translate-y-10');
+                            setTimeout(() => {
+                                stepLoading.classList.add('hidden');
+                                submitErrorMsg.classList.remove('visible');
+                                step3.classList.remove('hidden');
+                                setTimeout(() => {
+                                    step3.classList.remove('opacity-0', 'translate-y-10');
+                                }, 50);
+                            }, 500);
+                        }, 2000);
                     });
             };
 
