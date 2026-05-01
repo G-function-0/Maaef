@@ -615,14 +615,14 @@
     <main>
         <!-- PINHOLE BRAND SHOWCASE SECTION -->
         <section class="pinhole-section relative">
-            <div id="pinhole-title-container" class="absolute top-[15%] left-0 w-full text-center z-[40] pointer-events-none px-6">
+            <div id="pinhole-title-container" class="absolute top-[15%] left-0 w-full text-center z-[40] pointer-events-none px-6 hidden">
                 <h3 class="text-3xl uppercase tracking-[0.3em] text-red-600 mb-4">People who trusted us with their
                     vision. </h3>
                 <h2 class="serif text-4xl md:text-5xl mb-4 text-white"></h2>
                 <p class="text-gray-400 text-lg">A few logos we like.</p>
             </div>
             <div id="pinhole-bg-container">
-                <video id="pinhole-main-video" loop muted playsinline>
+                <video id="pinhole-main-video" autoplay muted playsinline>
                     <source src="dummy/dummyvideo.mp4" type="video/mp4">
                 </video>
             </div>
@@ -913,10 +913,10 @@
             const pinholeBgContainer = document.getElementById('pinhole-bg-container');
 
             let pinholeIsMuted = true;
+            let isRevealed = true;
 
-            // Display background immediately in the new layout
             if(pinholeBgContainer) {
-                // Initial load is handled by triggerSnapVideo directly
+                gsap.set(pinholeBgContainer, { opacity: 0.2 });
             }
             if(pinholeVideo) {
                 const playPromise = pinholeVideo.play();
@@ -953,8 +953,17 @@
                 let currentPos = 0;  
                 let targetPos = 0;   
                 let isDragging = false;
+                let hasDragged = false;
                 let startX = 0;
                 let dragStartPos = 0;
+
+                const cardStates = [
+                    { alpha: 1, y: 0 },
+                    { alpha: 1, y: 0 },
+                    { alpha: 1, y: 0 }
+                ];
+                
+                sliderWrapper.style.pointerEvents = 'auto'; // Initially visible and interactive
 
                 function render() {
                     if (!isDragging) {
@@ -980,14 +989,19 @@
                             left: `${leftPct}%`,
                             xPercent: -50,
                             yPercent: -50,
+                            y: cardStates[idx].y,
                             scale: scale,
-                            opacity: opacity
+                            opacity: opacity * cardStates[idx].alpha
                         });
                     });
                     
                     requestAnimationFrame(render);
                 }
                 render();
+
+                let currentVideoSrc = "";
+                let initialTimeout;
+                let loopCount = 0;
 
                 function triggerSnapVideo() {
                     activeIndex = Math.round(targetPos);
@@ -999,54 +1013,124 @@
                     if (activeCard && pinholeVideo && pinholeBgContainer) {
                         const newVideoSrc = activeCard.dataset.video;
                         const sourceTag = pinholeVideo.querySelector('source');
-                        if (sourceTag && sourceTag.getAttribute('src') !== newVideoSrc) {
-                            gsap.to(pinholeBgContainer, {
-                                opacity: 0, duration: 0.3, onComplete: () => {
-                                    sourceTag.setAttribute('src', newVideoSrc);
-                                    pinholeVideo.load();
-                                    const playPromise = pinholeVideo.play();
-                                    if (playPromise !== undefined) playPromise.catch(()=>{});
-                                    gsap.killTweensOf('#pinhole-title-container');
-                                    gsap.to(pinholeBgContainer, { opacity: 1, zIndex: 1, scale: 1, filter: 'blur(0px)', duration: 0.8 });
-                                    gsap.to('#pinhole-title-container', { opacity: 0, y: -20, duration: 0.8 });
-                                }
-                            });
-                        } else {
-                            // Ensure it plays if currently paused
-                            const p = pinholeVideo.play();
-                            if (p !== undefined) p.catch(()=>{});
-                            gsap.killTweensOf(pinholeBgContainer);
-                            gsap.killTweensOf('#pinhole-title-container');
-                            gsap.to(pinholeBgContainer, { opacity: 1, zIndex: 1, scale: 1, filter: 'blur(0px)', duration: 0.8 });
-                            gsap.to('#pinhole-title-container', { opacity: 0, y: -20, duration: 0.8 });
+                        
+                        if (currentVideoSrc !== newVideoSrc) {
+                            currentVideoSrc = newVideoSrc;
+                            clearTimeout(initialTimeout);
+                            loopCount = 0;
+                            
+                            const startVideoCycle = () => {
+                                revealLogos(); 
+                                pinholeVideo.currentTime = 0;
+                                const p = pinholeVideo.play();
+                                if (p !== undefined) p.catch(()=>{});
+                                
+                                initialTimeout = setTimeout(() => {
+                                    hideLogosAndPlay(false);
+                                }, 3000);
+                            };
+
+                            if (sourceTag && sourceTag.getAttribute('src')) {
+                                gsap.to(pinholeBgContainer, {
+                                    opacity: 0, duration: 0.3, onComplete: () => {
+                                        sourceTag.setAttribute('src', newVideoSrc);
+                                        pinholeVideo.load();
+                                        startVideoCycle();
+                                    }
+                                });
+                            }
                         }
                     }
                 }
                 
-                // Initialize Video for first card
+                function revealLogos() {
+                    isRevealed = true;
+                    sliderWrapper.style.pointerEvents = 'auto';
+                    gsap.to(cardStates, {
+                        alpha: 1,
+                        y: 0,
+                        duration: 0.8,
+                        stagger: 0.2,
+                        ease: "power2.out"
+                    });
+                    gsap.to(pinholeBgContainer, { opacity: 0.2, duration: 0.8 });
+                }
+
+                function hideLogosAndPlay(restart = true) {
+                    clearTimeout(initialTimeout);
+                    isRevealed = false;
+                    sliderWrapper.style.pointerEvents = 'none';
+                    gsap.to(cardStates, {
+                        alpha: 0,
+                        y: 20,
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                    gsap.to(pinholeBgContainer, { opacity: 1, duration: 0.5 });
+                    
+                    if (restart) {
+                        pinholeVideo.currentTime = 0;
+                    }
+                    const p = pinholeVideo.play();
+                    if (p !== undefined) p.catch(()=>{});
+                }
+
+                if (pinholeVideo) {
+                    pinholeVideo.addEventListener('ended', () => {
+                        loopCount++;
+                        if (loopCount >= 2) {
+                            targetPos += 1;
+                            triggerSnapVideo();
+                        } else {
+                            revealLogos();
+                            pinholeVideo.currentTime = 0;
+                            const p = pinholeVideo.play();
+                            if (p !== undefined) p.catch(()=>{});
+                            
+                            clearTimeout(initialTimeout);
+                            initialTimeout = setTimeout(() => {
+                                hideLogosAndPlay(false);
+                            }, 3000);
+                        }
+                    });
+                }
+                
+                if (pinholeBgContainer) {
+                    pinholeBgContainer.addEventListener('click', () => {
+                        if (!isRevealed) {
+                            revealLogos();
+                            clearTimeout(initialTimeout);
+                        }
+                    });
+                }
+
+                // Initialize Video for first card without fading title
                 triggerSnapVideo();
 
                 // Mouse events
                 sliderWrapper.addEventListener('mousedown', (e) => {
                     isDragging = true;
+                    hasDragged = false;
                     startX = e.clientX;
                     dragStartPos = currentPos;
                     targetPos = currentPos;
-                    gsap.killTweensOf(pinholeBgContainer);
-                    gsap.killTweensOf('#pinhole-title-container');
-                    gsap.to(pinholeBgContainer, { opacity: 0.15, zIndex: 1, scale: 0.95, filter: 'blur(8px)', duration: 0.4 });
-                    gsap.to('#pinhole-title-container', { opacity: 1, y: 0, duration: 0.4 });
+                    clearTimeout(initialTimeout);
                 });
-                window.addEventListener('mouseup', () => {
+                window.addEventListener('mouseup', (e) => {
                     if(!isDragging) return;
                     isDragging = false;
                     targetPos = Math.round(currentPos); // snap to nearest integer
                     triggerSnapVideo();
+
+                    if (!hasDragged && e.target === sliderWrapper) {
+                        if (isRevealed) hideLogosAndPlay(true);
+                    }
                 });
                 window.addEventListener('mousemove', (e) => {
                     if (!isDragging) return;
                     e.preventDefault();
                     const deltaX = e.clientX - startX;
+                    if (Math.abs(deltaX) > 5) hasDragged = true;
                     const vw = window.innerWidth;
                     const offsetPos = -(deltaX / (vw * 0.5)); 
                     currentPos = dragStartPos + offsetPos;
@@ -1056,23 +1140,26 @@
                 // Touch events
                 sliderWrapper.addEventListener('touchstart', (e) => {
                     isDragging = true;
+                    hasDragged = false;
                     startX = e.touches[0].clientX;
                     dragStartPos = currentPos;
                     targetPos = currentPos;
-                    gsap.killTweensOf(pinholeBgContainer);
-                    gsap.killTweensOf('#pinhole-title-container');
-                    gsap.to(pinholeBgContainer, { opacity: 0.15, zIndex: 1, scale: 0.95, filter: 'blur(8px)', duration: 0.4 });
-                    gsap.to('#pinhole-title-container', { opacity: 1, y: 0, duration: 0.4 });
+                    clearTimeout(initialTimeout);
                 });
-                window.addEventListener('touchend', () => {
+                window.addEventListener('touchend', (e) => {
                     if(!isDragging) return;
                     isDragging = false;
                     targetPos = Math.round(currentPos);
                     triggerSnapVideo();
+
+                    if (!hasDragged && e.target === sliderWrapper) {
+                        if (isRevealed) hideLogosAndPlay(true);
+                    }
                 });
                 sliderWrapper.addEventListener('touchmove', (e) => {
                     if(!isDragging) return;
                     const deltaX = e.touches[0].clientX - startX;
+                    if (Math.abs(deltaX) > 5) hasDragged = true;
                     const vw = window.innerWidth;
                     const offsetPos = -(deltaX / (vw * 0.5));
                     currentPos = dragStartPos + offsetPos;
