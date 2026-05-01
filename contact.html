@@ -149,6 +149,104 @@
         ::-webkit-scrollbar {
             width: 0px;
         }
+
+        /* --- Validation Error Styles --- */
+        .field-error {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #C41E3A;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+        }
+
+        .field-error.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-error {
+            border-color: #C41E3A !important;
+            animation: inputShake 0.4s ease;
+        }
+
+        @keyframes inputShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+
+        /* --- Loading Animation --- */
+        .loading-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .loader-line {
+            width: 120px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+            margin-bottom: 2.5rem;
+        }
+
+        .loader-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -40%;
+            width: 40%;
+            height: 100%;
+            background: #C41E3A;
+            border-radius: 2px;
+            animation: loaderSlide 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes loaderSlide {
+            0%   { left: -40%; }
+            100% { left: 100%; }
+        }
+
+        .loader-pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #C41E3A;
+            animation: loaderPulse 1.4s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50%      { opacity: 1; transform: scale(1.8); }
+        }
+
+        .submit-error-msg {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #C41E3A;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .submit-error-msg.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -239,6 +337,7 @@
                     <h3 class="serif text-4xl md:text-7xl mb-12 leading-tight">What should we<br>call you?</h3>
                     <input type="text" id="input-name" placeholder="Your Name"
                         class="w-full bg-transparent border-b border-white/20 text-2xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                    <span id="error-name" class="field-error">Please enter your name (at least 2 characters).</span>
                     <div class="flex justify-end mt-12">
                         <button onclick="nextStep(1)"
                             class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
@@ -252,6 +351,7 @@
                     <h3 class="serif text-4xl md:text-7xl mb-12 leading-tight">Where can we<br>reach you?</h3>
                     <input type="email" id="input-email" placeholder="your@email.com"
                         class="w-full bg-transparent border-b border-white/20 text-2xl md:text-6xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                    <span id="error-email" class="field-error">Please enter a valid email address.</span>
                     <div class="flex justify-between items-center mt-12">
                         <button onclick="prevStep(2)"
                             class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
@@ -269,6 +369,7 @@
                     <h3 class="serif text-4xl md:text-7xl mb-12 leading-tight">Tell us about<br>your project.</h3>
                     <input type="text" id="input-requirements" placeholder="Your requirements..."
                         class="w-full bg-transparent border-b border-white/20 text-2xl md:text-4xl py-4 md:py-8 text-white placeholder-neutral-800 focus:outline-none focus:border-red-600 transition-colors duration-300 hover-trigger">
+                    <span id="error-requirements" class="field-error">Please tell us about your project.</span>
                     <div class="flex justify-between items-center mt-12">
                         <button onclick="prevStep(3)"
                             class="group flex items-center gap-4 text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger">
@@ -285,6 +386,15 @@
                     class="form-step hidden opacity-0 translate-y-10 transition-all duration-700 text-center flex flex-col items-center justify-center">
                     <h3 class="serif text-4xl md:text-8xl mb-6 text-white leading-tight">Received.</h3>
                     <p class="text-gray-400 text-lg md:text-xl uppercase tracking-widest">We'll take it from here.</p>
+                </div>
+
+                <div id="step-loading"
+                    class="form-step hidden opacity-0 translate-y-10 transition-all duration-700 loading-step">
+                    <div class="loader-pulse-dot"></div>
+                    <div class="loader-line"></div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-2">Transmitting</p>
+                    <p class="serif text-2xl md:text-4xl text-white/80">Hold tight.</p>
+                    <span id="submit-error" class="submit-error-msg">Something went wrong. Please try again.</span>
                 </div>
             </div>
         </div>
@@ -425,7 +535,66 @@
                 trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
             });
 
+            // --- Validation Helpers ---
+            const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+            function showError(inputId, errorId) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+                if (input) input.classList.add('input-error');
+                if (error) error.classList.add('visible');
+            }
+
+            function clearError(inputId, errorId) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+                if (input) input.classList.remove('input-error');
+                if (error) error.classList.remove('visible');
+            }
+
+            function validateStep(step) {
+                if (step === 1) {
+                    const name = document.getElementById('input-name').value.trim();
+                    if (!name || name.length < 2) {
+                        showError('input-name', 'error-name');
+                        return false;
+                    }
+                    clearError('input-name', 'error-name');
+                    return true;
+                }
+                if (step === 2) {
+                    const email = document.getElementById('input-email').value.trim();
+                    if (!email || !emailRegex.test(email)) {
+                        showError('input-email', 'error-email');
+                        return false;
+                    }
+                    clearError('input-email', 'error-email');
+                    return true;
+                }
+                if (step === 3) {
+                    const req = document.getElementById('input-requirements').value.trim();
+                    if (!req) {
+                        showError('input-requirements', 'error-requirements');
+                        return false;
+                    }
+                    clearError('input-requirements', 'error-requirements');
+                    return true;
+                }
+                return true;
+            }
+
+            // Clear errors on input
+            ['input-name', 'input-email', 'input-requirements'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', () => {
+                        clearError(id, 'error-' + id.replace('input-', ''));
+                    });
+                }
+            });
+
             window.nextStep = function (current) {
+                if (!validateStep(current)) return;
                 const currentStep = document.getElementById(`step-${current}`);
                 const nextStep = document.getElementById(`step-${current + 1}`);
                 if (currentStep && nextStep) {
@@ -456,23 +625,17 @@
             };
 
             window.submitForm = function () {
-                const step3 = document.getElementById('step-3');
-                const stepSuccess = document.getElementById('step-success');
-                const name = document.getElementById('input-name').value;
-                const email = document.getElementById('input-email').value;
-                const requirements = document.getElementById('input-requirements').value;
-
-                if (!name || !email || !requirements) {
-                    alert('Please provide your name, email, and requirements.');
-                    return;
-                }
+                if (!validateStep(3)) return;
+                const name = document.getElementById('input-name').value.trim();
+                const email = document.getElementById('input-email').value.trim();
+                const requirements = document.getElementById('input-requirements').value.trim();
 
                 // --- EmailJS Configuration ---
                 // Credentials from your snippet
-                const serviceID = 'service_jxszk8v';
-                const ownerTemplateID = 'template_5kwfycv';
-                const customerTemplateID = 'template_5h4bd8a';
-                const publicKey = 'WGbmv9T440K0YXwC9';
+                const serviceID = 'service_ofkyvkj';
+                const ownerTemplateID = 'template_wde8ap8';
+                const customerTemplateID = 'template_ra3xg1j';
+                const publicKey = 'RmZcGlTCvJXQ5yflQ';
 
                 emailjs.init(publicKey);
 
@@ -517,19 +680,31 @@
                     `
                 };
 
-                const submitBtn = document.querySelector('#step-3 button');
-                const originalBtnText = submitBtn.innerText;
-                submitBtn.innerText = 'Sending...';
-                submitBtn.disabled = true;
+                const step3 = document.getElementById('step-3');
+                const stepLoading = document.getElementById('step-loading');
+                const stepSuccess = document.getElementById('step-success');
+                const submitErrorMsg = document.getElementById('submit-error');
+
+                // Transition to loading state
+                submitErrorMsg.classList.remove('visible');
+                step3.classList.add('opacity-0', 'translate-y-10');
+                setTimeout(() => {
+                    step3.classList.add('hidden');
+                    stepLoading.classList.remove('hidden');
+                    setTimeout(() => {
+                        stepLoading.classList.remove('opacity-0', 'translate-y-10');
+                    }, 50);
+                }, 500);
 
                 const sendOwner = emailjs.send(serviceID, ownerTemplateID, templateParams);
                 const sendCustomer = emailjs.send(serviceID, customerTemplateID, templateParams);
 
                 Promise.all([sendOwner, sendCustomer])
                     .then(() => {
-                        step3.classList.add('opacity-0', 'translate-y-10');
+                        // Loading -> Success
+                        stepLoading.classList.add('opacity-0', 'translate-y-10');
                         setTimeout(() => {
-                            step3.classList.add('hidden');
+                            stepLoading.classList.add('hidden');
                             stepSuccess.classList.remove('hidden');
                             setTimeout(() => {
                                 stepSuccess.classList.remove('opacity-0', 'translate-y-10');
@@ -538,9 +713,19 @@
                     })
                     .catch((error) => {
                         console.error('EmailJS Error:', error);
-                        alert('Something went wrong. Please try again later.');
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
+                        // Show error inline on loading screen, then transition back
+                        submitErrorMsg.classList.add('visible');
+                        setTimeout(() => {
+                            stepLoading.classList.add('opacity-0', 'translate-y-10');
+                            setTimeout(() => {
+                                stepLoading.classList.add('hidden');
+                                submitErrorMsg.classList.remove('visible');
+                                step3.classList.remove('hidden');
+                                setTimeout(() => {
+                                    step3.classList.remove('opacity-0', 'translate-y-10');
+                                }, 50);
+                            }, 500);
+                        }, 2000);
                     });
             };
 
