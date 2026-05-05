@@ -87,6 +87,19 @@ window.addEventListener('load', () => {
     if (isMobile()) {
         config.DYE_RESOLUTION = 512;
     }
+
+    // Aggressive mobile fallback: heavily reduce resolution on small screens
+    if (window.innerWidth < 768 || (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches)) {
+        config.DYE_RESOLUTION = 256;
+        config.SIM_RESOLUTION = 64;
+        config.BLOOM = false;
+        config.SUNRAYS = false;
+        config.SHADING = false;
+        config.BLOOM_ITERATIONS = 2;
+        config.PRESSURE_ITERATIONS = 6;
+        config.SPLAT_RADIUS = 0.15;
+    }
+
     if (!ext.supportLinearFiltering) {
         config.DYE_RESOLUTION = 512;
         config.SHADING = false;
@@ -259,6 +272,10 @@ function startGUI () {
 }
 
 function isMobile () {
+    // Capability-based detection: prefer matchMedia, fall back to UA sniffing
+    if (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+        return true;
+    }
     return /Mobi|Android/i.test(navigator.userAgent);
 }
 
@@ -935,7 +952,7 @@ let bloomFramebuffers = [];
 let sunrays;
 let sunraysTemp;
 
-let ditheringTexture = createTextureAsync('LDR_LLL1_0.png');
+let ditheringTexture = createTextureAsync('');
 
 const blurProgram            = new Program(blurVertexShader, blurShader);
 const copyProgram            = new Program(baseVertexShader, copyShader);
@@ -1130,7 +1147,7 @@ function createTextureAsync (url) {
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
     };
-    image.src = url;
+    if (url) image.src = url;
 
     return obj;
 }
@@ -1628,6 +1645,10 @@ function getTextureScale (texture, width, height) {
 
 function scaleByPixelRatio (input) {
     let pixelRatio = window.devicePixelRatio || 1;
+    // Cap pixel ratio on mobile to prevent GPU overload
+    if (isMobile() && pixelRatio > 1) {
+        pixelRatio = 1;
+    }
     return Math.floor(input * pixelRatio);
 }
 
