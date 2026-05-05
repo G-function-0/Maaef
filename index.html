@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaef Media House | Engineering Attention</title>
+    <meta name="description" content="Maaef Media House — a new-era creative studio engineering attention through video, design, photography, web, and brand strategy. Based in Lucknow, India.">
     <link rel="icon" type="image/png" href="logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -725,7 +726,6 @@
     <div id="intro-stage">
         <div id="intro-bg">
             <video id="intro-bg-video" autoplay loop muted playsinline>
-                <source src="trailer.mov" type="video/quicktime">
                 <source src="trailer.mp4" type="video/mp4">
             </video>
             <div id="intro-bg-overlay"></div>
@@ -873,7 +873,7 @@
 
         <section class="hero-wrap">
             <div class="absolute inset-0 z-0 pointer-events-none">
-                <video id="h-video" loop muted playsinline preload="none">
+                <video id="h-video" playsInline muted autoPlay loop class="object-cover w-full h-full pointer-events-none">
                     <source src="trailer.mp4" type="video/mp4">
                 </video>
                 <div class="absolute inset-0 bg-black/60"></div>
@@ -1140,7 +1140,7 @@
 
                 <!-- Bottom bar -->
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
-                    <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2025 Maaef
+                    <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef
                         Media House</span>
 
                     <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer"
@@ -1488,7 +1488,7 @@
                         clockEl.innerText = Date.now();
                     }
                 }
-                setInterval(updateClock, 50);
+                setInterval(updateClock, 1000);
                 updateClock();
 
                 // GSAP ScrollTrigger for Story Items — split by viewport
