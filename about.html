@@ -40,6 +40,10 @@
             --font-stack: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
+        html {
+            overflow-x: hidden;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -60,44 +64,6 @@
             font-family: 'Panchang', sans-serif;
         }
 
-        .cursor-dot,
-        .cursor-circle {
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 10000;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        body.use-custom-cursor .cursor-dot,
-        body.use-custom-cursor .cursor-circle {
-            opacity: 1;
-        }
-
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
-        }
-
-        .cursor-circle {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
-        }
-
-        body.hovering .cursor-circle {
-            width: 80px;
-            height: 80px;
-            background-color: rgba(196, 30, 58, 0.5);
-            border-color: transparent;
-            mix-blend-mode: difference;
-        }
 
         #kinetic-menu {
             transform: translateY(-100%);
@@ -351,12 +317,20 @@
         .pinhole-section {
             position: relative;
             min-height: 100vh;
-            background-color: var(--dark);
+            background-color: var(--bg-color);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .pinhole-section {
+                min-height: auto;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
         }
 
         #pinhole-bg-container {
@@ -371,6 +345,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            #pinhole-bg-container {
+                position: relative;
+                inset: auto;
+                width: 100%;
+                aspect-ratio: 9 / 16;
+                max-height: 70vh;
+                background: #000;
+            }
+
+            #pinhole-main-video {
+                object-fit: contain;
+                background: #000;
+            }
         }
 
         .pinhole-overlay {
@@ -508,6 +498,8 @@
             }
         }
 
+
+
         .pinhole-mute-toggle {
             position: absolute;
             bottom: 2rem;
@@ -537,8 +529,7 @@
 
 <body class="antialiased font-['Inter']">
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
+
     <div class="noise-overlay"></div>
 
     <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500"
@@ -571,34 +562,34 @@
 
     <div id="kinetic-menu"
         style="isolation: isolate; will-change: transform;"
-        class="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
+        class="fixed inset-0 z-[55] bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
         <canvas id="drawing-canvas"></canvas>
         <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
-            style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+            style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
         <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
             <a href="/" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
-                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Home</span>
+                <span class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Home</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Home</span>
+                    class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Home</span>
             </a>
             <a href="/about" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
-                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Studio</span>
+                <span class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Studio</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Studio</span>
+                    class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Studio</span>
             </a>
             <a href="/services" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
-                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Expertise</span>
+                <span class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Expertise</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Expertise</span>
+                    class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Expertise</span>
             </a>
             <a href="/contact" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
-                <span class="serif text-6xl md:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Contact</span>
+                <span class="serif text-[11vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Contact</span>
                 <span
-                    class="absolute top-0 left-0 serif text-6xl md:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Contact</span>
+                    class="absolute top-0 left-0 serif text-[11vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Contact</span>
             </a>
         </div>
         <div
@@ -627,65 +618,118 @@
                 </video>
             </div>
 
-            <!-- Mute Toggle -->
-            <button id="pinhole-mute-btn" class="pinhole-mute-toggle" title="Toggle Sound">
-                <svg id="pinhole-mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <line x1="23" y1="9" x2="17" y2="15"></line>
-                    <line x1="17" y1="9" x2="23" y2="15"></line>
-                </svg>
-            </button>
-
+            <!-- BRAND DIAL — circular selector, bottom-right corner -->
             <style>
-                #brand-slider-wrapper {
+                .brand-dial {
+                    position: absolute;
+                    bottom: 0; right: 0;
+                    width: 320px; height: 320px;
+                    z-index: 40;
+                    transform: translate(28%, 28%);
                     touch-action: none;
                     user-select: none;
                 }
-                #brand-slider {
-                    position: relative;
-                    width: 100vw;
-                    height: 300px;
+                /* mix-blend-mode: difference breaks position:fixed on mobile WebKit */
+                @media (hover: hover) {
+                    .brand-dial {
+                        mix-blend-mode: difference;
+                        isolation: isolate;
+                    }
                 }
-                .brand-card {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 15rem;
-                    height: 15rem;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    will-change: transform, left, opacity;
-                    cursor: grab;
-                }
-                .brand-card:active {
-                    cursor: grabbing;
-                }
-                .brand-card img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
+                .dial-ring {
+                    position: absolute; inset: 0;
+                    border-radius: 50%;
+                    border: 2px solid rgba(255,255,255,0.5);
+                    background: transparent;
                     pointer-events: none;
                 }
+                .dial-ring::before {
+                    content: ''; position: absolute; inset: 35px;
+                    border-radius: 50%;
+                    border: 1px dashed rgba(255,255,255,0.4);
+                }
+                .dial-ring::after {
+                    content: ''; position: absolute; inset: -1px;
+                    border-radius: 50%;
+                    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+                }
+                .dial-mute {
+                    position: absolute; top: 50%; left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 52px; height: 52px;
+                    border-radius: 50%;
+                    border: 2px solid rgba(255,255,255,0.8);
+                    background: transparent;
+                    backdrop-filter: blur(8px);
+                    color: #fff; cursor: pointer;
+                    z-index: 10;
+                    display: flex; align-items: center; justify-content: center;
+                    transition: all 0.3s ease;
+                }
+                .dial-mute:hover {
+                    border-color: rgba(255,255,255,1);
+                    transform: translate(-50%,-50%) scale(1.1);
+                }
+                .dial-logo {
+                    position: absolute;
+                    width: 58px; height: 58px;
+                    border-radius: 50%;
+                    border: 2px solid rgba(255,255,255,0.5);
+                    background: transparent;
+                    backdrop-filter: blur(4px);
+                    display: flex; align-items: center; justify-content: center;
+                    cursor: pointer;
+                    transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
+                }
+                .dial-logo.active {
+                    border-color: rgba(255,255,255,1);
+                    background: rgba(255,255,255,0.1);
+                    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+                }
+                .dial-logo img {
+                    width: 55%; height: 55%;
+                    object-fit: contain;
+                    opacity: 0.7;
+                    transition: opacity 0.3s;
+                    pointer-events: none;
+                }
+                .dial-logo.active img { opacity: 1; }
+
+                /* Active indicator circle on the outer rim */
+
+
                 @media (max-width: 768px) {
-                    .brand-card { width: 10rem; height: 10rem; }
+                    .brand-dial { width: 260px; height: 260px; transform: translate(15%, 15%); }
+                    .dial-ring {
+                        background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, transparent 70%);
+                        border-color: rgba(255,255,255,0.12);
+                    }
+                    .dial-logo { width: 48px; height: 48px; }
+                    .dial-mute { width: 46px; height: 46px; }
                 }
             </style>
-            
-            <div class="absolute inset-0 flex flex-col justify-center w-full overflow-hidden pointer-events-auto z-20 pt-24" id="brand-slider-wrapper" style="mix-blend-mode: difference;">
-                <div id="brand-slider">
-                    <!-- Exactly 3 fixed items -->
-                    <div class="brand-card" data-index="0" data-video="studio-video1.mp4">
-                        <img src="logo1.png" alt="Brand 1">
-                    </div>
-                    <div class="brand-card" data-index="1" data-video="studio-video2.mp4">
-                        <img src="logo2.png" alt="Brand 2">
-                    </div>
-                    <div class="brand-card" data-index="2" data-video="studio-video3.mp4">
-                        <img src="logo3.png" alt="Brand 3">
-                    </div>
+
+            <div class="brand-dial" id="brand-dial">
+                <div class="dial-ring"></div>
+
+                <!-- Mute at center -->
+                <button id="pinhole-mute-btn" class="dial-mute" title="Toggle Sound">
+                    <svg id="pinhole-mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+                <!-- Logos on the arc -->
+                <div class="dial-logo" data-index="0" data-video="studio-video1.mp4">
+                    <img src="logo1.png" alt="Brand 1">
+                </div>
+                <div class="dial-logo" data-index="1" data-video="studio-video2.mp4">
+                    <img src="logo2.png" alt="Brand 2">
+                </div>
+                <div class="dial-logo" data-index="2" data-video="studio-video3.mp4">
+                    <img src="logo3.png" alt="Brand 3">
                 </div>
             </div>
         </section>
@@ -694,7 +738,7 @@
     <!-- Main Footer -->
     <footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8 overflow-hidden border-t border-white/[.05] z-50">
         <!-- Noise overlay -->
-        <div class="absolute inset-0 opacity-[0.15] pointer-events-none z-0" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+        <div class="absolute inset-0 opacity-[0.15] pointer-events-none z-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
         
         <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
@@ -731,7 +775,7 @@
             
             <!-- Big text CTA -->
             <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer" onclick="window.location.href='/contact'">
-                <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:text-black group-hover:[-webkit-text-stroke:2px_rgba(196,30,58,1)]">Maaef.</h2>
+                <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:2px_#C41E3A] group-hover:text-black group-hover:[-webkit-text-stroke:2px_#C41E3A]">Maaef.</h2>
                 
                 <style>
                     @keyframes tapeSlideLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -788,28 +832,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const dot = document.querySelector('.cursor-dot');
-            const circle = document.querySelector('.cursor-circle');
-            let cursorEnabled = false;
 
-            document.addEventListener('mousemove', (e) => {
-                if (!cursorEnabled) {
-                    document.body.classList.add('use-custom-cursor');
-                    cursorEnabled = true;
-                }
-                dot.style.left = e.clientX + 'px';
-                dot.style.top = e.clientY + 'px';
-
-                setTimeout(() => {
-                    circle.style.left = e.clientX + 'px';
-                    circle.style.top = e.clientY + 'px';
-                }, 50);
-            });
-
-            document.querySelectorAll('.hover-trigger').forEach(trigger => {
-                trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-            });
 
             const menu = document.getElementById('kinetic-menu');
             const canvas = document.getElementById('drawing-canvas');
@@ -944,227 +967,203 @@
                 });
             }
 
-            // --- FIXED POSITION CONTINUOUS COVERFLOW LOGIC ---
-            const sliderWrapper = document.getElementById('brand-slider-wrapper');
-            const cards = document.querySelectorAll('.brand-card');
-            
-            if (sliderWrapper && cards.length === 3) {
-                let activeIndex = 0; 
-                let currentPos = 0;  
-                let targetPos = 0;   
+            // --- BRAND DIAL LOGIC ---
+            const brandDial = document.getElementById('brand-dial');
+            const dialLogos = document.querySelectorAll('.dial-logo');
+
+
+            if (brandDial && dialLogos.length === 3) {
+                let DIAL_SIZE = brandDial.offsetWidth;
+                let CENTER = DIAL_SIZE / 2;
+                let LOGO_R = DIAL_SIZE * 0.36;
+                const LOGO_SPACING = 55; // degrees between adjacent logos
+                const ACTIVE_DEG = 225;  // the "center" of the visible arc
+
+                const FULL_CYCLE = LOGO_SPACING * 3; // 165° = one full wrap
+
+                let dialAngle = 0;
+                let activeIndex = 0;
                 let isDragging = false;
-                let hasDragged = false;
-                let startX = 0;
-                let dragStartPos = 0;
-
-                const cardStates = [
-                    { alpha: 1, y: 0 },
-                    { alpha: 1, y: 0 },
-                    { alpha: 1, y: 0 }
-                ];
-                
-                sliderWrapper.style.pointerEvents = 'auto'; // Initially visible and interactive
-
-                function render() {
-                    if (!isDragging) {
-                        currentPos += (targetPos - currentPos) * 0.15; // spring effect
-                    }
-                    
-                    cards.forEach((card, idx) => {
-                        let offset = ((idx - currentPos) % 3 + 3) % 3;
-                        if (offset > 1.5) offset -= 3; // mapping to [-1.5 to 1.5]
-                        
-                        let leftPct = 50 + (offset * 35); // -1 -> 15%, 0 -> 50%, 1 -> 85%
-                        
-                        let absOffset = Math.abs(offset);
-                        let scale = 1 - (absOffset * 0.5); // center has 1, extremes have 0.5
-                        scale = Math.max(0.4, Math.min(1, scale)); 
-                        
-                        let opacity = 1 - (absOffset * 0.6); // slight transparency on sides
-                        opacity = Math.max(0.2, Math.min(1, opacity));
-                        
-                        card.style.zIndex = Math.round(100 - absOffset * 10);
-                        
-                        gsap.set(card, {
-                            left: `${leftPct}%`,
-                            xPercent: -50,
-                            yPercent: -50,
-                            y: cardStates[idx].y,
-                            scale: scale,
-                            opacity: opacity * cardStates[idx].alpha
-                        });
-                    });
-                    
-                    requestAnimationFrame(render);
-                }
-                render();
-
-                let currentVideoSrc = "";
-                let initialTimeout;
+                let dragStartAngle = 0;
+                let dragDialStart = 0;
+                let currentVideoSrc = '';
                 let loopCount = 0;
 
-                function triggerSnapVideo() {
-                    activeIndex = Math.round(targetPos);
-                    targetPos = activeIndex;
-                    
-                    let realIndex = ((activeIndex % 3) + 3) % 3;
-                    
-                    const activeCard = Array.from(cards).find(c => parseInt(c.dataset.index) === realIndex);
-                    if (activeCard && pinholeVideo && pinholeBgContainer) {
-                        const newVideoSrc = activeCard.dataset.video;
-                        const sourceTag = pinholeVideo.querySelector('source');
-                        
-                        if (currentVideoSrc !== newVideoSrc) {
-                            currentVideoSrc = newVideoSrc;
-                            clearTimeout(initialTimeout);
-                            loopCount = 0;
-                            
-                            const startVideoCycle = () => {
-                                revealLogos(); 
-                                pinholeVideo.currentTime = 0;
-                                const p = pinholeVideo.play();
-                                if (p !== undefined) p.catch(()=>{});
-                                
-                                initialTimeout = setTimeout(() => {
-                                    hideLogosAndPlay(false);
-                                }, 3000);
-                            };
 
-                            if (sourceTag && sourceTag.getAttribute('src')) {
-                                gsap.to(pinholeBgContainer, {
-                                    opacity: 0, duration: 0.3, onComplete: () => {
-                                        sourceTag.setAttribute('src', newVideoSrc);
-                                        pinholeVideo.load();
-                                        startVideoCycle();
-                                    }
-                                });
-                            }
+
+                // Wrap an angle into [0, FULL_CYCLE) range
+                function wrapAngle(a) {
+                    return ((a % FULL_CYCLE) + FULL_CYCLE * 100) % FULL_CYCLE;
+                }
+
+                function positionLogos() {
+                    dialLogos.forEach((logo, i) => {
+                        // Wrap each logo's offset so it always stays on the arc
+                        const rawOffset = (i * LOGO_SPACING) + dialAngle;
+                        const wrappedOffset = wrapAngle(rawOffset);
+                        // Center the range: shift so middle logo is at 0
+                        const centered = wrappedOffset - LOGO_SPACING; // range: [-55, 110]
+                        const angle = ACTIVE_DEG + centered;
+                        const rad = (angle * Math.PI) / 180;
+                        logo.style.left = (CENTER + LOGO_R * Math.cos(rad)) + 'px';
+                        logo.style.top  = (CENTER + LOGO_R * Math.sin(rad)) + 'px';
+                        logo.style.transform = 'translate(-50%,-50%)';
+                        // The logo at the center (offset ≈ 0 after wrapping) is active
+                        const atCenter = Math.abs(wrapAngle(rawOffset)) < 5 ||
+                                         Math.abs(wrapAngle(rawOffset) - FULL_CYCLE) < 5;
+                        logo.classList.toggle('active', atCenter);
+                    });
+
+                }
+
+                function getPointerAngle(cx, cy) {
+                    const rect = brandDial.getBoundingClientRect();
+                    return Math.atan2(
+                        cy - (rect.top + rect.height / 2),
+                        cx - (rect.left + rect.width / 2)
+                    ) * (180 / Math.PI);
+                }
+
+                // Snap to nearest multiple of LOGO_SPACING
+                function snapDial() {
+                    const snap = Math.round(dialAngle / LOGO_SPACING) * LOGO_SPACING;
+                    const newIdx = (((-Math.round(snap / LOGO_SPACING)) % 3) + 3) % 3;
+                    gsap.to({ v: dialAngle }, {
+                        v: snap, duration: 0.4, ease: 'power2.out',
+                        onUpdate: function () {
+                            dialAngle = this.targets()[0].v;
+                            positionLogos();
+                        },
+                        onComplete: () => {
+                            dialAngle = snap;
+                            activeIndex = newIdx;
+                            positionLogos();
+                            switchVideo(activeIndex);
                         }
-                    }
-                }
-                
-                function revealLogos() {
-                    isRevealed = true;
-                    sliderWrapper.style.pointerEvents = 'auto';
-                    gsap.to(cardStates, {
-                        alpha: 1,
-                        y: 0,
-                        duration: 0.8,
-                        stagger: 0.2,
-                        ease: "power2.out"
                     });
-                    gsap.to(pinholeBgContainer, { opacity: 0.2, duration: 0.8 });
                 }
 
-                function hideLogosAndPlay(restart = true) {
-                    clearTimeout(initialTimeout);
-                    isRevealed = false;
-                    sliderWrapper.style.pointerEvents = 'none';
-                    gsap.to(cardStates, {
-                        alpha: 0,
-                        y: 20,
-                        duration: 0.5,
-                        ease: "power2.in"
+                function rotateTo(logoIndex) {
+                    // Find the shortest rotation path to bring logoIndex to center
+                    const targetMod = (-logoIndex * LOGO_SPACING);
+                    // Calculate how far we need to go from current position
+                    let delta = targetMod - dialAngle;
+                    // Normalize delta to [-halfCycle, halfCycle] for shortest path
+                    const halfCycle = FULL_CYCLE / 2;
+                    delta = ((delta + halfCycle) % FULL_CYCLE + FULL_CYCLE) % FULL_CYCLE - halfCycle;
+                    const target = dialAngle + delta;
+
+                    gsap.to({ v: dialAngle }, {
+                        v: target, duration: 0.4, ease: 'power2.out',
+                        onUpdate: function () {
+                            dialAngle = this.targets()[0].v;
+                            positionLogos();
+                        },
+                        onComplete: () => {
+                            dialAngle = target;
+                            activeIndex = logoIndex;
+                            positionLogos();
+                            switchVideo(logoIndex);
+                        }
                     });
-                    gsap.to(pinholeBgContainer, { opacity: 1, duration: 0.5 });
-                    
-                    if (restart) {
-                        pinholeVideo.currentTime = 0;
-                    }
-                    const p = pinholeVideo.play();
-                    if (p !== undefined) p.catch(()=>{});
                 }
 
+                function switchVideo(idx) {
+                    const logo = dialLogos[idx];
+                    if (!logo || !pinholeVideo || !pinholeBgContainer) return;
+                    const src = logo.dataset.video;
+                    if (src === currentVideoSrc) return;
+                    currentVideoSrc = src;
+                    loopCount = 0;
+
+                    const sourceTag = pinholeVideo.querySelector('source');
+                    if (!sourceTag) return;
+                    gsap.to(pinholeBgContainer, {
+                        opacity: 0, duration: 0.3, onComplete: () => {
+                            sourceTag.setAttribute('src', src);
+                            pinholeVideo.load();
+                            pinholeVideo.currentTime = 0;
+                            const p = pinholeVideo.play(); if (p) p.catch(() => {});
+                            gsap.to(pinholeBgContainer, { opacity: 1, duration: 0.6 });
+                        }
+                    });
+                }
+
+                // Video ended — auto-advance after 2 loops
                 if (pinholeVideo) {
                     pinholeVideo.addEventListener('ended', () => {
                         loopCount++;
                         if (loopCount >= 2) {
-                            targetPos += 1;
-                            triggerSnapVideo();
+                            rotateTo((activeIndex + 1) % 3);
                         } else {
-                            revealLogos();
                             pinholeVideo.currentTime = 0;
-                            const p = pinholeVideo.play();
-                            if (p !== undefined) p.catch(()=>{});
-                            
-                            clearTimeout(initialTimeout);
-                            initialTimeout = setTimeout(() => {
-                                hideLogosAndPlay(false);
-                            }, 3000);
-                        }
-                    });
-                }
-                
-                if (pinholeBgContainer) {
-                    pinholeBgContainer.addEventListener('click', () => {
-                        if (!isRevealed) {
-                            revealLogos();
-                            clearTimeout(initialTimeout);
+                            const p = pinholeVideo.play(); if (p) p.catch(() => {});
                         }
                     });
                 }
 
-                // Initialize Video for first card without fading title
-                triggerSnapVideo();
-
-                // Mouse events
-                sliderWrapper.addEventListener('mousedown', (e) => {
-                    isDragging = true;
-                    hasDragged = false;
-                    startX = e.clientX;
-                    dragStartPos = currentPos;
-                    targetPos = currentPos;
-                    clearTimeout(initialTimeout);
+                // Click logo → bring it to center
+                dialLogos.forEach((logo, i) => {
+                    logo.addEventListener('click', () => rotateTo(i));
                 });
-                window.addEventListener('mouseup', (e) => {
-                    if(!isDragging) return;
-                    isDragging = false;
-                    targetPos = Math.round(currentPos); // snap to nearest integer
-                    triggerSnapVideo();
 
-                    if (!hasDragged && e.target === sliderWrapper) {
-                        if (isRevealed) hideLogosAndPlay(true);
-                    }
+                // Mouse drag
+                brandDial.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('.dial-mute')) return;
+                    isDragging = true;
+                    dragStartAngle = getPointerAngle(e.clientX, e.clientY);
+                    dragDialStart = dialAngle;
                 });
                 window.addEventListener('mousemove', (e) => {
                     if (!isDragging) return;
                     e.preventDefault();
-                    const deltaX = e.clientX - startX;
-                    if (Math.abs(deltaX) > 5) hasDragged = true;
-                    const vw = window.innerWidth;
-                    const offsetPos = -(deltaX / (vw * 0.5)); 
-                    currentPos = dragStartPos + offsetPos;
-                    targetPos = currentPos; 
+                    dialAngle = dragDialStart + (getPointerAngle(e.clientX, e.clientY) - dragStartAngle);
+                    positionLogos();
                 });
-
-                // Touch events
-                sliderWrapper.addEventListener('touchstart', (e) => {
-                    isDragging = true;
-                    hasDragged = false;
-                    startX = e.touches[0].clientX;
-                    dragStartPos = currentPos;
-                    targetPos = currentPos;
-                    clearTimeout(initialTimeout);
-                });
-                window.addEventListener('touchend', (e) => {
-                    if(!isDragging) return;
+                window.addEventListener('mouseup', () => {
+                    if (!isDragging) return;
                     isDragging = false;
-                    targetPos = Math.round(currentPos);
-                    triggerSnapVideo();
-
-                    if (!hasDragged && e.target === sliderWrapper) {
-                        if (isRevealed) hideLogosAndPlay(true);
-                    }
+                    snapDial();
                 });
-                sliderWrapper.addEventListener('touchmove', (e) => {
-                    if(!isDragging) return;
-                    const deltaX = e.touches[0].clientX - startX;
-                    if (Math.abs(deltaX) > 5) hasDragged = true;
-                    const vw = window.innerWidth;
-                    const offsetPos = -(deltaX / (vw * 0.5));
-                    currentPos = dragStartPos + offsetPos;
-                    targetPos = currentPos;
+
+                // Touch drag
+                brandDial.addEventListener('touchstart', (e) => {
+                    if (e.target.closest('.dial-mute')) return;
+                    isDragging = true;
+                    dragStartAngle = getPointerAngle(e.touches[0].clientX, e.touches[0].clientY);
+                    dragDialStart = dialAngle;
+                }, { passive: true });
+                window.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    dialAngle = dragDialStart + (getPointerAngle(e.touches[0].clientX, e.touches[0].clientY) - dragStartAngle);
+                    positionLogos();
+                }, { passive: true });
+                window.addEventListener('touchend', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    snapDial();
+                });
+
+                // Scroll wheel — jump directly to next/prev stop
+                brandDial.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const next = e.deltaY > 0
+                        ? (activeIndex + 1) % 3
+                        : (activeIndex + 2) % 3;
+                    rotateTo(next);
                 }, { passive: false });
+
+                // Resize handler
+                window.addEventListener('resize', () => {
+                    DIAL_SIZE = brandDial.offsetWidth;
+                    CENTER = DIAL_SIZE / 2;
+                    LOGO_R = DIAL_SIZE * 0.36;
+                    positionLogos();
+                });
+
+                // Initialize
+                positionLogos();
+                switchVideo(0);
             }
         });
     </script>

@@ -4,25 +4,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Custom Cursor
-            const dot = document.querySelector('.cursor-dot');
-            const circle = document.querySelector('.cursor-circle');
-            let cursorEnabled = false;
-
-            document.addEventListener('mousemove', (e) => {
-                if (!cursorEnabled) {
-                    document.body.classList.add('use-custom-cursor');
-                    cursorEnabled = true;
-                }
-                dot.style.left = e.clientX + 'px';
-                dot.style.top = e.clientY + 'px';
-                
-                setTimeout(() => {
-                    circle.style.left = e.clientX + 'px';
-                    circle.style.top = e.clientY + 'px';
-                }, 50);
-            });
-
             // 2. Hover Triggers
             document.querySelectorAll('.hover-trigger').forEach(trigger => {
                 trigger.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
