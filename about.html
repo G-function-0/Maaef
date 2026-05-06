@@ -292,9 +292,10 @@
 
         @media (max-width: 768px) {
             .pinhole-section {
-                min-height: auto;
+                min-height: 100dvh;
                 flex-direction: column;
-                justify-content: flex-start;
+                justify-content: center;
+                align-items: center;
             }
         }
 
@@ -313,18 +314,34 @@
         }
 
         @media (max-width: 768px) {
+            /* Video container — centered in viewport, landscape ratio */
             #pinhole-bg-container {
                 position: relative;
                 inset: auto;
                 width: 100%;
-                aspect-ratio: 9 / 16;
-                max-height: 70vh;
+                aspect-ratio: 16 / 9;
+                max-height: 56vw;
                 background: #000;
+                /* vertically center in the flex pinhole-section */
+                margin: auto 0;
             }
 
             #pinhole-main-video {
                 object-fit: contain;
                 background: #000;
+            }
+
+            /* Fullscreen button — compact pill on mobile */
+            #fullscreen-btn {
+                padding: 7px 14px !important;
+                font-size: 8px !important;
+                gap: 5px !important;
+                bottom: 0.75rem !important;
+            }
+
+            #fullscreen-btn svg {
+                width: 11px !important;
+                height: 11px !important;
             }
         }
 
@@ -497,28 +514,33 @@
 
     <div class="noise-overlay"></div>
 
-    <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500"
-        id="main-nav">
-        <a href="/" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
+    <!-- Studio-only expanded nav -->
+    <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-6 flex justify-between items-center mix-blend-difference text-white transition-opacity duration-500" id="main-nav">
+
+        <!-- Logo -->
+        <a href="/" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300 flex-shrink-0">
             <img src="logo.png" alt="Maaef Logo" class="h-8 w-auto">
         </a>
 
-        <div class="flex items-center gap-6 z-[60]">
-            <a href="/contact"
-                class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+        <!-- Inline nav links — visible on md+ -->
+        <div class="hidden md:flex items-center gap-8 z-[60]">
+            <a href="/" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Home</a>
+            <a href="/about" class="text-[11px] uppercase tracking-[0.2em] text-white font-bold hover:text-red-500 transition-colors duration-300 hover-trigger">Studio</a>
+            <a href="/services" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Expertise</a>
+            <a href="/contact" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Contact</a>
+        </div>
+
+        <!-- Right controls -->
+        <div class="flex items-center gap-5 z-[60]">
+            <a href="/contact" class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
                 Start Project
             </a>
-
-            <button onclick="toggleMenu()"
-                class="group relative flex flex-col items-end justify-center w-12 h-12 hover-trigger p-2">
+            <button onclick="toggleMenu()" class="group relative flex flex-col items-end justify-center w-12 h-12 hover-trigger p-2">
                 <div id="hamburger-lines" class="flex flex-col items-end gap-[6px] w-full transition-all duration-300">
-                    <span id="line1"
-                        class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
-                    <span id="line2"
-                        class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                    <span id="line1" class="w-full h-[2px] bg-white transition-all duration-300 group-hover:w-3/4"></span>
+                    <span id="line2" class="w-2/3 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </div>
-                <div id="menu-logo-toggle"
-                    class="absolute inset-0 flex items-center justify-center opacity-0 scale-50 transition-all duration-500 pointer-events-none">
+                <div id="menu-logo-toggle" class="absolute inset-0 flex items-center justify-center opacity-0 scale-50 transition-all duration-500 pointer-events-none">
                     <img src="logo.png" alt="Menu Logo" class="h-14 w-auto transition-all duration-300 menu-toggle-img">
                 </div>
             </button>
@@ -578,6 +600,19 @@
                 <p class="text-gray-400 text-lg">A few logos we like.</p>
             </div>
             <div id="pinhole-bg-container">
+                <!-- Fullscreen button overlay -->
+                <button id="fullscreen-btn" title="Watch fullscreen" aria-label="Open video fullscreen"
+                    style="position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:50;
+                           display:flex;align-items:center;gap:8px;padding:10px 22px;
+                           background:rgba(0,0,0,0.55);backdrop-filter:blur(10px);
+                           border:1px solid rgba(255,255,255,0.25);border-radius:999px;
+                           color:#fff;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+                           cursor:pointer;transition:all 0.3s ease;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                    Watch Fullscreen
+                </button>
                 <video id="pinhole-main-video" autoplay muted playsinline>
                     <source src="dummy/dummyvideo.mp4" type="video/mp4">
                 </video>
@@ -664,13 +699,16 @@
 
 
                 @media (max-width: 768px) {
-                    .brand-dial { width: 260px; height: 260px; transform: translate(15%, 15%); }
-                    .dial-ring {
-                        background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, transparent 70%);
-                        border-color: rgba(255,255,255,0.12);
+                    .brand-dial {
+                        width: 180px;
+                        height: 180px;
+                        transform: translate(10%, 10%);
                     }
-                    .dial-logo { width: 48px; height: 48px; }
-                    .dial-mute { width: 46px; height: 46px; }
+                    .dial-ring::before { inset: 24px; }
+                    .dial-logo { width: 38px; height: 38px; }
+                    .dial-mute { width: 36px; height: 36px; }
+                    .dial-mute svg { width: 13px; height: 13px; }
+                    .dial-logo img { width: 50%; height: 50%; }
                 }
             </style>
 
@@ -700,8 +738,9 @@
         </section>
     </main>
 
-    <!-- Main Footer -->
-    <footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8 overflow-hidden border-t border-white/[.05] z-50">
+    <!-- Footer removed from Studio page -->
+    <div id="main-footer" style="display:none;"></div>
+    <footer style="display:none;">
         <!-- Noise overlay -->
         <div class="absolute inset-0 opacity-[0.15] pointer-events-none z-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
         
@@ -891,7 +930,7 @@
                     clockEl.innerText = Date.now();
                 }
             }
-            setInterval(updateClock, 50);
+            setInterval(updateClock, 1000);
             updateClock();
 
             // --- PINHOLE BRAND SHOWCASE LOGIC ---
@@ -932,7 +971,76 @@
                 });
             }
 
+            // --- FULLSCREEN BUTTON LOGIC ---
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            if (fullscreenBtn && pinholeVideo && pinholeBgContainer) {
+
+                // CSS for when the container is fullscreen — fill screen, no controls bar
+                const fsStyle = document.createElement('style');
+                fsStyle.textContent = `
+                    #pinhole-bg-container:fullscreen,
+                    #pinhole-bg-container:-webkit-full-screen {
+                        background: #000;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    #pinhole-bg-container:fullscreen #pinhole-main-video,
+                    #pinhole-bg-container:-webkit-full-screen #pinhole-main-video {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
+                    #pinhole-bg-container:fullscreen #fullscreen-btn,
+                    #pinhole-bg-container:-webkit-full-screen #fullscreen-btn {
+                        display: none;
+                    }
+                `;
+                document.head.appendChild(fsStyle);
+
+                fullscreenBtn.addEventListener('click', () => {
+                    // Request fullscreen on the CONTAINER, not the video
+                    // This avoids the browser's native video controls bar
+                    const el = pinholeBgContainer;
+                    
+                    const enterFS = el.requestFullscreen || el.webkitRequestFullscreen;
+                    
+                    if (enterFS) {
+                        enterFS.call(el).then(() => {
+                            // Attempt to lock screen to landscape on mobile (Android/Chrome)
+                            if (screen.orientation && screen.orientation.lock) {
+                                screen.orientation.lock("landscape").catch((err) => {
+                                    console.warn("Screen orientation lock failed:", err);
+                                });
+                            }
+                        }).catch(err => console.error("Error attempting to enable fullscreen:", err));
+                    } else if (pinholeVideo.webkitEnterFullscreen) {
+                        // iOS Safari fallback — native player automatically rotates to landscape
+                        pinholeVideo.webkitEnterFullscreen();
+                    } else {
+                        window.open(pinholeVideo.currentSrc, '_blank');
+                    }
+                });
+
+                // Keep playing / restore state when exiting fullscreen
+                ['fullscreenchange', 'webkitfullscreenchange'].forEach(evt => {
+                    document.addEventListener(evt, () => {
+                        const inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+                        fullscreenBtn.style.display = inFS ? 'none' : 'flex';
+                        if (!inFS) {
+                            // Unlock screen orientation when exiting fullscreen
+                            if (screen.orientation && screen.orientation.unlock) {
+                                screen.orientation.unlock();
+                            }
+                            // Restore ambient opacity on exit
+                            gsap.to(pinholeBgContainer, { opacity: 1, duration: 0.4 });
+                        }
+                    });
+                });
+            }
+
             // --- BRAND DIAL LOGIC ---
+
             const brandDial = document.getElementById('brand-dial');
             const dialLogos = document.querySelectorAll('.dial-logo');
 
