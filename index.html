@@ -67,20 +67,17 @@
         html.intro-done {
             overflow-y: auto;
             overflow-x: hidden;
-            height: var(--vh-full);
+            height: auto;
             scroll-behavior: smooth;
         }
 
-        /* Scroll-snap only on desktop — causes jumpy UX on mobile */
-        @media (min-width: 768px) {
-            html.intro-done {
-                scroll-snap-type: y mandatory;
-            }
+        /* Scroll-snap enabled on all screens per user request */
+        html.intro-done {
+            scroll-snap-type: y mandatory;
         }
 
         body.intro-done {
             overflow: visible;
-            overflow-x: hidden;
             height: auto;
         }
 
@@ -344,7 +341,6 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity .5s ease;
-            overflow-x: hidden;
         }
 
         #homepage.alive {
@@ -388,7 +384,7 @@
         @media (max-width: 768px) {
             .hero-wrap {
                 padding: 0 1.5rem;
-                scroll-snap-align: none;
+                scroll-snap-align: start;
             }
         }
 
@@ -508,7 +504,6 @@
             padding: 0;
             background: #050505;
             position: relative;
-            overflow-x: hidden;
         }
 
         .story-container {
@@ -523,7 +518,6 @@
             min-height: var(--vh-full);
             margin-bottom: 0;
             opacity: 0;
-            visibility: hidden;
             scroll-snap-align: center;
             scroll-snap-stop: always;
         }
@@ -706,7 +700,7 @@
 
         @media (max-width: 768px) {
             #main-footer {
-                scroll-snap-align: none;
+                scroll-snap-align: start;
             }
         }
 
@@ -1499,7 +1493,7 @@
                 document.querySelectorAll('.story-item').forEach((item, i) => {
                     if (isMobileView) {
                         // Mobile: simpler stacked fade-in / slide-up
-                        gsap.set(item, { opacity: 0, visibility: "hidden", y: 30 });
+                        gsap.set(item, { opacity: 0, y: 30 });
                         gsap.to(item, {
                             scrollTrigger: {
                                 trigger: item,
@@ -1507,7 +1501,6 @@
                                 toggleActions: "play none none none"
                             },
                             opacity: 1,
-                            visibility: "visible",
                             y: 0,
                             duration: 0.8,
                             ease: "power2.out",
@@ -1522,7 +1515,6 @@
                                 toggleActions: "play none none reverse"
                             },
                             opacity: 1,
-                            visibility: "visible",
                             y: 0,
                             duration: 1.2,
                             ease: "power3.out",
