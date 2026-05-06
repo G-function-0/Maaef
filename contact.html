@@ -211,6 +211,39 @@
         .submit-error-msg.visible {
             opacity: 1;
         }
+
+        /* Menu Open Overrides */
+        body.menu-open #main-nav .nav-logo-link,
+        body.menu-open #main-nav .hidden.md\:flex,
+        body.menu-open #main-nav a[href="/contact"] {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        body.menu-open {
+            overflow: hidden !important;
+        }
+
+        .menu-open #menu-logo-toggle {
+            opacity: 1;
+            scale: 1;
+            pointer-events: auto;
+        }
+
+        .menu-open #hamburger-lines {
+            opacity: 0;
+            scale: 0.5;
+            pointer-events: none;
+        }
+
+        .menu-toggle-img {
+            filter: brightness(0) invert(1);
+        }
+
+        button:hover .menu-toggle-img {
+            filter: invert(18%) sepia(91%) saturate(3644%) hue-rotate(338deg) brightness(85%) contrast(93%);
+        }
     </style>
 </head>
 
@@ -731,6 +764,7 @@
                 }
             };
 
+            // Mouse events
             canvas.addEventListener('mousedown', (e) => {
                 drawing = true;
                 paths.push({ points: [{ x: e.clientX, y: e.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
@@ -740,6 +774,24 @@
                 paths[paths.length - 1].points.push({ x: e.clientX, y: e.clientY });
             });
             window.addEventListener('mouseup', () => {
+                drawing = false;
+                if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+            });
+
+            // Touch events
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                drawing = true;
+                paths.push({ points: [{ x: touch.clientX, y: touch.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+            }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!drawing) return;
+                const touch = e.touches[0];
+                paths[paths.length - 1].points.push({ x: touch.clientX, y: touch.clientY });
+            }, { passive: false });
+            canvas.addEventListener('touchend', () => {
                 drawing = false;
                 if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
             });

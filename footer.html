@@ -95,6 +95,7 @@
                 }
             };
 
+            // Mouse events
             canvas.addEventListener('mousedown', (e) => {
                 drawing = true;
                 paths.push({ points: [{x: e.clientX, y: e.clientY}], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
@@ -106,6 +107,24 @@
             window.addEventListener('mouseup', () => {
                 drawing = false;
                 if(paths.length > 0) paths[paths.length - 1].state = 'pulsing';
+            });
+
+            // Touch events
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                drawing = true;
+                paths.push({ points: [{ x: touch.clientX, y: touch.clientY }], state: 'drawing', opacity: 1, pulseVal: 0, pulseDir: 1, pulseCount: 0 });
+            }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!drawing) return;
+                const touch = e.touches[0];
+                paths[paths.length - 1].points.push({ x: touch.clientX, y: touch.clientY });
+            }, { passive: false });
+            canvas.addEventListener('touchend', () => {
+                drawing = false;
+                if (paths.length > 0) paths[paths.length - 1].state = 'pulsing';
             });
 
             function animateDrawing() {
