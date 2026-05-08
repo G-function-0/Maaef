@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maaef — Direction A</title>
+
+<!-- Brand fonts. Drop the OTF/TTF files next to this HTML. -->
+<style>
+  @font-face {
+    font-family: 'Panchang';
+    src: url('dummy/Panchang-Semibold.otf') format('opentype'),
+         url('Panchang-Semibold.otf') format('opentype');
+    font-weight: 600 700;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'VerdanaLocal';
+    src: url('dummy/Verdana.ttf') format('truetype'),
+         url('Verdana.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+  }
+  html, body { margin: 0; padding: 0; background: #050505; color: #f4f1ee; }
+  body {
+    font-family: VerdanaLocal, Verdana, Geneva, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+  #root { width: 100vw; height: 100vh; }
+
+  .maaef-h1, .serif {
+    font-family: Panchang, 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 0.92;
+  }
+  .maaef-h1-italic {
+    font-family: Panchang, 'Playfair Display', 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+  }
+  .maaef-body { font-family: VerdanaLocal, Verdana, Geneva, sans-serif; }
+  .maaef-mono { font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace; }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#050505"/>
+    <text x="50" y="58" font-family="serif" font-weight="700" font-size="34" text-anchor="middle" fill="#fff">M</text>
+    <rect x="36" y="68" width="28" height="2" fill="#E40521"/>
+  </svg>
+</template>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+//
+// ─────────── shared content + primitives (from sections-data.jsx) ──────────
+//
+const { useEffect, useRef, useState } = React;
+
+const MAAEF_RED = '#E40521';
+const MAAEF_BG = '#050505';
+const MAAEF_INK = '#f4f1ee';
+const MAAEF_DIM = 'rgba(244,241,238,0.42)';
+const MAAEF_FAINT = 'rgba(244,241,238,0.12)';
+
+const LOGO_SRC = 'logo.png';
+const HERO_VIDEO_SRC = 'trailer.mp4';
+
+const MAAEF_SECTIONS = [
+  {
+    id: 'hero', ch: '00', kicker: 'INDEX', label: 'HERO',
+    pre: 'WE ENGINEER ATTENTION',
+    titleLines: ['Maaef'], subtitleLines: ['Media House.'],
+    body: 'We engineer attention. A new-era media house.',
+    coords: '26.8467° N · 81.0307° E',
+    tags: ['LUCKNOW · IN', 'EST. 2024', 'TZ +05:30'],
+  },
+  {
+    id: 'origin', ch: '01', kicker: 'ORIGIN', label: 'ORIGIN',
+    pre: 'WHY WE EXIST',
+    titleLines: ['It started', 'because', 'we were bored.'],
+    redLine: 2,
+    body: 'Digital noise is loud. We wanted to make something that actually felt like something. So we did.',
+    tags: ['EST. 2024', 'INDEPENDENT', 'NO INVESTORS'],
+  },
+  {
+    id: 'team', ch: '02', kicker: 'TEAM', label: 'TEAM',
+    pre: 'WHO MADE IT',
+    titleLines: ['Restless in', 'Lucknow.'],
+    italicLine: 1,
+    body: "A group of people who couldn't stop critiquing everything they saw. Now we just do the work ourselves.",
+    tags: ['12 HUMANS', '4 DOGS', '0 EGOS'],
+  },
+  {
+    id: 'vision', ch: '03', kicker: 'VISION', label: 'VISION',
+    pre: 'HOW WE THINK',
+    titleLines: ['Art is cool.', 'Results are', 'better.'],
+    italicLine: 1,
+    body: 'We bridge the gap between "that looks nice" and "that actually worked." It\u2019s a delicate balance.',
+    tags: ['CRAFT', 'OUTCOMES', 'BOTH'],
+  },
+  {
+    id: 'reach', ch: '04', kicker: 'REACH', label: 'REACH',
+    pre: 'WHERE WE WORK',
+    titleLines: ['Here, there,', 'and', 'everywhere.'],
+    body: "Telling stories across borders. Same core values: don't be boring, don't lie, and hit the deadline.",
+    tags: ['7 CITIES', '3 CONTINENTS', '∞ TIMEZONES'],
+  },
+  {
+    id: 'outro', ch: '05', kicker: 'CONTACT', label: 'BECAME',
+    pre: 'WHAT IT BECAME',
+    titleLines: ['became'],
+    body: 'Start a project. Or just say hi.',
+    tags: ['HELLO@MAAEF.COM', 'IG @MAAEF', 'LUCKNOW · IN'],
+  },
+];
+
+function Ticker({ children, duration = 30, reverse = false, motion = true }) {
+  return (
+    <div style={{ overflow: 'hidden', whiteSpace: 'nowrap',
+      maskImage: 'linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%)',
+      WebkitMaskImage: 'linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%)' }}>
+      <div style={{
+        display: 'inline-block',
+        animation: motion ? `maaef-marquee ${duration}s linear infinite ${reverse ? 'reverse' : 'normal'}` : 'none',
+      }}>
+        {Array.from({ length: 8 }).map((_, i) => (
+          <span key={i} style={{ paddingRight: 32 }}>{children}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Reticle({ size = 22, color = MAAEF_RED, blink = true }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 22 22" style={{ display: 'block' }}>
+      <g stroke={color} strokeWidth="1" fill="none">
+        <path d="M0,0 L6,0 M0,0 L0,6" />
+        <path d="M22,0 L16,0 M22,0 L22,6" />
+        <path d="M0,22 L6,22 M0,22 L0,16" />
+        <path d="M22,22 L16,22 M22,22 L22,16" />
+        <circle cx="11" cy="11" r="2.5" />
+        <path d="M11,7 L11,9 M11,13 L11,15 M7,11 L9,11 M13,11 L15,11" />
+      </g>
+      {blink && <circle cx="11" cy="11" r="1.2" fill={color}>
+        <animate attributeName="opacity" values="1;0.2;1" dur="1.4s" repeatCount="indefinite" />
+      </circle>}
+    </svg>
+  );
+}
+
+(function injectMaaefStyles() {
+  if (document.getElementById('maaef-globals')) return;
+  const s = document.createElement('style');
+  s.id = 'maaef-globals';
+  s.textContent = `
+    @keyframes maaef-sweep { 0%{transform:translateX(-30%)} 100%{transform:translateX(30%)} }
+    @keyframes maaef-marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @keyframes maaef-blink { 0%,49%{opacity:1} 50%,100%{opacity:0.15} }
+    @keyframes maaef-scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
+    @keyframes maaef-bar { 0%{transform:scaleX(0.1)} 50%{transform:scaleX(1)} 100%{transform:scaleX(0.4)} }
+    @keyframes maaef-pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+    .maaef-snap { scroll-snap-type: y mandatory; scrollbar-width: none; }
+    .maaef-snap::-webkit-scrollbar { display: none; }
+    .maaef-snap > section { scroll-snap-align: start; scroll-snap-stop: always; }
+  `;
+  document.head.appendChild(s);
+})();
+
+//
+// ─────────────── Direction A — Telemetry HUD (from direction-a.jsx) ────────
+//
+
+function HudCorner({ children, side = 'tl', color = MAAEF_DIM }) {
+  const pos = {
+    tl: { top: 14, left: 18 }, tr: { top: 14, right: 18 },
+    bl: { bottom: 14, left: 18 }, br: { bottom: 14, right: 18 },
+  }[side];
+  return (
+    <div className="maaef-mono" style={{
+      position: 'absolute', ...pos, fontSize: 9, letterSpacing: '0.16em',
+      color, textTransform: 'uppercase', display: 'flex', gap: 8, alignItems: 'center', zIndex: 6,
+    }}>
+      {children}
+    </div>
+  );
+}
+
+function ChannelBadge({ ch, label, color = MAAEF_RED }) {
+  return (
+    <span className="maaef-mono" style={{
+      display: 'inline-flex', alignItems: 'center', gap: 6,
+      fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase',
+    }}>
+      <span style={{ width: 6, height: 6, background: color, borderRadius: 1 }} />
+      <span style={{ color }}>CH-{ch}</span>
+      <span style={{ color: MAAEF_DIM }}>/ {label}</span>
+    </span>
+  );
+}
+
+function SectorBar({ motion = true, sectors = [0.62, 0.38, 0.84] }) {
+  return (
+    <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+      {sectors.map((v, i) => (
+        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div className="maaef-mono" style={{ fontSize: 8, letterSpacing: '0.14em', color: MAAEF_DIM }}>S{i + 1}</div>
+          <div style={{ width: 38, height: 3, background: 'rgba(255,255,255,0.08)', position: 'relative' }}>
+            <div style={{
+              position: 'absolute', left: 0, top: 0, bottom: 0,
+              width: `${v * 100}%`, background: i === 1 ? MAAEF_RED : MAAEF_INK,
+              transformOrigin: 'left',
+              animation: motion ? `maaef-bar ${2.4 + i * 0.4}s ease-in-out infinite` : 'none',
+            }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ScanSweep({ motion = true }) {
+  if (!motion) return null;
+  return (
+    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 1 }}>
+      <div style={{
+        position: 'absolute', left: 0, right: 0, height: '24%',
+        background: 'linear-gradient(180deg, transparent 0%, rgba(196,37,26,0.05) 50%, transparent 100%)',
+        animation: 'maaef-scan 9s linear infinite',
+      }} />
+    </div>
+  );
+}
+
+function HudFrame({ color = MAAEF_FAINT }) {
+  return (
+    <>
+      {['tl','tr','bl','br'].map(c => {
+        const s = 14;
+        const pos = {
+          tl: { top: 22, left: 26, borderLeft: `1px solid ${color}`, borderTop: `1px solid ${color}` },
+          tr: { top: 22, right: 26, borderRight: `1px solid ${color}`, borderTop: `1px solid ${color}` },
+          bl: { bottom: 22, left: 26, borderLeft: `1px solid ${color}`, borderBottom: `1px solid ${color}` },
+          br: { bottom: 22, right: 26, borderRight: `1px solid ${color}`, borderBottom: `1px solid ${color}` },
+        }[c];
+        return <div key={c} style={{ position: 'absolute', width: s, height: s, ...pos, zIndex: 2 }} />;
+      })}
+    </>
+  );
+}
+
+function HeroVideo({ motion }) {
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#0a0405' }}>
+      <video src={HERO_VIDEO_SRC} autoPlay muted loop playsInline
+        style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          objectFit: 'cover', filter: motion ? 'none' : 'blur(2px)',
+        }} />
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'radial-gradient(120% 80% at 70% 40%, rgba(196,37,26,0.35), rgba(196,37,26,0.05) 55%, rgba(0,0,0,0) 80%)',
+        mixBlendMode: 'screen',
+      }} />
+    </div>
+  );
+}
+
+function HeroA({ s, motion, density }) {
+  return (
+    <>
+      <HeroVideo motion={motion} />
+      <ScanSweep motion={motion} />
+      <div style={{ position: 'absolute', inset: 0,
+        background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,0.85) 100%)' }} />
+      <HudFrame />
+      <HudCorner side="tl">
+        <img src={LOGO_SRC} alt="Maaef" style={{ height: 22, width: 'auto', filter: 'brightness(0) invert(1)' }} />
+        <span style={{ color: MAAEF_DIM }}>N–01 / BROADCAST</span>
+      </HudCorner>
+      <HudCorner side="tr">
+        <span>REC</span>
+        <span style={{ width: 6, height: 6, borderRadius: '50%', background: MAAEF_RED, animation: motion ? 'maaef-pulse 1s ease-in-out infinite' : 'none' }} />
+        <span style={{ color: MAAEF_INK, letterSpacing: '0.25em' }}>START PROJECT</span>
+      </HudCorner>
+      <div style={{
+        position: 'absolute', left: 56, right: 56, bottom: density === 'sparse' ? 90 : 70,
+        display: 'flex', flexDirection: 'column', gap: density === 'sparse' ? 18 : 10, zIndex: 4,
+      }}>
+        <ChannelBadge ch="00" label="HERO · BROADCAST LIVE" />
+        <h1 className="maaef-h1" style={{ fontSize: 168, color: MAAEF_INK, margin: 0 }}>
+          Maaef
+          <span className="maaef-h1-italic" style={{ display: 'block', fontSize: 92, color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em' }}>
+            Media House.
+          </span>
+        </h1>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32, justifyContent: 'space-between' }}>
+          <div className="maaef-body" style={{
+            fontSize: 13, color: MAAEF_INK, maxWidth: 320, opacity: 0.9,
+            borderLeft: `2px solid ${MAAEF_RED}`, paddingLeft: 14, lineHeight: 1.6,
+          }}>We engineer attention. A new-era media house.</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <SectorBar motion={motion} />
+            <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM }}>{s.coords}</span>
+          </div>
+        </div>
+      </div>
+      <HudCorner side="bl"><span style={{ color: MAAEF_INK }}>// SCROLL</span><span>↓</span></HudCorner>
+      <HudCorner side="br"><span>{s.tags.join(' · ')}</span></HudCorner>
+    </>
+  );
+}
+
+function ContentA({ s, motion, density, idx }) {
+  const titleSize = s.titleLines.length === 1 ? 200 : (s.titleLines[0].length > 12 ? 104 : 124);
+  return (
+    <>
+      <ScanSweep motion={motion} />
+      <HudFrame />
+      <div style={{
+        position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        pointerEvents: 'none', zIndex: 0,
+      }}>
+        <div className="maaef-h1" style={{
+          fontSize: 320, color: 'rgba(255,255,255,0.025)', letterSpacing: '-0.05em',
+          textTransform: 'uppercase', whiteSpace: 'nowrap',
+        }}>{s.label}</div>
+      </div>
+      <HudCorner side="tl"><ChannelBadge ch={s.ch} label={`${s.label} · ${s.pre}`} /></HudCorner>
+      <HudCorner side="tr">
+        <SectorBar motion={motion} />
+        <span style={{ marginLeft: 8, color: MAAEF_DIM }}>{String(idx).padStart(2, '0')} / 06</span>
+      </HudCorner>
+
+      <div style={{
+        position: 'absolute', left: 56, right: 56, top: 0, bottom: 0,
+        display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: 40, zIndex: 4,
+      }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+            <Reticle size={18} color={MAAEF_RED} blink={motion} />
+            <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.18em', color: MAAEF_DIM }}>
+              TARGETING · {s.label}
+            </span>
+          </div>
+          <h2 className="maaef-h1" style={{ fontSize: titleSize, color: MAAEF_INK, margin: 0 }}>
+            {s.titleLines.map((ln, i) => (
+              <span key={i} style={{
+                display: 'block',
+                color: i === s.redLine ? MAAEF_RED : MAAEF_INK,
+                fontStyle: i === s.italicLine ? 'italic' : 'normal',
+              }}>{ln}</span>
+            ))}
+          </h2>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: density === 'sparse' ? 28 : 18, alignSelf: 'stretch', justifyContent: 'center', paddingTop: 80 }}>
+          <div className="maaef-body" style={{
+            fontSize: 14, color: MAAEF_INK, opacity: 0.9, maxWidth: 340,
+            borderLeft: `2px solid ${MAAEF_RED}`, paddingLeft: 14, lineHeight: 1.6,
+          }}>{s.body}</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {s.tags.map((t, i) => (
+              <span key={i} className="maaef-mono" style={{
+                fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM,
+                border: `1px solid ${MAAEF_FAINT}`, padding: '5px 9px',
+              }}>{t}</span>
+            ))}
+          </div>
+          <div className="maaef-mono" style={{
+            fontSize: 9, letterSpacing: '0.14em', color: MAAEF_DIM,
+            display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '6px 14px',
+            borderTop: `1px solid ${MAAEF_FAINT}`, paddingTop: 14, maxWidth: 340,
+          }}>
+            <span>CH</span><span style={{ color: MAAEF_INK }}>{s.ch}.{s.label}</span><span>OK</span>
+            <span>SIG</span><span style={{ color: MAAEF_INK }}>━━━━━━━━━━ </span><span>1.00</span>
+            <span>LAT</span><span style={{ color: MAAEF_INK }}>008ms · stable</span><span style={{ color: MAAEF_RED }}>LIVE</span>
+          </div>
+        </div>
+      </div>
+
+      <HudCorner side="bl"><span>// SCROLL</span><span>↓</span></HudCorner>
+      <HudCorner side="br"><span style={{ color: MAAEF_DIM }}>{s.tags.join(' · ')}</span></HudCorner>
+    </>
+  );
+}
+
+function OutroA({ s, motion, density }) {
+  return (
+    <>
+      <ScanSweep motion={motion} />
+      <HudFrame />
+      <HudCorner side="tl"><ChannelBadge ch={s.ch} label="END · BROADCAST" /></HudCorner>
+      <HudCorner side="tr"><SectorBar motion={motion} /></HudCorner>
+
+      <div style={{
+        position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center', gap: density === 'sparse' ? 28 : 16, zIndex: 4,
+      }}>
+        <div className="maaef-h1-italic" style={{ fontSize: 64, color: MAAEF_DIM }}>That something became</div>
+        <img src={LOGO_SRC} alt="Maaef"
+             style={{ height: 180, width: 'auto', filter: motion ? 'drop-shadow(0 0 35px rgba(196,37,26,0.55))' : 'drop-shadow(0 0 15px rgba(196,37,26,0.3))', animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none' }} />
+        <div className="maaef-mono" style={{ fontSize: 10, color: MAAEF_DIM, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
+          HELLO@MAAEF.COM &nbsp;·&nbsp; START A PROJECT
+        </div>
+      </div>
+    </>
+  );
+}
+
+function FooterTickerA({ motion }) {
+  return (
+    <div style={{
+      position: 'absolute', left: 0, right: 0, bottom: 0, height: 22,
+      background: 'rgba(196,37,26,0.04)',
+      borderTop: `1px solid rgba(196,37,26,0.18)`,
+      display: 'flex', alignItems: 'center', zIndex: 5,
+      font: '9px/1 "Courier New",monospace', letterSpacing: '0.16em',
+      color: MAAEF_DIM, textTransform: 'uppercase',
+    }}>
+      <Ticker motion={motion} duration={42}>
+        <span style={{ color: MAAEF_RED }}>● LIVE</span> &nbsp;·&nbsp; CH 00–05 NOMINAL &nbsp;·&nbsp; LUCKNOW 26.8467° N 81.0307° E &nbsp;·&nbsp; LAP 12 / OUT &nbsp;·&nbsp; ATTENTION ENGINE v2.4 &nbsp;·&nbsp; <span style={{ color: MAAEF_INK }}>START PROJECT →</span> &nbsp;·&nbsp; SECTOR 1 PURPLE &nbsp;·&nbsp; SECTOR 2 GREEN &nbsp;·&nbsp; SECTOR 3 GREEN &nbsp;·&nbsp;
+      </Ticker>
+    </div>
+  );
+}
+
+function MaaefNav({ menuOpen, onToggle }) {
+  return (
+    <nav style={{
+      position: 'absolute', top: 0, left: 0, right: 0, zIndex: 60,
+      padding: '20px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      color: '#fff', pointerEvents: 'none',
+    }}>
+      <a href="#" style={{ pointerEvents: 'auto', opacity: menuOpen ? 0 : 1, transition: 'opacity .3s' }}>
+        <img src={LOGO_SRC} alt="Maaef" style={{ height: 26, width: 'auto' }} />
+      </a>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 18, pointerEvents: 'auto' }}>
+        <a href="#" style={{
+          fontSize: 10, letterSpacing: '0.25em', textTransform: 'uppercase',
+          color: '#fff', textDecoration: 'none', fontWeight: 700,
+          fontFamily: 'VerdanaLocal, Verdana, sans-serif',
+        }}>START PROJECT</a>
+        <button onClick={onToggle} aria-label="Menu" style={{
+          width: 40, height: 40, padding: 8, background: 'transparent', border: 0,
+          cursor: 'pointer', display: 'flex', flexDirection: 'column',
+          alignItems: 'flex-end', justifyContent: 'center', gap: 5,
+        }}>
+          <span style={{
+            width: menuOpen ? 22 : '100%', height: 2, background: '#fff',
+            transform: menuOpen ? 'translateY(3.5px) rotate(45deg)' : 'none',
+            transition: 'all .3s',
+          }} />
+          <span style={{
+            width: menuOpen ? 22 : '66%', height: 2, background: '#fff',
+            transform: menuOpen ? 'translateY(-3.5px) rotate(-45deg)' : 'none',
+            transition: 'all .3s',
+          }} />
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+function KineticLink({ href, label, hover, onClose }) {
+  const [h, setH] = useState(false);
+  const baseStyle = {
+    fontFamily: "Panchang, 'Playfair Display', serif",
+    fontWeight: 700,
+    fontSize: 96, lineHeight: 1.1, paddingBottom: 12,
+    display: 'block', transition: 'transform .5s cubic-bezier(.16,1,.3,1)',
+  };
+  return (
+    <a href={href} onClick={(e) => { e.preventDefault(); onClose && onClose(); }}
+       onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+       style={{ position: 'relative', overflow: 'hidden', display: 'inline-block', textDecoration: 'none', cursor: 'pointer', padding: '8px 0' }}>
+      <span style={{ ...baseStyle, color: '#fff', transform: h ? 'translateY(-120%)' : 'none' }}>{label}</span>
+      <span style={{
+        ...baseStyle, position: 'absolute', top: 8, left: 0, width: '100%',
+        color: hover === 'gray' ? '#6b7280' : '#dc2626',
+        transform: h ? 'translateY(0)' : 'translateY(120%)',
+      }}>{label}</span>
+    </a>
+  );
+}
+
+function KineticMenu({ open, onClose }) {
+  const [now, setNow] = useState('0000000000000');
+  useEffect(() => {
+    if (!open) return;
+    const t = setInterval(() => setNow(Date.now().toString()), 50);
+    return () => clearInterval(t);
+  }, [open]);
+
+  const links = [
+    { href: '/', label: 'Home', hover: 'red' },
+    { href: '/about', label: 'Studio', hover: 'red' },
+    { href: '/services', label: 'Expertise', hover: 'gray' },
+    { href: '/contact', label: 'Contact', hover: 'red' },
+  ];
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 55, background: '#050505',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      transform: open ? 'translateY(0)' : 'translateY(-100%)',
+      transition: 'transform .8s cubic-bezier(.7,0,.3,1)',
+      pointerEvents: open ? 'auto' : 'none', overflow: 'hidden', isolation: 'isolate',
+    }}>
+      <div style={{
+        position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none',
+        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+      }} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4, textAlign: 'center', position: 'relative', zIndex: 10 }}>
+        {links.map((l, i) => <KineticLink key={i} {...l} onClose={onClose} />)}
+      </div>
+      <div style={{
+        position: 'absolute', bottom: 96, fontSize: 9, letterSpacing: '0.3em',
+        color: '#404040', textTransform: 'uppercase',
+        animation: 'maaef-pulse 2s ease-in-out infinite',
+      }}>[ LEAVE A TRACE ]</div>
+      <div style={{
+        position: 'absolute', bottom: 32, left: 0, right: 0, padding: '0 48px',
+        display: 'flex', justifyContent: 'space-between',
+        fontSize: 10, letterSpacing: '0.2em', color: '#5a5a5a', textTransform: 'uppercase',
+        fontFamily: 'VerdanaLocal, Verdana, sans-serif',
+      }}>
+        <span>26.86478567352451, 81.0101077355821</span>
+        <span>{now}</span>
+      </div>
+    </div>
+  );
+}
+
+function MaaefFooter() {
+  const [hover, setHover] = useState(false);
+  const navItems = [
+    { l: 'Home', h: '/' }, { l: 'Studio', h: '/about' },
+    { l: 'Expertise', h: '/services' }, { l: 'Contact', h: '/contact' },
+  ];
+  return (
+    <footer style={{
+      position: 'relative', background: '#050505', padding: '50px 0 24px',
+      borderTop: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden',
+      minHeight: '100%', scrollSnapAlign: 'start',
+    }}>
+      <div style={{
+        position: 'absolute', inset: 0, opacity: 0.15, pointerEvents: 'none', zIndex: 0,
+        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+      }} />
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 32px', position: 'relative', zIndex: 10 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 32, marginBottom: 48 }}>
+          <div>
+            <a href="/" style={{ display: 'inline-block', marginBottom: 18 }}>
+              <img src={LOGO_SRC} alt="Maaef" style={{ height: 32, width: 'auto', opacity: 0.9 }} />
+            </a>
+            <p style={{
+              fontFamily: 'VerdanaLocal, Verdana, sans-serif', fontSize: 13, color: '#9ca3af', maxWidth: 320,
+              fontWeight: 300, lineHeight: 1.6, borderLeft: '2px solid #c0251a', paddingLeft: 14, margin: 0,
+            }}>
+              We engineer attention.<br />A new-era media house.
+            </p>
+          </div>
+          <div>
+            <h3 className="serif" style={{ color: '#fff', fontSize: 16, marginBottom: 18, opacity: 0.9, letterSpacing: '0.02em', fontWeight: 600 }}>Navigation</h3>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: 12, listStyle: 'none', padding: 0, margin: 0, fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+              {navItems.map((n, i) => (
+                <li key={i}><a href={n.h} style={{ color: '#6b7280', textDecoration: 'none', transition: 'color .3s' }}
+                              onMouseEnter={e => e.target.style.color = '#fff'}
+                              onMouseLeave={e => e.target.style.color = '#6b7280'}>{n.l}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="serif" style={{ color: '#fff', fontSize: 16, marginBottom: 18, opacity: 0.9, letterSpacing: '0.02em', fontWeight: 600 }}>Connect</h3>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: 12, listStyle: 'none', padding: 0, margin: 0, fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+              <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" style={{ color: '#6b7280', textDecoration: 'none' }}>Instagram</a></li>
+              <li style={{ paddingTop: 6 }}><a href="/contact" style={{ color: '#c0251a', textDecoration: 'none', fontWeight: 700 }}>Start Project</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+          style={{
+            position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',
+            padding: '36px 0', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)',
+            marginBottom: 24, overflow: 'hidden', cursor: 'pointer',
+          }}>
+          <h2 className="serif" style={{
+            fontSize: 168, lineHeight: 1, letterSpacing: '-0.04em', margin: 0,
+            color: hover ? '#000' : 'transparent',
+            WebkitTextStroke: '2px #C41E3A',
+            transition: 'all .5s', position: 'relative', zIndex: 10, fontWeight: 700,
+          }}>Maaef.</h2>
+          {[
+            { top: '10%', rot: -2, bg: '#dc2626', color: '#fff', a: 'left', txt: ['LET\u2019S TALK', 'START PROJECT'] },
+            { top: '35%', rot: 3,  bg: '#050505', color: '#dc2626', border: true, a: 'right', txt: ['WAITING FOR YOU', 'GET IN TOUCH'] },
+            { top: '65%', rot: -1, bg: '#dc2626', color: '#fff', a: 'right', txt: ['LET\u2019S TALK', 'START PROJECT'] },
+            { top: '90%', rot: 2,  bg: '#050505', color: '#dc2626', border: true, a: 'left', txt: ['WAITING FOR YOU', 'GET IN TOUCH'] },
+          ].map((tape, i) => (
+            <div key={i} style={{
+              position: 'absolute', left: '-10%', right: '-10%', width: '120%', height: 48, top: tape.top,
+              background: tape.bg, border: tape.border ? '2px solid #c0251a' : 'none',
+              boxShadow: tape.bg === '#dc2626' ? '0 0 30px rgba(196,30,58,0.4)' : '0 0 30px rgba(196,30,58,0.2)',
+              opacity: hover ? 0.95 : 0,
+              transform: `rotate(${tape.rot}deg) scaleX(${hover ? 1 : 0})`,
+              transformOrigin: tape.a, transition: `all .7s cubic-bezier(.16,1,.3,1) ${i * 0.1}s`,
+              display: 'flex', alignItems: 'center', overflow: 'hidden', zIndex: 1, pointerEvents: 'none',
+            }}>
+              <div className="serif" style={{
+                whiteSpace: 'nowrap', display: 'flex', gap: 28, color: tape.color,
+                fontWeight: 700, fontSize: 18, letterSpacing: '0.3em',
+                animation: `maaef-marquee 15s linear infinite ${i % 2 ? 'reverse' : 'normal'}`,
+              }}>
+                {Array.from({ length: 8 }).map((_, k) => (
+                  <React.Fragment key={k}>
+                    <span>{tape.txt[0]}</span>
+                    <span style={{ opacity: 0.5 }}>///</span>
+                    <span>{tape.txt[1]}</span>
+                    <span style={{ opacity: 0.5 }}>///</span>
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, paddingTop: 8,
+          fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase',
+          fontFamily: 'VerdanaLocal, Verdana, sans-serif',
+        }}>
+          <span style={{ color: 'rgba(255,255,255,0.25)' }}>© 2026 Maaef Media House</span>
+          <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+            Made with <span style={{ color: '#dc2626' }}>♥</span> &amp; Coffee by Humans
+          </a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+            <span style={{ color: 'rgba(255,255,255,0.25)' }}>Lucknow, IN</span>
+            <span style={{ color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>↑ Top</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function DirectionA({ motion = true, density = 'comfy' }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%', background: MAAEF_BG, overflow: 'hidden' }}>
+      <MaaefNav menuOpen={menuOpen} onToggle={() => setMenuOpen(o => !o)} />
+      <KineticMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+
+      <div className="maaef-snap" style={{
+        width: '100%', height: '100%', overflowY: 'auto', background: MAAEF_BG, color: MAAEF_INK,
+        position: 'relative',
+      }}>
+        {MAAEF_SECTIONS.map((s, i) => (
+          <section key={s.id} style={{
+            position: 'relative', width: '100%', height: '100%', minHeight: '100%',
+            background: MAAEF_BG, overflow: 'hidden',
+          }}>
+            {i === 0 ? <HeroA s={s} motion={motion} density={density} />
+              : i === MAAEF_SECTIONS.length - 1 ? <OutroA s={s} motion={motion} density={density} />
+              : <ContentA s={s} motion={motion} density={density} idx={i} />}
+            <FooterTickerA motion={motion} />
+          </section>
+        ))}
+        <MaaefFooter />
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<DirectionA motion={true} density="comfy" />);
+</script>
+</body>
+</html>
