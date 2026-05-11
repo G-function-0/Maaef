@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaef Media House | Engineering Attention</title>
-    <meta name="description" content="Maaef Media House — a new-era creative studio engineering attention through video, design, photography, web, and brand strategy. Based in Lucknow, India.">
+    <meta name="description" content="Maaef Media House — a new-era creative collective engineering attention through video, design, photography, web, and brand strategy. Based in Lucknow, India.">
     <link rel="icon" type="image/png" href="logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,6 +45,36 @@
             /* Dynamic viewport height: dvh prevents mobile browser chrome jump */
             --vh-full: 100vh;
             --vh-full: 100dvh;
+
+            --hud-offset-x: 26px;
+            --hud-offset-y: 22px;
+            --content-px: 56px;
+            --h1-hero: 168px;
+            --h1-hero-sub: 92px;
+            --h1-bg: 320px;
+            --title-base: 124px;
+            --footer-h1: 168px;
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --content-px: 40px;
+                --h1-hero: 120px;
+                --h1-hero-sub: 64px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --hud-offset-x: 16px;
+                --hud-offset-y: 14px;
+                --content-px: 20px;
+                --h1-hero: clamp(3rem, 15vw, 6rem);
+                --h1-hero-sub: clamp(1.5rem, 8vw, 3rem);
+                --h1-bg: 80px;
+                --title-base: clamp(2rem, 12vw, 4.5rem);
+                --footer-h1: 60px;
+            }
         }
 
         *,
@@ -739,33 +769,24 @@
         @keyframes maaef-scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
         @keyframes maaef-bar { 0%{transform:scaleX(0.1)} 50%{transform:scaleX(1)} 100%{transform:scaleX(0.4)} }
         @keyframes maaef-pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+        @keyframes maaef-glitch {
+            0% { transform: translate(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
+            20% { transform: translate(-2px, 1px); text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff; }
+            40% { transform: translate(-2px, -1px); text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521; }
+            60% { transform: translate(2px, 1px); text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff; }
+            80% { transform: translate(2px, -1px); text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521; }
+            100% { transform: translate(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
+        }
         
         #react-root {
             width: 100%;
         }
 
-        #mute-toggle {
-            transition: all 0.3s ease;
-        }
-        #mute-toggle:hover {
-            opacity: 0.7;
-        }
+
     </style>
 </head>
 
 <body>
-
-    <div id="global-ui" class="fixed top-0 left-0 w-full z-[100] pointer-events-none">
-        <div class="flex justify-end p-6 md:p-12">
-            <button id="mute-toggle" onclick="toggleAudio()"
-                class="pointer-events-auto mix-blend-difference text-white uppercase text-[10px] tracking-widest font-bold flex items-center gap-3 group">
-                <span id="mute-label">Audio Off</span>
-                <div class="w-5 h-5 flex items-center justify-center border border-white/20 group-hover:border-white transition-colors">
-                    <div id="mute-indicator" class="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 transition-opacity duration-300"></div>
-                </div>
-            </button>
-        </div>
-    </div>
 
 
     <div id="intro-stage">
@@ -802,11 +823,9 @@
     </div>
 
     <div id="homepage">
-
-        <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center text-white transition-opacity duration-500"
+<nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center text-white transition-opacity duration-500"
             id="main-nav">
             <a href="/" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
-                <img src="logo.png" alt="Maaef Logo" class="h-8 w-auto">
             </a>
             <div class="flex items-center gap-6 z-[60]">
                 <button onclick="toggleMenu()"
@@ -864,12 +883,15 @@
                 opacity: 0;
                 pointer-events: none;
             }
+            .menu-open #global-ui {
+                display: none;
+            }
         </style>
 
         <div id="kinetic-menu" style="isolation: isolate; will-change: transform;"
             class="fixed inset-0 z-[55] bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
             <canvas id="drawing-canvas"></canvas>
-            <div class="absolute inset-0 opacity-20 pointer-events-none z-0"
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
                 style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
             <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
                 <a href="/" onclick="toggleMenu()"
@@ -882,16 +904,16 @@
                 <a href="/about" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                     <span
-                        class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Studio</span>
+                        class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Clients</span>
                     <span
-                        class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Studio</span>
+                        class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Clients</span>
                 </a>
                 <a href="/services" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                     <span
-                        class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Expertise</span>
+                        class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Services</span>
                     <span
-                        class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Expertise</span>
+                        class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Services</span>
                 </a>
                 <a href="/contact" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
@@ -915,172 +937,95 @@
 
         <div id="react-root"></div>
 
-
-
         <footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8 overflow-hidden border-t border-white/[.05]">
             <!-- Noise overlay -->
-            <div class="absolute inset-0 opacity-[0.15] pointer-events-none z-0"
-                style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
-
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 200\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E\');"></div>
+            
             <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
                     <!-- Brand -->
                     <div class="col-span-1 lg:col-span-2">
                         <a href="/" class="inline-block hover-trigger mb-6">
-                            <img src="logo.png" alt="Maaef Logo" loading="lazy"
-                                class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                            <img src="logo.png" alt="Maaef Logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
                         </a>
-                        <p
-                            class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
+                        <p class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
                             We engineer attention.<br>A new-era media house.
                         </p>
                     </div>
-
+                    
                     <!-- Navigation -->
                     <div>
                         <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
                         <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
-                            <li><a href="/"
-                                    class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a>
-                            </li>
-                            <li><a href="/about"
-                                    class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Studio</a>
-                            </li>
-                            <li><a href="/services"
-                                    class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Expertise</a>
-                            </li>
-                            <li><a href="/contact"
-                                    class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a>
-                            </li>
+                            <li><a href="/" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
+                            <li><a href="/about" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
+                            <li><a href="/services" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
+                            <li><a href="/contact" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
                         </ul>
                     </div>
-
+                    
                     <!-- Contact & Socials -->
                     <div>
                         <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
                         <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
-                            <li><a href="https://www.instagram.com/maaef.media" target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a>
-                            </li>
+                            <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
+                            <li class="pt-2"><a href="/contact" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
                         </ul>
                     </div>
                 </div>
-
+                
                 <!-- Big text CTA -->
-                <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer"
-                    onclick="window.location.href='/contact'">
+                <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer" onclick="window.location.href='/contact'">
                     <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:2px_#C41E3A] group-hover:text-black group-hover:[-webkit-text-stroke:2px_#C41E3A]">Maaef.</h2>
-
+                    
                     <style>
-                        @keyframes tapeSlideLeft {
-                            0% {
-                                transform: translateX(0);
-                            }
-
-                            100% {
-                                transform: translateX(-50%);
-                            }
-                        }
-
-                        @keyframes tapeSlideRight {
-                            0% {
-                                transform: translateX(-50%);
-                            }
-
-                            100% {
-                                transform: translateX(0);
-                            }
-                        }
+                        @keyframes tapeSlideLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+                        @keyframes tapeSlideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
                     </style>
                     <!-- Police Tape 1 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden"
-                        style="top: 10%;">
-                        <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]"
-                            style="animation: tapeSlideLeft 15s linear infinite;">
-                            <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span>
+                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                             style="top: 10%;">
+                            <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
+                                <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Police Tape 2 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-3 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden"
-                        style="top: 35%;">
-                        <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]"
-                            style="animation: tapeSlideRight 15s linear infinite;">
-                            <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN
-                                TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span><span
-                                class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span><span
-                                class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span><span
-                                class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span>
+                        <!-- Police Tape 2 -->
+                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-3 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                             style="top: 35%;">
+                            <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
+                                <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Police Tape 3 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-1 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden"
-                        style="top: 65%;">
-                        <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]"
-                            style="animation: tapeSlideRight 15s linear infinite;">
-                            <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span><span
-                                class="text-white/50">///</span><span>LET'S TALK</span><span
-                                class="text-white/50">///</span><span>START PROJECT</span>
+                        <!-- Police Tape 3 -->
+                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-0 group-hover:opacity-95 -rotate-1 origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                             style="top: 65%;">
+                            <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
+                                <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Police Tape 4 -->
-                    <div class="absolute left-[-10%] right-[-10%] w-[120%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-95 rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden"
-                        style="top: 90%;">
-                        <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]"
-                            style="animation: tapeSlideLeft 15s linear infinite;">
-                            <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN
-                                TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span><span
-                                class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span><span
-                                class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span><span
-                                class="text-red-900">///</span><span>WAITING FOR YOU</span><span
-                                class="text-red-900">///</span><span>GET IN TOUCH</span>
+                        <!-- Police Tape 4 -->
+                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-100 rotate-2 origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
+                             style="top: 90%;">
+                            <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
+                                <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                 <!-- Bottom bar -->
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
-                    <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef
-                        Media House</span>
-
-                    <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer"
-                        class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2"
-                        style="color:rgba(255,255,255,.3)">
-                        Made with <span
-                            class="text-red-600 group-hover:scale-125 transition-transform duration-300">❤</span> &
-                        Coffee by Humans
+                    <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef Media House</span>
+                    
+                    <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2" style="color:rgba(255,255,255,.3)">
+                        Made with <span class="text-red-600 group-hover:scale-125 transition-transform duration-300">❤</span> & Coffee by Humans
                     </a>
-
+                    
                     <div class="flex items-center gap-6">
-                        <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow,
-                            IN</span>
-                        <span onclick="window.scrollTo({top:0,behavior:'smooth'})"
-                            class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger"
-                            style="color:rgba(255,255,255,.25)">↑ Top</span>
+                         <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow, IN</span>
+                         <span onclick="window.scrollTo({top:0,behavior:'smooth'})" class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger" style="color:rgba(255,255,255,.25)">↑ Top</span>
                     </div>
                 </div>
             </div>
@@ -1112,8 +1057,8 @@
             {
                 id: 'origin', ch: '01', kicker: 'ORIGIN', label: 'ORIGIN',
                 pre: 'WHY WE EXIST',
-                titleLines: ['It started', 'because', 'we were bored.'],
-                redLine: 2,
+                titleLines: ['It started because', 'we were bored.'],
+                redLine: 1,
                 body: 'Digital noise is loud. We wanted to make something that actually felt like something. So we did.',
                 tags: ['EST. 2024', 'INDEPENDENT', 'NO INVESTORS'],
             },
@@ -1128,8 +1073,8 @@
             {
                 id: 'vision', ch: '03', kicker: 'VISION', label: 'VISION',
                 pre: 'HOW WE THINK',
-                titleLines: ['Art is cool.', 'Results are', 'better.'],
-                italicLine: 1,
+                titleLines: ['Art is cool.', 'Results are better.'],
+                redLine: 1,
                 body: 'We bridge the gap between "that looks nice" and "that actually worked." It’s a delicate balance.',
                 tags: ['CRAFT', 'OUTCOMES', 'BOTH'],
             },
@@ -1143,7 +1088,7 @@
             {
                 id: 'outro', ch: '05', kicker: 'CONTACT', label: 'BECAME',
                 pre: 'WHAT IT BECAME',
-                titleLines: ['became'],
+                titleLines: ['That something became', 'Maaef.'],
                 body: 'Start a project. Or just say hi.',
                 tags: ['HELLO@MAAEF.COM', 'IG @MAAEF', 'LUCKNOW · IN'],
             },
@@ -1188,8 +1133,10 @@
 
         function HudCorner({ children, side = 'tl', color = MAAEF_DIM }) {
             const pos = {
-                tl: { top: 14, left: 18 }, tr: { top: 14, right: 18 },
-                bl: { bottom: 14, left: 18 }, br: { bottom: 14, right: 18 },
+                tl: { top: 'var(--hud-offset-y)', left: 'var(--hud-offset-x)' }, 
+                tr: { top: 'var(--hud-offset-y)', right: 'var(--hud-offset-x)' },
+                bl: { bottom: 'var(--hud-offset-y)', left: 'var(--hud-offset-x)' }, 
+                br: { bottom: 'var(--hud-offset-y)', right: 'var(--hud-offset-x)' },
             }[side];
             return (
                 <div className="maaef-mono" style={{
@@ -1207,7 +1154,6 @@
                     display: 'inline-flex', alignItems: 'center', gap: 6,
                     fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase',
                 }}>
-                    <span style={{ width: 6, height: 6, background: color, borderRadius: 1 }} />
                     <span style={{ color }}>CH-{ch}</span>
                     <span style={{ color: MAAEF_DIM }}>/ {label}</span>
                 </span>
@@ -1248,41 +1194,25 @@
         }
 
         function HudFrame({ color = MAAEF_FAINT }) {
-            return (
-                <>
-                    {['tl', 'tr', 'bl', 'br'].map(c => {
-                        const s = 14;
-                        const pos = {
-                            tl: { top: 22, left: 26, borderLeft: `1px solid ${color}`, borderTop: `1px solid ${color}` },
-                            tr: { top: 22, right: 26, borderRight: `1px solid ${color}`, borderTop: `1px solid ${color}` },
-                            bl: { bottom: 22, left: 26, borderLeft: `1px solid ${color}`, borderBottom: `1px solid ${color}` },
-                            br: { bottom: 22, right: 26, borderRight: `1px solid ${color}`, borderBottom: `1px solid ${color}` },
-                        }[c];
-                        return <div key={c} style={{ position: 'absolute', width: s, height: s, ...pos, zIndex: 2 }} />;
-                    })}
-                </>
-            );
+            return null;
         }
 
-        function HeroVideoHUD({ motion }) {
+        function HeroVideoHUD({ motion, isMuted, isHovered, isLaptop }) {
             const videoRef = useRef(null);
             useEffect(() => {
-                const sync = () => {
-                    if (videoRef.current) videoRef.current.muted = window.isAudioMuted;
-                };
-                window.addEventListener('audioChange', sync);
-                sync();
-                return () => window.removeEventListener('audioChange', sync);
-            }, []);
+                if (videoRef.current) videoRef.current.muted = isMuted;
+            }, [isMuted]);
 
             return (
                 <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#0a0405' }}>
                     <video ref={videoRef} src={HERO_VIDEO_SRC} autoPlay muted loop playsInline preload="auto"
                         style={{
                             position: 'absolute', inset: 0, width: '100%', height: '100%',
-                            objectFit: 'cover', filter: motion ? 'none' : 'blur(2px)',
+                            objectFit: 'cover', 
+                            filter: isLaptop ? `blur(${isHovered ? 0 : 60}px)` : 'none',
+                            transition: 'filter 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                            transform: isLaptop ? 'scale(1.1)' : 'none', 
                             willChange: 'transform',
-                            transform: 'translateZ(0)',
                         }} />
                     <div style={{
                         position: 'absolute', inset: 0,
@@ -1293,10 +1223,39 @@
             );
         }
 
-        function HeroA({ s, motion, density }) {
+        function HeroA({ s, motion, density, isMuted }) {
+            const [isHovered, setIsHovered] = useState(false);
+            const [isLaptop, setIsLaptop] = useState(window.innerWidth >= 1024);
+            const [glitchText1, setGlitchText1] = useState('Maaef');
+            const [glitchText2, setGlitchText2] = useState('Media House.');
+
+            const original1 = 'Maaef';
+            const original2 = 'Media House.';
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+';
+
+            useEffect(() => {
+                const handleResize = () => setIsLaptop(window.innerWidth >= 1024);
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            useEffect(() => {
+                let interval;
+                if (isLaptop && isHovered) {
+                    interval = setInterval(() => {
+                        setGlitchText1(original1.split('').map(() => chars[Math.floor(Math.random() * chars.length)]).join(''));
+                        setGlitchText2(original2.split('').map((c) => c === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)]).join(''));
+                    }, 60);
+                } else {
+                    setGlitchText1(original1);
+                    setGlitchText2(original2);
+                }
+                return () => clearInterval(interval);
+            }, [isHovered, isLaptop]);
+
             return (
                 <>
-                    <HeroVideoHUD motion={motion} />
+                    <HeroVideoHUD motion={motion} isMuted={isMuted} isHovered={isHovered} isLaptop={isLaptop} />
                     <ScanSweep motion={motion} />
                     <div style={{
                         position: 'absolute', inset: 0,
@@ -1307,39 +1266,50 @@
                         <span style={{ color: MAAEF_DIM }}>N–01 / BROADCAST</span>
                     </HudCorner>
                     <HudCorner side="tr">
-                        <span>REC</span>
-                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: MAAEF_RED, animation: motion ? 'maaef-pulse 1s ease-in-out infinite' : 'none' }} />
+                        <ChannelBadge ch="00" label="HERO · BROADCAST LIVE" />
                     </HudCorner>
                     <div style={{
-                        position: 'absolute', left: 56, right: 56, bottom: density === 'sparse' ? 90 : 70,
-                        display: 'flex', flexDirection: 'column', gap: density === 'sparse' ? 18 : 10, zIndex: 4,
+                        position: 'absolute', left: 'var(--content-px)', right: 'var(--content-px)', 
+                        top: 'calc(var(--hud-offset-y) + 40px)', bottom: 'calc(var(--hud-offset-y) + 40px)',
+                        display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24, zIndex: 4,
                     }}>
-                        <ChannelBadge ch="00" label="HERO · BROADCAST LIVE" />
-                        <h1 className="maaef-h1" style={{ fontSize: 168, color: MAAEF_INK, margin: 0 }}>
-                            Maaef
-                            <span className="maaef-h1-italic" style={{ display: 'block', fontSize: 92, color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em' }}>
-                                Media House.
-                            </span>
-                        </h1>
-                        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32, justifyContent: 'space-between' }}>
+                        <div 
+                          onMouseEnter={() => setIsHovered(true)} 
+                          onMouseLeave={() => setIsHovered(false)}
+                          style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 'fit-content', cursor: isLaptop ? 'pointer' : 'default' }}
+                        >
+                            <h1 className="maaef-h1" style={{ 
+                                fontSize: 'var(--h1-hero)', color: MAAEF_INK, margin: 0,
+                                animation: (isLaptop && isHovered) ? 'maaef-glitch 0.2s linear infinite' : 'none'
+                            }}>
+                                {glitchText1}
+                                <span className="maaef-h1-italic" style={{ display: 'block', fontSize: 'var(--h1-hero-sub)', color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em' }}>
+                                    {glitchText2}
+                                </span>
+                            </h1>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32, justifyContent: 'flex-start', flexWrap: 'wrap' }}>
                             <div className="maaef-body" style={{
                                 fontSize: 13, color: MAAEF_INK, maxWidth: 320, opacity: 0.9,
                                 borderLeft: `2px solid ${MAAEF_RED}`, paddingLeft: 14, lineHeight: 1.6,
                             }}>We engineer attention. A new-era media house.</div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-                                <SectorBar motion={motion} />
-                                <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM }}>{s.coords}</span>
-                            </div>
                         </div>
                     </div>
-                    <HudCorner side="bl"><span style={{ color: MAAEF_INK }}>// SCROLL</span><span>↓</span></HudCorner>
-                    <HudCorner side="br"><span>{s.tags.join(' · ')}</span></HudCorner>
+                    <HudCorner side="bl"></HudCorner>
+                    <HudCorner side="br">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginRight: 'calc(var(--content-px) - var(--hud-offset-x))', marginBottom: 20 }}>
+                            <SectorBar motion={motion} />
+                            <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM }}>{s.coords}</span>
+                        </div>
+                    </HudCorner>
                 </>
             );
         }
 
         function ContentA({ s, motion, density, idx }) {
-            const titleSize = s.titleLines.length === 1 ? 200 : (s.titleLines[0].length > 12 ? 104 : 124);
+            const titleSize = s.titleLines.length === 1 ? 'calc(var(--title-base) * 1.6)' : (s.titleLines[0].length > 12 ? 'calc(var(--title-base) * 0.84)' : 'var(--title-base)');
+            const isMobile = window.innerWidth < 768;
+
             return (
                 <>
                     <ScanSweep motion={motion} />
@@ -1349,31 +1319,30 @@
                         pointerEvents: 'none', zIndex: 0,
                     }}>
                         <div className="maaef-h1" style={{
-                            fontSize: 320, color: 'rgba(255,255,255,0.025)', letterSpacing: '-0.05em',
+                            fontSize: 'var(--h1-bg)', color: 'rgba(255,255,255,0.025)', letterSpacing: '-0.05em',
                             textTransform: 'uppercase', whiteSpace: 'nowrap',
                         }}>{s.label}</div>
                     </div>
-                    <HudCorner side="tl"><ChannelBadge ch={s.ch} label={`${s.label} · ${s.pre}`} /></HudCorner>
+                    <HudCorner side="tl"></HudCorner>
                     <HudCorner side="tr">
-                        <SectorBar motion={motion} />
-                        <span style={{ marginLeft: 8, color: MAAEF_DIM }}>{String(idx).padStart(2, '0')} / 06</span>
+                        <ChannelBadge ch={s.ch} label={`${s.label} · ${s.pre}`} />
                     </HudCorner>
 
                     <div style={{
-                        position: 'absolute', left: 56, right: 56, top: 0, bottom: 0,
-                        display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: 40, zIndex: 4,
+                        position: 'absolute', left: 'var(--content-px)', right: 'var(--content-px)', 
+                        top: 'calc(var(--hud-offset-y) + 30px)', bottom: 'calc(var(--hud-offset-y) + 30px)',
+                        display: 'flex', flexDirection: 'column', 
+                        justifyContent: 'center', gap: isMobile ? 24 : 40, zIndex: 4,
+                        boxSizing: 'border-box'
                     }}>
-                        <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-                                <Reticle size={18} color={MAAEF_RED} blink={motion} />
-                                <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.18em', color: MAAEF_DIM }}>
-                                    TARGETING · {s.label}
-                                </span>
-                            </div>
-                            <h2 className="maaef-h1" style={{ fontSize: titleSize, color: MAAEF_INK, margin: 0 }}>
+                        <div style={{ width: '100%' }}>
+                            <h2 className="maaef-h1" style={{ 
+                                fontSize: titleSize, color: MAAEF_INK, margin: 0,
+                                lineHeight: 1, overflowWrap: 'break-word', wordBreak: 'break-word'
+                            }}>
                                 {s.titleLines.map((ln, i) => (
                                     <span key={i} style={{
-                                        display: 'block',
+                                        display: 'block', 
                                         color: i === s.redLine ? MAAEF_RED : MAAEF_INK,
                                         fontStyle: i === s.italicLine ? 'italic' : 'normal',
                                     }}>{ln}</span>
@@ -1381,20 +1350,23 @@
                             </h2>
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: density === 'sparse' ? 28 : 18, alignSelf: 'stretch', justifyContent: 'center', paddingTop: 80 }}>
+                        <div style={{ 
+                            display: 'flex', flexDirection: 'column', gap: 16, 
+                            maxWidth: isMobile ? '100%' : 400 
+                        }}>
                             <div className="maaef-body" style={{
-                                fontSize: 14, color: MAAEF_INK, opacity: 0.9, maxWidth: 340,
-                                borderLeft: `2px solid ${MAAEF_RED}`, paddingLeft: 14, lineHeight: 1.6,
+                                fontSize: isMobile ? 12 : 14, color: MAAEF_INK, opacity: 0.9,
+                                borderLeft: `2px solid ${MAAEF_RED}`, paddingLeft: 12, lineHeight: 1.5,
                             }}>{s.body}</div>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                                 {s.tags.map((t, i) => (
                                     <span key={i} className="maaef-mono" style={{
-                                        fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM,
-                                        border: `1px solid ${MAAEF_FAINT}`, padding: '5px 9px',
+                                        fontSize: 8, letterSpacing: '0.16em', color: MAAEF_DIM,
+                                        border: `1px solid ${MAAEF_FAINT}`, padding: '3px 6px',
                                     }}>{t}</span>
                                 ))}
                             </div>
-                            <div className="maaef-mono" style={{
+                            {!isMobile && <div className="maaef-mono" style={{
                                 fontSize: 9, letterSpacing: '0.14em', color: MAAEF_DIM,
                                 display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '6px 14px',
                                 borderTop: `1px solid ${MAAEF_FAINT}`, paddingTop: 14, maxWidth: 340,
@@ -1402,12 +1374,17 @@
                                 <span>CH</span><span style={{ color: MAAEF_INK }}>{s.ch}.{s.label}</span><span>OK</span>
                                 <span>SIG</span><span style={{ color: MAAEF_INK }}>━━━━━━━━━━ </span><span>1.00</span>
                                 <span>LAT</span><span style={{ color: MAAEF_INK }}>008ms · stable</span><span style={{ color: MAAEF_RED }}>LIVE</span>
-                            </div>
+                            </div>}
                         </div>
                     </div>
 
-                    <HudCorner side="bl"><span>// SCROLL</span><span>↓</span></HudCorner>
-                    <HudCorner side="br"><span style={{ color: MAAEF_DIM }}>{s.tags.join(' · ')}</span></HudCorner>
+                    <HudCorner side="bl"></HudCorner>
+                    <HudCorner side="br">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginRight: 'calc(var(--content-px) - var(--hud-offset-x))', marginBottom: 20 }}>
+                            <SectorBar motion={motion} />
+                            <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM }}>{s.coords || '26.8467° N · 81.0307° E'}</span>
+                        </div>
+                    </HudCorner>
                 </>
             );
         }
@@ -1417,20 +1394,30 @@
                 <>
                     <ScanSweep motion={motion} />
                     <HudFrame />
-                    <HudCorner side="tl"><ChannelBadge ch={s.ch} label="END · BROADCAST" /></HudCorner>
-                    <HudCorner side="tr"><SectorBar motion={motion} /></HudCorner>
+                    <HudCorner side="tl">
+                    </HudCorner>
+                    <HudCorner side="tr">
+                        <ChannelBadge ch={s.ch} label="END · BROADCAST" />
+                    </HudCorner>
 
                     <div style={{
                         position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
                         alignItems: 'center', justifyContent: 'center', gap: density === 'sparse' ? 28 : 16, zIndex: 4,
+                        padding: '0 var(--content-px)', textAlign: 'center',
                     }}>
-                        <div className="maaef-h1-italic" style={{ fontSize: 64, color: MAAEF_DIM }}>That something became</div>
+                        <div className="maaef-h1-italic" style={{ fontSize: 'clamp(1.5rem, 6vw, 4rem)', color: MAAEF_DIM }}>That something became</div>
                         <img src={LOGO_SRC} alt="Maaef"
-                            style={{ height: 180, width: 'auto', filter: motion ? 'drop-shadow(0 0 35px rgba(196,37,26,0.55))' : 'drop-shadow(0 0 15px rgba(196,37,26,0.3))', animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none' }} />
+                            style={{ height: 'clamp(80px, 20vw, 180px)', width: 'auto', filter: motion ? 'drop-shadow(0 0 35px rgba(196,37,26,0.55))' : 'drop-shadow(0 0 15px rgba(196,37,26,0.3))', animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none' }} />
                         <div className="maaef-mono" style={{ fontSize: 10, color: MAAEF_DIM, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
                             HELLO@MAAEF.COM
                         </div>
                     </div>
+                    <HudCorner side="br">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginRight: 'calc(var(--content-px) - var(--hud-offset-x))', marginBottom: 20 }}>
+                            <SectorBar motion={motion} />
+                            <span className="maaef-mono" style={{ fontSize: 9, letterSpacing: '0.16em', color: MAAEF_DIM }}>26.8467° N · 81.0307° E</span>
+                        </div>
+                    </HudCorner>
                 </>
             );
         }
@@ -1453,15 +1440,65 @@
         }
 
         function DirectionA({ motion = true, density = 'comfy' }) {
+            const [isMuted, setIsMuted] = useState(true);
+            const [showAudioLabel, setShowAudioLabel] = useState(true);
+            const timerRef = useRef(null);
+
+            const toggleAudio = () => {
+                const newVal = !isMuted;
+                setIsMuted(newVal);
+                window.isAudioMuted = newVal;
+                // Only target videos within the React root or with the specific class
+                document.querySelectorAll('#react-root video').forEach(v => v.muted = newVal);
+                window.dispatchEvent(new CustomEvent('audioChange'));
+
+                setShowAudioLabel(true);
+                if (timerRef.current) clearTimeout(timerRef.current);
+                timerRef.current = setTimeout(() => setShowAudioLabel(false), 1500);
+            };
+
+            useEffect(() => {
+                timerRef.current = setTimeout(() => setShowAudioLabel(false), 3000);
+                return () => timerRef.current && clearTimeout(timerRef.current);
+            }, []);
+
             return (
                 <>
+                    {/* Persistent Audio Toggle (React side - for when homepage is active) */}
+                    <div 
+                        onClick={toggleAudio}
+                        style={{
+                            position: 'fixed', bottom: 'calc(var(--hud-offset-y) + 80px)', right: 'var(--content-px)',
+                            zIndex: 100, display: 'flex',
+                            alignItems: 'center', gap: 12, cursor: 'pointer',
+                            padding: '8px 0', transition: 'opacity 0.3s'
+                        }}>
+                        <span className="maaef-mono" style={{ 
+                            fontSize: 9, color: '#fff', letterSpacing: '0.1em',
+                            opacity: showAudioLabel ? 1 : 0,
+                            transition: 'opacity 0.5s ease-in-out',
+                            pointerEvents: 'none'
+                        }}>
+                            {isMuted ? 'AUDIO OFF' : 'AUDIO ON'}
+                        </span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" 
+                             fill={isMuted ? "none" : "#c0251a"} 
+                             stroke={isMuted ? "#fff" : "#c0251a"} 
+                             strokeWidth="2" 
+                             style={{ transition: 'all 0.3s' }}>
+                            <path d="M11 5L6 9H2v6h4l5 4V5z" strokeLinecap="round" strokeLinejoin="round" />
+                            {!isMuted && (
+                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" strokeLinecap="round" strokeLinejoin="round" />
+                            )}
+                        </svg>
+                    </div>
                     {MAAEF_SECTIONS.map((s, i) => (
                         <section key={s.id} style={{
                             position: 'relative', width: '100%', height: '100vh', height: '100dvh',
                             background: MAAEF_BG, overflow: 'hidden',
                             scrollSnapAlign: 'start', scrollSnapStop: 'always'
                         }}>
-                            {i === 0 ? <HeroA s={s} motion={motion} density={density} />
+                            {i === 0 ? <HeroA s={s} motion={motion} density={density} isMuted={isMuted} />
                                 : i === MAAEF_SECTIONS.length - 1 ? <OutroA s={s} motion={motion} density={density} />
                                 : <ContentA s={s} motion={motion} density={density} idx={i} />}
                             <FooterTickerA motion={motion} />
@@ -1511,17 +1548,45 @@
                 syncAudio();
             };
 
+            let audioLabelTimer = null;
             function syncAudio() {
-                document.querySelectorAll('video').forEach(v => {
+                // Only target active videos to prevent echo from hidden/intro videos
+                const activeVideos = document.querySelectorAll('#react-root video, #intro-bg-video');
+                activeVideos.forEach(v => {
                     v.muted = window.isAudioMuted;
-                    if (!v.isAudioMuted) v.play().catch(() => { });
+                    if (!window.isAudioMuted) {
+                        // Ensure video is playing if unmuted
+                        const playPromise = v.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                // Autoplay was prevented
+                            });
+                        }
+                    }
                 });
                 const label = document.getElementById('mute-label');
-                const indicator = document.getElementById('mute-indicator');
-                if (label) label.innerText = window.isAudioMuted ? 'Audio Off' : 'Audio On';
-                if (indicator) indicator.style.opacity = window.isAudioMuted ? '0' : '1';
+                const icon = document.getElementById('mute-icon');
+                const waves = document.getElementById('mute-waves');
+                if (label) {
+                    label.innerText = window.isAudioMuted ? 'Audio Off' : 'Audio On';
+                    label.style.opacity = '1';
+                    if (audioLabelTimer) clearTimeout(audioLabelTimer);
+                    audioLabelTimer = setTimeout(() => { label.style.opacity = '0'; }, 1500);
+                }
+                if (icon) {
+                    icon.setAttribute('fill', window.isAudioMuted ? 'none' : '#c0251a');
+                    icon.setAttribute('stroke', window.isAudioMuted ? '#fff' : '#c0251a');
+                }
+                if (waves) {
+                    waves.style.opacity = window.isAudioMuted ? '0' : '1';
+                }
                 window.dispatchEvent(new CustomEvent('audioChange'));
             }
+            // Initial hide after 3s
+            setTimeout(() => { 
+                const label = document.getElementById('mute-label');
+                if (label) label.style.opacity = '0';
+            }, 3000);
 
             function advance() {
                 if (busy || done) return;
@@ -1596,6 +1661,13 @@
                         homepageEl.classList.add('alive');
                     },
                     onComplete: () => {
+                        const introVideo = document.getElementById('intro-bg-video');
+                        if (introVideo) {
+                            introVideo.pause();
+                            introVideo.src = "";
+                            introVideo.load();
+                            introVideo.remove();
+                        }
                         introEl.style.display = 'none';
                         gsap.to(homepageEl, { opacity: 1, duration: 0.5, ease: 'power2.out' });
                         document.documentElement.classList.add('intro-done');
@@ -1613,6 +1685,13 @@
                 gsap.to(introEl, {
                     opacity: 0, duration: 0.5, ease: 'power2.inOut',
                     onComplete: () => {
+                        const introVideo = document.getElementById('intro-bg-video');
+                        if (introVideo) {
+                            introVideo.pause();
+                            introVideo.src = "";
+                            introVideo.load();
+                            introVideo.remove();
+                        }
                         introEl.style.display = 'none';
                         homepageEl.classList.add('alive');
                         gsap.to(homepageEl, { opacity: 1, duration: 0.5 });
@@ -1626,6 +1705,13 @@
             };
 
             function skipIntroImmediate() {
+                const introVideo = document.getElementById('intro-bg-video');
+                if (introVideo) {
+                    introVideo.pause();
+                    introVideo.src = "";
+                    introVideo.load();
+                    introVideo.remove();
+                }
                 introEl.style.display = 'none';
                 homepageEl.classList.add('alive');
                 homepageEl.style.opacity = '1';
