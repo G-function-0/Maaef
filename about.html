@@ -509,7 +509,7 @@
         /* Menu Open Overrides */
         body.menu-open #main-nav .nav-logo-link,
         body.menu-open #main-nav .hidden.md\:flex,
-        body.menu-open #main-nav a[href="/contact"] {
+        body.menu-open #main-nav a[href="/contact.html"] {
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
@@ -558,14 +558,14 @@
         <!-- Inline nav links — visible on md+ -->
         <div class="hidden md:flex items-center gap-8 z-[60]">
             <a href="/" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Home</a>
-            <a href="/about" class="text-[11px] uppercase tracking-[0.2em] text-white font-bold hover:text-red-500 transition-colors duration-300 hover-trigger">Clients</a>
-            <a href="/services" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Services</a>
-            <a href="/contact" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Contact</a>
+            <a href="/about.html" class="text-[11px] uppercase tracking-[0.2em] text-white font-bold hover:text-red-500 transition-colors duration-300 hover-trigger">Clients</a>
+            <a href="/services.html" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Services</a>
+            <a href="/contact.html" class="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 hover-trigger">Contact</a>
         </div>
 
         <!-- Right controls -->
         <div class="flex items-center gap-5 z-[60]">
-            <a href="/contact" class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
+            <a href="/contact.html" class="hidden md:block text-xs uppercase tracking-widest hover:text-red-600 transition hover-trigger font-bold">
                 Start Project
             </a>
             <button onclick="toggleMenu()" class="group relative flex flex-col items-end justify-center w-12 h-12 hover-trigger p-2">
@@ -593,19 +593,19 @@
                 <span
                     class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Home</span>
             </a>
-            <a href="/about" onclick="toggleMenu()"
+            <a href="/about.html" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Clients</span>
                 <span
                     class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Clients</span>
             </a>
-            <a href="/services" onclick="toggleMenu()"
+            <a href="/services.html" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Services</span>
                 <span
                     class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Services</span>
             </a>
-            <a href="/contact" onclick="toggleMenu()"
+            <a href="/contact.html" onclick="toggleMenu()"
                 class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                 <span class="serif text-[11vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Contact</span>
                 <span
@@ -790,9 +790,9 @@
                     <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
                     <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
                         <li><a href="/" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
-                        <li><a href="/about" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
-                        <li><a href="/services" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
-                        <li><a href="/contact" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
+                        <li><a href="/about.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
+                        <li><a href="/services.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
+                        <li><a href="/contact.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
                     </ul>
                 </div>
                 
@@ -801,7 +801,7 @@
                     <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
                     <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
                         <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
-                        <li class="pt-2"><a href="/contact" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
+                        <li class="pt-2"><a href="/contact.html" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
                     </ul>
                 </div>
             </div>
