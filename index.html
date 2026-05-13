@@ -768,7 +768,10 @@
         @keyframes maaef-blink { 0%,49%{opacity:1} 50%,100%{opacity:0.15} }
         @keyframes maaef-scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
         @keyframes maaef-bar { 0%{transform:scaleX(0.1)} 50%{transform:scaleX(1)} 100%{transform:scaleX(0.1)} }
-        @keyframes maaef-pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+        @keyframes maaef-pulse { 
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(228,5,33,0.8)) drop-shadow(0 0 25px rgba(228,5,33,0.4)) drop-shadow(0 0 2px rgba(255,255,255,0.5)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 20px rgba(228,5,33,1)) drop-shadow(0 0 45px rgba(228,5,33,0.6)) drop-shadow(0 0 4px rgba(255,255,255,0.8)); transform: scale(1.05); }
+        }
         @keyframes maaef-glitch {
             0% { transform: translate(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
             20% { transform: translate(-2px, 1px); text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff; }
@@ -776,6 +779,10 @@
             60% { transform: translate(2px, 1px); text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff; }
             80% { transform: translate(2px, -1px); text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521; }
             100% { transform: translate(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
+        }
+        @keyframes maaef-glow {
+            0%, 100% { text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
+            50% { text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 25px rgba(228,5,33,0.8); }
         }
         
         #react-root {
@@ -901,21 +908,21 @@
                     <span
                         class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Home</span>
                 </a>
-                <a href="/about" onclick="toggleMenu()"
+                <a href="/about.html" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                     <span
                         class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Clients</span>
                     <span
                         class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-red-600 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Clients</span>
                 </a>
-                <a href="/services" onclick="toggleMenu()"
+                <a href="/services.html" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                     <span
                         class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Services</span>
                     <span
                         class="absolute top-0 left-0 serif text-[10vw] md:text-8xl lg:text-9xl text-gray-500 w-full pb-2 md:pb-6 block leading-[1.1] translate-y-[120%] group-hover:translate-y-0">Services</span>
                 </a>
-                <a href="/contact" onclick="toggleMenu()"
+                <a href="/contact.html" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
                     <span
                         class="serif text-[10vw] md:text-8xl lg:text-9xl text-white pb-2 md:pb-6 block leading-[1.1] group-hover:-translate-y-[120%]">Contact</span>
@@ -958,9 +965,9 @@
                         <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
                         <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
                             <li><a href="/" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
-                            <li><a href="/about" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
-                            <li><a href="/services" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
-                            <li><a href="/contact" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
+                            <li><a href="/about.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
+                            <li><a href="/services.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
+                            <li><a href="/contact.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
                         </ul>
                     </div>
                     
@@ -969,10 +976,11 @@
                         <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
                         <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
                             <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
-                            <li class="pt-2"><a href="/contact" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
+                            <li class="pt-2"><a href="/contact.html" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
                         </ul>
                     </div>
                 </div>
+            </div>
                 
                 <!-- Big text CTA -->
                 <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer" onclick="window.location.href='/contact'">
@@ -1015,6 +1023,7 @@
                         </div>
                     </div>
 
+            <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
                 <!-- Bottom bar -->
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
                     <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef Media House</span>
@@ -1209,7 +1218,7 @@
                         style={{
                             position: 'absolute', inset: 0, width: '100%', height: '100%',
                             objectFit: 'cover', 
-                            filter: isLaptop ? `blur(${isHovered ? 0 : 60}px)` : 'none',
+                            filter: isLaptop ? `blur(${isHovered ? 0 : 8}px)` : 'none',
                             transition: 'filter 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
                             transform: isLaptop ? 'scale(1.1)' : 'none', 
                             willChange: 'transform',
@@ -1217,7 +1226,7 @@
                     <div style={{
                         position: 'absolute', inset: 0,
                         background: 'radial-gradient(120% 80% at 70% 40%, rgba(196,37,26,0.35), rgba(196,37,26,0.05) 55%, rgba(0,0,0,0) 80%)',
-                        opacity: 0.8,
+                        opacity: 0.4,
                     }} />
                 </div>
             );
@@ -1244,7 +1253,6 @@
                 if (isLaptop && isHovered) {
                     interval = setInterval(() => {
                         setGlitchText1(original1.split('').map(() => chars[Math.floor(Math.random() * chars.length)]).join(''));
-                        setGlitchText2(original2.split('').map((c) => c === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)]).join(''));
                     }, 60);
                 } else {
                     setGlitchText1(original1);
@@ -1279,11 +1287,18 @@
                           style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 'fit-content', cursor: isLaptop ? 'pointer' : 'default' }}
                         >
                             <h1 className="maaef-h1" style={{ 
-                                fontSize: 'var(--h1-hero)', color: MAAEF_INK, margin: 0,
-                                animation: (isLaptop && isHovered) ? 'maaef-glitch 0.2s linear infinite' : 'none'
+                                fontSize: 'var(--h1-hero)', color: MAAEF_INK, margin: 0
                             }}>
-                                {glitchText1}
-                                <span className="maaef-h1-italic" style={{ display: 'block', fontSize: 'var(--h1-hero-sub)', color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em' }}>
+                                <span style={{ 
+                                    display: 'inline-block',
+                                    animation: (isLaptop && isHovered) ? 'maaef-glitch 0.2s linear infinite' : 'none'
+                                }}>
+                                    {glitchText1}
+                                </span>
+                                <span className="maaef-h1-italic" style={{ 
+                                    display: 'block', fontSize: 'var(--h1-hero-sub)', color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em',
+                                    animation: (isLaptop && isHovered) ? 'maaef-glow 0.4s ease-in-out infinite' : 'none'
+                                }}>
                                     {glitchText2}
                                 </span>
                             </h1>
@@ -1336,6 +1351,9 @@
                         boxSizing: 'border-box'
                     }}>
                         <div style={{ width: '100%' }}>
+                            <div className="maaef-mono" style={{ fontSize: 9, color: MAAEF_DIM, letterSpacing: '0.24em', marginBottom: 12, textTransform: 'uppercase' }}>
+                                TARGETING — {s.kicker}
+                            </div>
                             <h2 className="maaef-h1" style={{ 
                                 fontSize: titleSize, color: MAAEF_INK, margin: 0,
                                 lineHeight: 1, overflowWrap: 'break-word', wordBreak: 'break-word'
@@ -1407,7 +1425,11 @@
                     }}>
                         <div className="maaef-h1-italic" style={{ fontSize: 'clamp(1.5rem, 6vw, 4rem)', color: MAAEF_DIM }}>That something became</div>
                         <img src={LOGO_SRC} alt="Maaef"
-                            style={{ height: 'clamp(80px, 20vw, 180px)', width: 'auto', filter: motion ? 'drop-shadow(0 0 35px rgba(196,37,26,0.55))' : 'drop-shadow(0 0 15px rgba(196,37,26,0.3))', animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none' }} />
+                            style={{ 
+                                height: 'clamp(80px, 20vw, 180px)', width: 'auto', 
+                                filter: motion ? 'drop-shadow(0 0 10px rgba(228,5,33,0.8)) drop-shadow(0 0 25px rgba(228,5,33,0.4)) drop-shadow(0 0 2px rgba(255,255,255,0.5))' : 'drop-shadow(0 0 15px rgba(228,5,33,0.3))', 
+                                animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none' 
+                            }} />
                         <div className="maaef-mono" style={{ fontSize: 10, color: MAAEF_DIM, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
                             HELLO@MAAEF.COM
                         </div>
