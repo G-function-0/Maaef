@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maaef — Services</title>
-  <meta name="description" content="Explore Maaef Media House's areas of services: video production, web design, brand identity, photography, and brand strategy.">
+  <meta name="description"
+    content="Explore Maaef Media House's areas of services: video production, web design, brand identity, photography, and brand strategy.">
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
@@ -630,6 +631,7 @@
 
     /* ─── MOBILE TILE LAYOUT (< 768px) ─── */
     @media (max-width: 768px) {
+
       /* Stack tiles vertically */
       #tiles {
         flex-direction: column;
@@ -750,7 +752,8 @@
 
         <div class="tile" data-index="0" onclick="openPanel(0)">
           <div class="tile-bg"></div>
-          <img src="f1-car-1.webp" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+          <img src="f1-car-1.webp" loading="lazy"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Video</span>
@@ -761,7 +764,8 @@
 
         <div class="tile" data-index="1" onclick="openPanel(1)">
           <div class="tile-bg"></div>
-          <img src="f1-car-2.webp" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+          <img src="f1-car-2.webp" loading="lazy"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Web</span>
@@ -772,7 +776,8 @@
 
         <div class="tile" data-index="2" onclick="openPanel(2)">
           <div class="tile-bg"></div>
-          <img src="f1-car-3.webp" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+          <img src="f1-car-3.webp" loading="lazy"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Design</span>
@@ -783,7 +788,8 @@
 
         <div class="tile" data-index="3" onclick="openPanel(3)">
           <div class="tile-bg"></div>
-          <img src="f1-car-4.webp" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+          <img src="f1-car-4.webp" loading="lazy"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Photo</span>
@@ -794,7 +800,8 @@
 
         <div class="tile" data-index="4" onclick="openPanel(4)">
           <div class="tile-bg"></div>
-          <img src="f1-car-5.webp" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
+          <img src="f1-car-5.webp" loading="lazy"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(4px); opacity: 0.4; mix-blend-mode: screen; pointer-events: none;">
           <div class="tile-frost"></div>
           <div class="tile-content">
             <span class="tile-label">Brand</span>
@@ -806,7 +813,8 @@
       </div>
 
       <!-- EXPANDED PANEL -->
-      <img id="panelImage" alt="Selected services background" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0; transition: opacity 0.55s ease; pointer-events: none; mix-blend-mode: screen; z-index: 10;">
+      <img id="panelImage" alt="Selected services background"
+        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0; transition: opacity 0.55s ease; pointer-events: none; mix-blend-mode: screen; z-index: 10;">
       <div id="panel">
         <div class="panel-bg" id="panelBg"></div>
 
@@ -838,169 +846,214 @@
   <!-- Main Footer -->
   <!-- Main Footer -->
   <footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8 overflow-hidden border-t border-white/[.05]">
-      <!-- Noise overlay -->
-      <div class="absolute inset-0 opacity-[0.15] pointer-events-none z-0"
-          style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
 
-      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
-              <!-- Brand -->
-              <div class="col-span-1 lg:col-span-2">
-                  <a href="/" class="inline-block hover-trigger mb-6">
-                      <img src="logo.png" alt="Maaef Logo" loading="lazy"
-                          class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
-                  </a>
-                  <p
-                      class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
-                      We engineer attention.<br>A new-era media house.
-                  </p>
-              </div>
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+         style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 200 200%27%3E%3C/svg%3E')"></div>
 
-              <!-- Navigation -->
-              <div>
-                  <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
-                  <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
-                      <li><a href="/"
-                              class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a>
-                      </li>
-                      <li><a href="/about.html"
-                              class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a>
-                      </li>
-                      <li><a href="/services.html"
-                              class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a>
-                      </li>
-                      <li><a href="/contact.html"
-                              class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a>
-                      </li>
-                  </ul>
-              </div>
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
 
-          </div>
-      </div>
+            <div class="col-span-1 lg:col-span-2">
+                <a href="/" class="inline-block hover-trigger mb-6">
+                    <img src="logo.png" alt="Maaef Logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                </a>
+                <p class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
+                    We engineer attention.<br>A new-era media house.
+                </p>
+            </div>
 
-      <style>
-          @keyframes tapeSlideLeft {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-          }
-          @keyframes tapeSlideRight {
-              0% { transform: translateX(-50%); }
-              100% { transform: translateX(0); }
-          }
-      </style>
-      <style>
-          @media (max-width: 1023px) {
-              .mobile-reveal { opacity: 1 !important; transform: scaleX(1) !important; }
-              .mobile-reveal-rot-1 { transform: rotate(-1.2deg) scaleX(1) !important; }
-              .mobile-reveal-rot-2 { transform: rotate(0.8deg) scaleX(1) !important; }
-              .mobile-reveal-rot-3 { transform: rotate(-0.5deg) scaleX(1) !important; }
-              .mobile-reveal-rot-4 { transform: rotate(1.1deg) scaleX(1) !important; }
-              .mobile-reveal-rot-5 { transform: rotate(-0.9deg) scaleX(1) !important; }
-              .mobile-reveal-rot-6 { transform: rotate(0.6deg) scaleX(1) !important; }
-          }
-      </style>
-      <div class="group relative w-full flex justify-center items-center min-h-[320px] md:min-h-[520px] border-y border-white/5 mb-6 overflow-hidden cursor-pointer bg-black" onclick="window.location.href='/contact'">
-          <h2 class="serif relative z-30 text-[18vw] md:text-[18vw] font-black m-0 transition-all duration-500 text-black text-center w-full leading-[0.8] tracking-tighter"
-              style="-webkit-text-stroke: 3px #dc2626;">Maaef.</h2>
+            <div>
+                <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
+                <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
+                    <li><a href="/"           class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
+                    <li><a href="/about.html"    class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
+                    <li><a href="/services.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
+                    <li><a href="/contact.html"  class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
+                </ul>
+            </div>
 
-          <!-- Police Tape 1 -->
-          <div class="footer-tape mobile-reveal mobile-reveal-rot-1 absolute left-[-50%] right-[-50%] w-[200%] h-[38px] md:h-[54px] bg-red-600 flex items-center shadow-[0_0_50px_rgba(196,30,58,0.6)] opacity-0 group-hover:opacity-100 -rotate-[1.2deg] origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-10 pointer-events-none overflow-hidden"
-              style="top: 15%;">
-              <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-[12px] md:text-xl tracking-[0.3em]"
-                  style="animation: tapeSlideLeft 15s linear infinite;">
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span>
-              </div>
-          </div>
+            <div>
+                <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
+                <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
+                    <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer"
+                           class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
+                    <li class="pt-2"><a href="/contact.html"
+                           class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
+                </ul>
+            </div>
 
-          <!-- Police Tape 2 -->
-          <div class="footer-tape mobile-reveal mobile-reveal-rot-2 absolute left-[-50%] right-[-50%] w-[200%] h-[36px] md:h-[50px] bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-100 rotate-[0.8deg] origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-80 ease-[cubic-bezier(0.16,1,0.3,1)] z-10 pointer-events-none overflow-hidden"
-              style="top: 30%;">
-              <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-[12px] md:text-xl tracking-[0.3em]"
-                  style="animation: tapeSlideRight 15s linear infinite;">
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span>
-              </div>
-          </div>
+        </div>
+    </div>
 
-          <!-- Police Tape 3 -->
-          <div class="footer-tape mobile-reveal mobile-reveal-rot-3 absolute left-[-50%] right-[-50%] w-[200%] h-[40px] md:h-[58px] bg-red-600 flex items-center shadow-[0_0_50px_rgba(196,30,58,0.6)] opacity-0 group-hover:opacity-100 -rotate-[0.5deg] origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-160 ease-[cubic-bezier(0.16,1,0.3,1)] z-10 pointer-events-none overflow-hidden"
-              style="top: 45%;">
-              <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-[12px] md:text-xl tracking-[0.3em]"
-                  style="animation: tapeSlideRight 15s linear infinite;">
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span>
-              </div>
-          </div>
+    <!-- Big text CTA -->
+            <div class="footer-cta-hover relative w-full flex justify-center items-center h-[30vh] md:h-[55vh] bg-[#030303]
+                border-t border-b border-white/[.05] mb-8 overflow-hidden group cursor-pointer"
+         onclick="window.location.href='/contact.html'">
 
-          <!-- Police Tape 4 -->
-          <div class="footer-tape mobile-reveal mobile-reveal-rot-4 absolute left-[-50%] right-[-50%] w-[200%] h-[36px] md:h-[52px] bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-100 rotate-[1.1deg] origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-240 ease-[cubic-bezier(0.16,1,0.3,1)] z-10 pointer-events-none overflow-hidden"
-              style="top: 60%;">
-              <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-[12px] md:text-xl tracking-[0.3em]"
-                  style="animation: tapeSlideLeft 15s linear infinite;">
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>START PROJECT</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>START PROJECT</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>START PROJECT</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>START PROJECT</span><span class="text-red-900">///</span>
-              </div>
-          </div>
+        <div class="absolute inset-0 pointer-events-none z-40 bg-[radial-gradient(circle_at_center,transparent_25%,rgba(3,3,3,0.95)_100%)]"></div>
 
-          <!-- Police Tape 5 -->
-          <div class="footer-tape mobile-reveal mobile-reveal-rot-5 absolute left-[-50%] right-[-50%] w-[200%] h-[38px] md:h-[56px] bg-red-600 flex items-center shadow-[0_0_50px_rgba(196,30,58,0.6)] opacity-0 group-hover:opacity-100 -rotate-[0.9deg] origin-right scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-320 ease-[cubic-bezier(0.16,1,0.3,1)] z-10 pointer-events-none overflow-hidden"
-              style="top: 75%;">
-              <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-[12px] md:text-xl tracking-[0.3em]"
-                  style="animation: tapeSlideLeft 15s linear infinite;">
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>GET IN TOUCH</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>GET IN TOUCH</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>GET IN TOUCH</span><span class="text-white/50">///</span>
-                  <span>LET'S TALK</span><span class="text-white/50">///</span><span>GET IN TOUCH</span><span class="text-white/50">///</span>
-              </div>
-          </div>
+        <h2 class="serif text-[18vw] md:text-[14vw] leading-none text-transparent tracking-tighter
+                   transition-all duration-500 relative z-50
+                   [-webkit-text-stroke:2px_#C41E3A]
+                   group-hover:text-black group-hover:[-webkit-text-stroke:2px_#C41E3A]">
+            Maaef.
+        </h2>
 
-          <!-- Police Tape 6 -->
-          <div class="footer-tape mobile-reveal mobile-reveal-rot-6 absolute left-[-50%] right-[-50%] w-[200%] h-[36px] md:h-[52px] bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-0 group-hover:opacity-100 rotate-[0.6deg] origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-400 ease-[cubic-bezier(0.16,1,0.3,1)] z-10 pointer-events-none overflow-hidden"
-              style="top: 90%;">
-              <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-[12px] md:text-xl tracking-[0.3em]"
-                  style="animation: tapeSlideRight 15s linear infinite;">
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>LET'S TALK</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>LET'S TALK</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>LET'S TALK</span><span class="text-red-900">///</span>
-                  <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>LET'S TALK</span><span class="text-red-900">///</span>
-              </div>
-          </div>
-      </div>
+        <svg class="absolute inset-0 w-full h-full z-0 opacity-30 pointer-events-none" viewBox="0 0 1000 500" preserveAspectRatio="none">
+            <path d="M-100,100 Q200,200 400,50 T700,150 T1100,50" 
+                  stroke="#dc2626" stroke-width="2" fill="none" 
+                  style="filter: drop-shadow(0px 0px 10px rgba(220,38,38,1));" />
+            <path d="M-100,400 Q250,300 500,450 T800,350 T1100,450" 
+                  stroke="#dc2626" stroke-width="3" fill="none" 
+                  style="filter: drop-shadow(0px 0px 15px rgba(220,38,38,0.8));" />
+        </svg>
 
-      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-          <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-          <!-- Bottom bar -->
-          <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
-              <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef
-                  Media House</span>
+        <style>
+            @keyframes slideLeft  { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+            @keyframes slideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-              <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer"
-                  class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2"
-                  style="color:rgba(255,255,255,.3)">
-                  Made with <span
-                      class="text-red-600 group-hover:scale-125 transition-transform duration-300">❤</span> &
-                  Coffee by Humans
-              </a>
+            .concept-tape {
+                position: absolute;
+                display: flex;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.5s ease, filter 0.5s ease;
+                filter: blur(4px);
+            }
+            .footer-cta-hover:hover .concept-tape {
+                opacity: 0.95;
+                filter: blur(0px);
+            }
 
-              <div class="flex items-center gap-6">
-                  <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow,
-                      IN</span>
-                  <span onclick="window.scrollTo({top:0,behavior:'smooth'})"
+            .marquee-content {
+                display: flex;
+                width: max-content;
+            }
+
+            /* 1. TOP FRAME (Shallow angles hovering above text) */
+            .ct-1 { top: 8%; left: -50vw; width: 200vw; transform: rotate(4deg); z-index: 10; }
+            .ct-2 { top: 18%; left: -50vw; width: 200vw; transform: rotate(-2deg); z-index: 11; }
+            
+            /* 2. BOTTOM FRAME (Shallow angles hovering below text) */
+            .ct-3 { top: 85%; left: -50vw; width: 200vw; transform: rotate(-3deg); z-index: 12; }
+            .ct-4 { top: 75%; left: -50vw; width: 200vw; transform: rotate(2deg); z-index: 13; }
+
+            /* 3. SIDE FRAMES (Steep angles locked to the extreme edges) */
+            /* Far Left Wall */
+            .ct-5 { top: -10%; left: -50vw; width: 120vw; transform: rotate(55deg); z-index: 14; }
+            /* Far Right Wall */
+            .ct-6 { top: -10%; right: -50vw; left: auto; width: 120vw; transform: rotate(-55deg); z-index: 15; }
+
+            @media (max-width: 1023px) {
+                .concept-tape {
+                    opacity: 0.95 !important;
+                    filter: blur(0px) !important;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .ct-5 { display: flex !important; top: 5% !important; left: -90vw !important; width: 200vw !important; transform: rotate(60deg) !important; z-index: 15 !important; }
+                .ct-6 { display: flex !important; top: 40% !important; right: -90vw !important; width: 200vw !important; transform: rotate(-50deg) !important; left: auto !important; bottom: auto !important; z-index: 15 !important; }
+                .marquee-content { font-size: 10px !important; }
+                .concept-tape > div { padding-top: 6px !important; padding-bottom: 6px !important; }
+            }
+        </style>
+
+        <div class="concept-tape ct-1">
+            <div class="w-full bg-[#dc2626] py-3 shadow-[0_0_40px_rgba(220,38,38,0.5)]">
+                <div class="marquee-content gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: slideRight 30s linear infinite;">
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-tape ct-2">
+            <div class="w-full bg-[#050505] py-2 border-y border-[#c0251a]">
+                <div class="marquee-content gap-8 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="color: #dc2626; animation: slideLeft 35s linear infinite;">
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-tape ct-3">
+            <div class="w-full bg-[#dc2626] py-3 shadow-[0_0_40px_rgba(220,38,38,0.5)]">
+                <div class="marquee-content gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: slideRight 32s linear infinite;">
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-tape ct-4">
+            <div class="w-full bg-[#050505] py-2 border-y border-[#c0251a]">
+                <div class="marquee-content gap-8 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="color: #dc2626; animation: slideLeft 28s linear infinite;">
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-tape ct-5">
+            <div class="w-full bg-[#050505] py-2 md:py-3 border-y border-[#c0251a]">
+                <div class="marquee-content gap-8 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="color: #dc2626; animation: slideRight 26s linear infinite;">
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-tape ct-6">
+            <div class="w-full bg-[#dc2626] py-2 md:py-3 shadow-[0_0_30px_rgba(220,38,38,0.5)]">
+                <div class="marquee-content gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: slideLeft 24s linear infinite;">
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
+            <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef Media House</span>
+
+            <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer"
+               class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2"
+               style="color:rgba(255,255,255,.3)">
+                Made with <span class="text-red-600 group-hover:scale-125 transition-transform duration-300">&#10084;</span> &amp; Coffee by Humans
+            </a>
+
+            <div class="flex items-center gap-6">
+                <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow, IN</span>
+                <span onclick="window.scrollTo({top:0,behavior:'smooth'})"
                       class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger"
-                      style="color:rgba(255,255,255,.25)">↑ Top</span>
-              </div>
-          </div>
-      </div>
-  </footer>
+                      style="color:rgba(255,255,255,.25)">&#8593; Top</span>
+            </div>
+        </div>
+    </div>
+
+</footer>
 
   <script>
     const data = [
@@ -1122,7 +1175,7 @@
 
       document.querySelector('nav').classList.add('hidden');
       const footer = document.getElementById('main-footer');
-      if(footer) footer.style.display = 'none';
+      if (footer) footer.style.display = 'none';
 
       setTimeout(() => {
         document.getElementById('panel').classList.add('open');
@@ -1134,10 +1187,10 @@
       const pv = document.getElementById('panelImage');
       if (pv) {
         pv.style.opacity = '0';
-              }
+      }
       document.querySelector('nav').classList.remove('hidden');
       const footer = document.getElementById('main-footer');
-      if(footer) footer.style.display = '';
+      if (footer) footer.style.display = '';
       isOpen = false;
 
       const tiles = document.querySelectorAll('.tile');
