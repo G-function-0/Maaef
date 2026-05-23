@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaef Media House | Engineering Attention</title>
-    <meta name="description" content="Maaef Media House — a new-era creative collective engineering attention through video, design, photography, web, and brand strategy. Based in Lucknow, India.">
+    <meta name="description"
+        content="Maaef Media House — a new-era creative collective engineering attention through video, design, photography, web, and brand strategy. Based in Lucknow, India.">
     <link rel="icon" type="image/png" href="logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -103,11 +104,6 @@
             overflow-y: auto;
             overflow-x: hidden;
             height: auto;
-            scroll-behavior: smooth;
-        }
-
-        /* Scroll-snap enabled on all screens per user request */
-        html.intro-done {
             scroll-snap-type: y mandatory;
         }
 
@@ -741,6 +737,7 @@
 
         /* --- TOUCH DEVICE OVERRIDES (capability-based, not width-based) --- */
         @media (hover: none) and (pointer: coarse) {
+
             /* Neutralize hero header blend on touch since there's no hover cursor */
             #hero-header {
                 mix-blend-mode: normal !important;
@@ -748,12 +745,14 @@
         }
 
         /* --- HUD / DIRECTION A STYLES --- */
-        .maaef-h1, .serif {
+        .maaef-h1,
+        .serif {
             font-family: 'Panchang', 'Playfair Display', 'Times New Roman', serif;
             font-weight: 700;
             letter-spacing: -0.02em;
             line-height: 0.92;
         }
+
         .maaef-h1-italic {
             font-family: 'Panchang', 'Playfair Display', 'Times New Roman', serif;
             font-style: italic;
@@ -761,35 +760,129 @@
             letter-spacing: -0.01em;
             line-height: 0.95;
         }
-        .maaef-mono { font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-        @keyframes maaef-sweep { 0%{transform:translateX(-30%)} 100%{transform:translateX(30%)} }
-        @keyframes maaef-marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-        @keyframes maaef-blink { 0%,49%{opacity:1} 50%,100%{opacity:0.15} }
-        @keyframes maaef-scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
-        @keyframes maaef-bar { 0%{transform:scaleX(0.1)} 50%{transform:scaleX(1)} 100%{transform:scaleX(0.1)} }
-        @keyframes maaef-pulse { 
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(228,5,33,0.8)) drop-shadow(0 0 25px rgba(228,5,33,0.4)) drop-shadow(0 0 2px rgba(255,255,255,0.5)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 20px rgba(228,5,33,1)) drop-shadow(0 0 45px rgba(228,5,33,0.6)) drop-shadow(0 0 4px rgba(255,255,255,0.8)); transform: scale(1.05); }
+        .maaef-mono {
+            font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
         }
+
+        @keyframes maaef-sweep {
+            0% {
+                transform: translateX(-30%)
+            }
+
+            100% {
+                transform: translateX(30%)
+            }
+        }
+
+        @keyframes maaef-marquee {
+            0% {
+                transform: translateX(0)
+            }
+
+            100% {
+                transform: translateX(-50%)
+            }
+        }
+
+        @keyframes maaef-blink {
+
+            0%,
+            49% {
+                opacity: 1
+            }
+
+            50%,
+            100% {
+                opacity: 0.15
+            }
+        }
+
+        @keyframes maaef-scan {
+            0% {
+                transform: translateY(-100%)
+            }
+
+            100% {
+                transform: translateY(100%)
+            }
+        }
+
+        @keyframes maaef-bar {
+            0% {
+                transform: scaleX(0.1)
+            }
+
+            50% {
+                transform: scaleX(1)
+            }
+
+            100% {
+                transform: scaleX(0.1)
+            }
+        }
+
+        @keyframes maaef-pulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(228, 5, 33, 0.8)) drop-shadow(0 0 25px rgba(228, 5, 33, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+                transform: scale(1);
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(228, 5, 33, 1)) drop-shadow(0 0 45px rgba(228, 5, 33, 0.6)) drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+                transform: scale(1.05);
+            }
+        }
+
         @keyframes maaef-glitch {
-            0% { transform: translate(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
-            20% { transform: translate(-2px, 1px); text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff; }
-            40% { transform: translate(-2px, -1px); text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521; }
-            60% { transform: translate(2px, 1px); text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff; }
-            80% { transform: translate(2px, -1px); text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521; }
-            100% { transform: translate(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
+            0% {
+                transform: translate(0);
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(228, 5, 33, 0.6);
+            }
+
+            20% {
+                transform: translate(-2px, 1px);
+                text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff;
+            }
+
+            40% {
+                transform: translate(-2px, -1px);
+                text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521;
+            }
+
+            60% {
+                transform: translate(2px, 1px);
+                text-shadow: 2px 0 #E40521, -2px 0 #00fff9, 0 0 12px #fff;
+            }
+
+            80% {
+                transform: translate(2px, -1px);
+                text-shadow: -2px 0 #E40521, 2px 0 #00fff9, 0 0 15px #E40521;
+            }
+
+            100% {
+                transform: translate(0);
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(228, 5, 33, 0.6);
+            }
         }
+
         @keyframes maaef-glow {
-            0%, 100% { text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(228,5,33,0.6); }
-            50% { text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 25px rgba(228,5,33,0.8); }
+
+            0%,
+            100% {
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(228, 5, 33, 0.6);
+            }
+
+            50% {
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 25px rgba(228, 5, 33, 0.8);
+            }
         }
-        
+
         #react-root {
             width: 100%;
         }
-
-
     </style>
 </head>
 
@@ -830,7 +923,7 @@
     </div>
 
     <div id="homepage">
-<nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center text-white transition-opacity duration-500"
+        <nav class="fixed top-0 w-full z-[60] px-6 md:px-12 py-8 flex justify-between items-center text-white transition-opacity duration-500"
             id="main-nav">
             <a href="/" class="hover-trigger relative z-[60] nav-logo-link transition-opacity duration-300">
             </a>
@@ -858,6 +951,10 @@
             html.menu-open,
             body.menu-open {
                 overflow: hidden !important;
+            }
+
+            html.menu-open #global-audio-toggle {
+                display: none !important;
             }
 
             /* Menu Toggle Logo Hover Effect */
@@ -890,6 +987,7 @@
                 opacity: 0;
                 pointer-events: none;
             }
+
             .menu-open #global-ui {
                 display: none;
             }
@@ -899,7 +997,8 @@
             class="fixed inset-0 z-[55] bg-[#050505] flex flex-col justify-center items-center overflow-hidden">
             <canvas id="drawing-canvas"></canvas>
             <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
-                style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');"></div>
+                style="background-image: url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E');">
+            </div>
             <div class="flex flex-col gap-4 text-center relative z-10 pointer-events-none">
                 <a href="/" onclick="toggleMenu()"
                     class="menu-link group relative overflow-hidden inline-block hover-trigger cursor-pointer pointer-events-auto py-2">
@@ -945,101 +1044,219 @@
         <div id="react-root"></div>
 
         <footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8 overflow-hidden border-t border-white/[.05]">
-            <!-- Noise overlay -->
-            <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 200\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E\');"></div>
-            
-            <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
-                    <!-- Brand -->
-                    <div class="col-span-1 lg:col-span-2">
-                        <a href="/" class="inline-block hover-trigger mb-6">
-                            <img src="logo.png" alt="Maaef Logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
-                        </a>
-                        <p class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
-                            We engineer attention.<br>A new-era media house.
-                        </p>
-                    </div>
-                    
-                    <!-- Navigation -->
-                    <div>
-                        <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
-                        <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
-                            <li><a href="/" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
-                            <li><a href="/about.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
-                            <li><a href="/services.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
-                            <li><a href="/contact.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Contact & Socials -->
-                    <div>
-                        <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
-                        <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
-                            <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
-                            <li class="pt-2"><a href="/contact.html" class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
-                        </ul>
-                    </div>
+
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+         style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 200 200%27%3E%3C/svg%3E')"></div>
+
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-16">
+
+            <div class="col-span-1 lg:col-span-2">
+                <a href="/" class="inline-block hover-trigger mb-6">
+                    <img src="logo.png" alt="Maaef Logo" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                </a>
+                <p class="text-gray-400 text-sm md:text-base max-w-sm font-light leading-relaxed border-l-2 border-red-600 pl-4">
+                    We engineer attention.<br>A new-era media house.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Navigation</h3>
+                <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
+                    <li><a href="/"              class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Home</a></li>
+                    <li><a href="/about.html"    class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Clients</a></li>
+                    <li><a href="/services.html" class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Services</a></li>
+                    <li><a href="/contact.html"  class="text-gray-500 hover:text-white transition duration-300 hover-trigger inline-block">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="serif text-white text-lg mb-6 tracking-wide opacity-90">Connect</h3>
+                <ul class="space-y-4 text-xs tracking-[0.2em] uppercase">
+                    <li><a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer"
+                           class="text-gray-500 hover:text-red-500 transition duration-300 hover-trigger inline-block">Instagram</a></li>
+                    <li class="pt-2"><a href="/contact.html"
+                           class="text-red-600 hover:text-red-500 transition duration-300 hover-trigger inline-block font-bold">Start Project</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Big text CTA -->
+    <div id="cta-block" class="footer-cta-hover relative w-full flex justify-center items-center h-[30vh] md:h-[55vh] bg-[#030303]
+                border-t border-b border-white/[.05] mb-8 overflow-hidden group cursor-pointer"
+         onclick="window.location.href='/contact.html'">
+
+        <div class="absolute inset-0 pointer-events-none z-40 bg-[radial-gradient(circle_at_center,transparent_25%,rgba(3,3,3,0.95)_100%)]"></div>
+
+        <h2 class="serif text-[18vw] md:text-[14vw] leading-none text-transparent tracking-tighter
+                   transition-all duration-500 relative z-50
+                   [-webkit-text-stroke:2px_#C41E3A]
+                   group-hover:text-black group-hover:[-webkit-text-stroke:2px_#C41E3A]">
+            Maaef.
+        </h2>
+
+        <style>
+            @keyframes slideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+            @keyframes slideLeft  { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+            .concept-tape {
+                position: absolute;
+                display: flex;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.5s ease, filter 0.5s ease;
+                filter: blur(4px);
+                transform-origin: 0% 50%;
+                overflow: hidden;
+                will-change: transform;
+            }
+            .footer-cta-hover:hover .concept-tape {
+                opacity: 0.95;
+                filter: blur(0px);
+            }
+            .marquee-content { display: flex; width: max-content; }
+
+            .ct-1 { z-index: 13; }
+            .ct-2 { z-index: 11; }
+            .ct-3 { z-index: 12; }
+            .ct-4 { z-index: 10; }
+
+            @media (max-width: 1023px) {
+                .concept-tape { opacity: 0.95 !important; filter: blur(0px) !important; }
+            }
+            @media (max-width: 767px) {
+                .marquee-content { font-size: 10px !important; }
+                .concept-tape > div { padding-top: 6px !important; padding-bottom: 6px !important; }
+            }
+        </style>
+
+        <div class="concept-tape ct-1" data-start="0,-7.5" data-end="74,105">
+            <div class="w-full bg-[#dc2626] py-3 shadow-[0_0_40px_rgba(220,38,38,0.5)]">
+                <div class="marquee-content gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: slideRight 30s linear infinite;">
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
+                    <span>LET'S TALK</span><span class="opacity-50 text-black">///</span><span>START PROJECT</span><span class="opacity-50 text-black">///</span>
                 </div>
             </div>
-                
-                <!-- Big text CTA -->
-                <div class="relative w-full flex justify-center items-center py-10 border-t border-b border-white/[.05] mb-8 overflow-hidden group hover-trigger cursor-pointer" onclick="window.location.href='/contact'">
-                    <h2 class="serif text-[15vw] md:text-[12vw] leading-none text-transparent tracking-tighter transition-all duration-500 relative z-10 [-webkit-text-stroke:2px_#C41E3A] group-hover:text-black group-hover:[-webkit-text-stroke:2px_#C41E3A]">Maaef.</h2>
-                    
-                    <style>
-                        @keyframes tapeSlideLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-                        @keyframes tapeSlideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-                    </style>
-                    <!-- Police Tape 1 -->
-                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-95 lg:opacity-0 group-hover:opacity-95 -rotate-2 origin-right scale-x-100 lg:scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                             style="top: 10%;">
-                            <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
-                                <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
-                            </div>
-                        </div>
+        </div>
 
-                        <!-- Police Tape 2 -->
-                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-95 lg:opacity-0 group-hover:opacity-95 rotate-3 origin-left scale-x-100 lg:scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                             style="top: 35%;">
-                            <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
-                                <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
-                            </div>
-                        </div>
-
-                        <!-- Police Tape 3 -->
-                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.4)] opacity-95 lg:opacity-0 group-hover:opacity-95 -rotate-1 origin-left scale-x-100 lg:scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                             style="top: 65%;">
-                            <div class="flex whitespace-nowrap gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideRight 15s linear infinite;">
-                                <span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span><span class="text-white/50">///</span><span>LET'S TALK</span><span class="text-white/50">///</span><span>START PROJECT</span>
-                            </div>
-                        </div>
-
-                        <!-- Police Tape 4 -->
-                        <div class="absolute left-[-50%] right-[-50%] w-[200%] h-10 md:h-14 bg-[#050505] border-y-2 border-red-600 flex items-center shadow-[0_0_30px_rgba(196,30,58,0.2)] opacity-100 lg:opacity-0 group-hover:opacity-100 rotate-2 origin-right scale-x-100 lg:scale-x-0 group-hover:scale-x-100 transition-all duration-700 delay-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0 pointer-events-none overflow-hidden" 
-                             style="top: 90%;">
-                            <div class="flex whitespace-nowrap gap-8 text-red-600 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: tapeSlideLeft 15s linear infinite;">
-                                <span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span><span class="text-red-900">///</span><span>WAITING FOR YOU</span><span class="text-red-900">///</span><span>GET IN TOUCH</span>
-                            </div>
-                        </div>
-                    </div>
-
-            <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-                <!-- Bottom bar -->
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
-                    <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef Media House</span>
-                    
-                    <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2" style="color:rgba(255,255,255,.3)">
-                        Made with <span class="text-red-600 group-hover:scale-125 transition-transform duration-300">❤</span> & Coffee by Humans
-                    </a>
-                    
-                    <div class="flex items-center gap-6">
-                         <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow, IN</span>
-                         <span onclick="window.scrollTo({top:0,behavior:'smooth'})" class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger" style="color:rgba(255,255,255,.25)">↑ Top</span>
-                    </div>
+        <div class="concept-tape ct-2" data-start="2,45.5" data-end="86,-5.5">
+            <div class="w-full bg-[#050505] py-2 border-y border-[#c0251a]">
+                <div class="marquee-content gap-8 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="color:#dc2626; animation: slideLeft 35s linear infinite;">
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
+                    <span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span><span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span>
                 </div>
             </div>
-        </footer>
+        </div>
 
+        <div class="concept-tape ct-3" data-start="2,56" data-end="96,80">
+            <div class="w-full bg-[#dc2626] py-3 shadow-[0_0_40px_rgba(220,38,38,0.5)]">
+                <div class="marquee-content gap-8 text-white font-bold serif text-sm md:text-xl tracking-[0.3em]" style="animation: slideRight 32s linear infinite;">
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                    <span>START PROJECT</span><span class="opacity-50 text-black">///</span><span>LET'S TALK</span><span class="opacity-50 text-black">///</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-tape ct-4" data-start="2,92" data-end="96,18">
+            <div class="w-full bg-[#050505] py-2 border-y border-[#c0251a]">
+                <div class="marquee-content gap-8 font-bold serif text-sm md:text-xl tracking-[0.3em]" style="color:#dc2626; animation: slideLeft 28s linear infinite;">
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                    <span>GET IN TOUCH</span><span class="opacity-30 text-white">///</span><span>WAITING FOR YOU</span><span class="opacity-30 text-white">///</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-2">
+            <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">© 2026 Maaef Media House</span>
+
+            <a href="https://dev-folio-wine.vercel.app/" target="_blank" rel="noopener noreferrer"
+               class="text-[10px] uppercase tracking-widest hover:text-white transition duration-300 hover-trigger group flex items-center gap-2"
+               style="color:rgba(255,255,255,.3)">
+                Made with <span class="text-red-600 group-hover:scale-125 transition-transform duration-300">&#10084;</span> &amp; Coffee by Humans
+            </a>
+
+            <div class="flex items-center gap-6">
+                <span class="text-[10px] uppercase tracking-widest" style="color:rgba(255,255,255,.25)">Lucknow, IN</span>
+                <span onclick="window.scrollTo({top:0,behavior:'smooth'})"
+                      class="text-[10px] uppercase tracking-widest hover:text-white transition cursor-pointer hover-trigger"
+                      style="color:rgba(255,255,255,.25)">&#8593; Top</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        const cta = document.getElementById('cta-block');
+        if (!cta) return;
+        const tapes = cta.querySelectorAll('.concept-tape[data-start]');
+        function position() {
+            const W = cta.clientWidth, H = cta.clientHeight;
+            tapes.forEach(el => {
+                const [x1, y1] = el.dataset.start.split(',').map(Number);
+                const [x2, y2] = el.dataset.end.split(',').map(Number);
+                const dx = (x2 - x1) / 100 * W;
+                const dy = (y2 - y1) / 100 * H;
+                el.style.left  = (x1 / 100 * W) + 'px';
+                el.style.top   = (y1 / 100 * H - el.offsetHeight / 2) + 'px';
+                el.style.width = Math.hypot(dx, dy) + 'px';
+                el.style.transform = 'rotate(' + (Math.atan2(dy, dx) * 180 / Math.PI) + 'deg)';
+            });
+        }
+        window.positionMaaefStripes = position;
+        requestAnimationFrame(() => requestAnimationFrame(position));
+        window.addEventListener('resize', position);
+    })();
+    </script>
+
+</footer>
+
+    </div>
+
+    <!-- Stub to prevent toggle error before main script parses -->
+    <script>
+        window.toggleAudio = window.toggleAudio || function () { };
+    </script>
+
+    <!-- Global Persistent Audio Toggle -->
+    <div id="global-audio-toggle" onclick="toggleAudio()"
+        class="fixed z-[600] flex items-center gap-3 cursor-pointer py-2 transition-all duration-300"
+        style="bottom: calc(var(--hud-offset-y) + 80px); right: var(--content-px); z-index: 600;">
+        <span id="mute-label"
+            class="maaef-mono text-[9px] text-white tracking-[0.1em] transition-opacity duration-500 pointer-events-none"
+            style="opacity: 1;">
+            AUDIO OFF
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" id="mute-icon"
+            style="transition: all 0.3s;">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- Mute cross: visible when muted -->
+            <path id="mute-cross" d="M23 9l-6 6M17 9l6 6" stroke-linecap="round" stroke-linejoin="round"
+                style="display: block;" />
+            <!-- Waves: visible when unmuted -->
+            <path id="mute-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke-linecap="round"
+                stroke-linejoin="round" style="display: none;" />
+        </svg>
     </div>
 
     <script type="text/babel" data-presets="react">
@@ -1142,9 +1359,9 @@
 
         function HudCorner({ children, side = 'tl', color = MAAEF_DIM }) {
             const pos = {
-                tl: { top: 'var(--hud-offset-y)', left: 'var(--hud-offset-x)' }, 
+                tl: { top: 'var(--hud-offset-y)', left: 'var(--hud-offset-x)' },
                 tr: { top: 'var(--hud-offset-y)', right: 'var(--hud-offset-x)' },
-                bl: { bottom: 'var(--hud-offset-y)', left: 'var(--hud-offset-x)' }, 
+                bl: { bottom: 'var(--hud-offset-y)', left: 'var(--hud-offset-x)' },
                 br: { bottom: 'var(--hud-offset-y)', right: 'var(--hud-offset-x)' },
             }[side];
             return (
@@ -1208,25 +1425,46 @@
 
         function HeroVideoHUD({ motion, isMuted, isHovered, isLaptop }) {
             const videoRef = useRef(null);
+
             useEffect(() => {
-                if (videoRef.current) videoRef.current.muted = isMuted;
+                if (videoRef.current) {
+                    videoRef.current.muted = isMuted;
+                    const playPromise = videoRef.current.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => { });
+                    }
+                }
             }, [isMuted]);
+
+            const showBlur = isLaptop && !isHovered;
 
             return (
                 <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#0a0405' }}>
                     <video ref={videoRef} src={HERO_VIDEO_SRC} autoPlay muted loop playsInline preload="auto"
                         style={{
                             position: 'absolute', inset: 0, width: '100%', height: '100%',
-                            objectFit: 'cover', 
-                            filter: isLaptop ? `blur(${isHovered ? 0 : 8}px)` : 'none',
-                            transition: 'filter 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-                            transform: isLaptop ? 'scale(1.1)' : 'none', 
+                            objectFit: 'cover',
+                            transform: isLaptop ? 'scale(1.1)' : 'none',
                             willChange: 'transform',
                         }} />
+                    {isLaptop && (
+                        <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            backdropFilter: 'blur(8px)',
+                            WebkitBackdropFilter: 'blur(8px)',
+                            opacity: showBlur ? 1 : 0,
+                            transition: 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                            pointerEvents: 'none',
+                            willChange: 'opacity',
+                            zIndex: 2
+                        }} />
+                    )}
                     <div style={{
                         position: 'absolute', inset: 0,
                         background: 'radial-gradient(120% 80% at 70% 40%, rgba(196,37,26,0.35), rgba(196,37,26,0.05) 55%, rgba(0,0,0,0) 80%)',
                         opacity: 0.4,
+                        zIndex: 3
                     }} />
                 </div>
             );
@@ -1277,25 +1515,25 @@
                         <ChannelBadge ch="00" label="HERO · BROADCAST LIVE" />
                     </HudCorner>
                     <div style={{
-                        position: 'absolute', left: 'var(--content-px)', right: 'var(--content-px)', 
+                        position: 'absolute', left: 'var(--content-px)', right: 'var(--content-px)',
                         top: 'calc(var(--hud-offset-y) + 40px)', bottom: 'calc(var(--hud-offset-y) + 40px)',
                         display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24, zIndex: 4,
                     }}>
-                        <div 
-                          onMouseEnter={() => setIsHovered(true)} 
-                          onMouseLeave={() => setIsHovered(false)}
-                          style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 'fit-content', cursor: isLaptop ? 'pointer' : 'default' }}
+                        <div
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 'fit-content', cursor: isLaptop ? 'pointer' : 'default' }}
                         >
-                            <h1 className="maaef-h1" style={{ 
+                            <h1 className="maaef-h1" style={{
                                 fontSize: 'var(--h1-hero)', color: MAAEF_INK, margin: 0
                             }}>
-                                <span style={{ 
+                                <span style={{
                                     display: 'inline-block',
                                     animation: (isLaptop && isHovered) ? 'maaef-glitch 0.2s linear infinite' : 'none'
                                 }}>
                                     {glitchText1}
                                 </span>
-                                <span className="maaef-h1-italic" style={{ 
+                                <span className="maaef-h1-italic" style={{
                                     display: 'block', fontSize: 'var(--h1-hero-sub)', color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em',
                                     animation: (isLaptop && isHovered) ? 'maaef-glow 0.4s ease-in-out infinite' : 'none'
                                 }}>
@@ -1344,9 +1582,9 @@
                     </HudCorner>
 
                     <div style={{
-                        position: 'absolute', left: 'var(--content-px)', right: 'var(--content-px)', 
+                        position: 'absolute', left: 'var(--content-px)', right: 'var(--content-px)',
                         top: 'calc(var(--hud-offset-y) + 30px)', bottom: 'calc(var(--hud-offset-y) + 30px)',
-                        display: 'flex', flexDirection: 'column', 
+                        display: 'flex', flexDirection: 'column',
                         justifyContent: 'center', gap: isMobile ? 24 : 40, zIndex: 4,
                         boxSizing: 'border-box'
                     }}>
@@ -1354,13 +1592,13 @@
                             <div className="maaef-mono" style={{ fontSize: 9, color: MAAEF_DIM, letterSpacing: '0.24em', marginBottom: 12, textTransform: 'uppercase' }}>
                                 TARGETING — {s.kicker}
                             </div>
-                            <h2 className="maaef-h1" style={{ 
+                            <h2 className="maaef-h1" style={{
                                 fontSize: titleSize, color: MAAEF_INK, margin: 0,
                                 lineHeight: 1, overflowWrap: 'break-word', wordBreak: 'break-word'
                             }}>
                                 {s.titleLines.map((ln, i) => (
                                     <span key={i} style={{
-                                        display: 'block', 
+                                        display: 'block',
                                         color: i === s.redLine ? MAAEF_RED : MAAEF_INK,
                                         fontStyle: i === s.italicLine ? 'italic' : 'normal',
                                     }}>{ln}</span>
@@ -1368,9 +1606,9 @@
                             </h2>
                         </div>
 
-                        <div style={{ 
-                            display: 'flex', flexDirection: 'column', gap: 16, 
-                            maxWidth: isMobile ? '100%' : 400 
+                        <div style={{
+                            display: 'flex', flexDirection: 'column', gap: 16,
+                            maxWidth: isMobile ? '100%' : 400
                         }}>
                             <div className="maaef-body" style={{
                                 fontSize: isMobile ? 12 : 14, color: MAAEF_INK, opacity: 0.9,
@@ -1425,10 +1663,10 @@
                     }}>
                         <div className="maaef-h1-italic" style={{ fontSize: 'clamp(1.5rem, 6vw, 4rem)', color: MAAEF_DIM }}>That something became</div>
                         <img src={LOGO_SRC} alt="Maaef"
-                            style={{ 
-                                height: 'clamp(80px, 20vw, 180px)', width: 'auto', 
-                                filter: motion ? 'drop-shadow(0 0 10px rgba(228,5,33,0.8)) drop-shadow(0 0 25px rgba(228,5,33,0.4)) drop-shadow(0 0 2px rgba(255,255,255,0.5))' : 'drop-shadow(0 0 15px rgba(228,5,33,0.3))', 
-                                animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none' 
+                            style={{
+                                height: 'clamp(80px, 20vw, 180px)', width: 'auto',
+                                filter: motion ? 'drop-shadow(0 0 10px rgba(228,5,33,0.8)) drop-shadow(0 0 25px rgba(228,5,33,0.4)) drop-shadow(0 0 2px rgba(255,255,255,0.5))' : 'drop-shadow(0 0 15px rgba(228,5,33,0.3))',
+                                animation: motion ? 'maaef-pulse 3s ease-in-out infinite' : 'none'
                             }} />
                         <div className="maaef-mono" style={{ fontSize: 10, color: MAAEF_DIM, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
                             HELLO@MAAEF.COM
@@ -1462,58 +1700,20 @@
         }
 
         function DirectionA({ motion = true, density = 'comfy' }) {
-            const [isMuted, setIsMuted] = useState(true);
-            const [showAudioLabel, setShowAudioLabel] = useState(true);
-            const timerRef = useRef(null);
-
-            const toggleAudio = () => {
-                const newVal = !isMuted;
-                setIsMuted(newVal);
-                window.isAudioMuted = newVal;
-                // Only target videos within the React root or with the specific class
-                document.querySelectorAll('#react-root video').forEach(v => v.muted = newVal);
-                window.dispatchEvent(new CustomEvent('audioChange'));
-
-                setShowAudioLabel(true);
-                if (timerRef.current) clearTimeout(timerRef.current);
-                timerRef.current = setTimeout(() => setShowAudioLabel(false), 1500);
-            };
+            const [isMuted, setIsMuted] = useState(window.isAudioMuted);
 
             useEffect(() => {
-                timerRef.current = setTimeout(() => setShowAudioLabel(false), 3000);
-                return () => timerRef.current && clearTimeout(timerRef.current);
+                const handleAudioChange = () => {
+                    setIsMuted(window.isAudioMuted);
+                };
+                window.addEventListener('audioChange', handleAudioChange);
+                // Sync on mount
+                setIsMuted(window.isAudioMuted);
+                return () => window.removeEventListener('audioChange', handleAudioChange);
             }, []);
 
             return (
                 <>
-                    {/* Persistent Audio Toggle (React side - for when homepage is active) */}
-                    <div 
-                        onClick={toggleAudio}
-                        style={{
-                            position: 'fixed', bottom: 'calc(var(--hud-offset-y) + 80px)', right: 'var(--content-px)',
-                            zIndex: 100, display: 'flex',
-                            alignItems: 'center', gap: 12, cursor: 'pointer',
-                            padding: '8px 0', transition: 'opacity 0.3s'
-                        }}>
-                        <span className="maaef-mono" style={{ 
-                            fontSize: 9, color: '#fff', letterSpacing: '0.1em',
-                            opacity: showAudioLabel ? 1 : 0,
-                            transition: 'opacity 0.5s ease-in-out',
-                            pointerEvents: 'none'
-                        }}>
-                            {isMuted ? 'AUDIO OFF' : 'AUDIO ON'}
-                        </span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" 
-                             fill={isMuted ? "none" : "#c0251a"} 
-                             stroke={isMuted ? "#fff" : "#c0251a"} 
-                             strokeWidth="2" 
-                             style={{ transition: 'all 0.3s' }}>
-                            <path d="M11 5L6 9H2v6h4l5 4V5z" strokeLinecap="round" strokeLinejoin="round" />
-                            {!isMuted && (
-                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" strokeLinecap="round" strokeLinejoin="round" />
-                            )}
-                        </svg>
-                    </div>
                     {MAAEF_SECTIONS.map((s, i) => (
                         <section key={s.id} style={{
                             position: 'relative', width: '100%', height: '100vh', height: '100dvh',
@@ -1522,7 +1722,7 @@
                         }}>
                             {i === 0 ? <HeroA s={s} motion={motion} density={density} isMuted={isMuted} />
                                 : i === MAAEF_SECTIONS.length - 1 ? <OutroA s={s} motion={motion} density={density} />
-                                : <ContentA s={s} motion={motion} density={density} idx={i} />}
+                                    : <ContentA s={s} motion={motion} density={density} idx={i} />}
                             <FooterTickerA motion={motion} />
                         </section>
                     ))}
@@ -1580,17 +1780,16 @@
                         // Ensure video is playing if unmuted
                         const playPromise = v.play();
                         if (playPromise !== undefined) {
-                            playPromise.catch(() => {
-                                // Autoplay was prevented
-                            });
+                            playPromise.catch(() => { });
                         }
                     }
                 });
                 const label = document.getElementById('mute-label');
                 const icon = document.getElementById('mute-icon');
+                const cross = document.getElementById('mute-cross');
                 const waves = document.getElementById('mute-waves');
                 if (label) {
-                    label.innerText = window.isAudioMuted ? 'Audio Off' : 'Audio On';
+                    label.innerText = window.isAudioMuted ? 'AUDIO OFF' : 'AUDIO ON';
                     label.style.opacity = '1';
                     if (audioLabelTimer) clearTimeout(audioLabelTimer);
                     audioLabelTimer = setTimeout(() => { label.style.opacity = '0'; }, 1500);
@@ -1599,15 +1798,20 @@
                     icon.setAttribute('fill', window.isAudioMuted ? 'none' : '#c0251a');
                     icon.setAttribute('stroke', window.isAudioMuted ? '#fff' : '#c0251a');
                 }
+                if (cross) {
+                    cross.style.display = window.isAudioMuted ? 'block' : 'none';
+                    cross.setAttribute('stroke', window.isAudioMuted ? '#fff' : '#c0251a');
+                }
                 if (waves) {
-                    waves.style.opacity = window.isAudioMuted ? '0' : '1';
+                    waves.style.display = window.isAudioMuted ? 'none' : 'block';
+                    waves.setAttribute('stroke', window.isAudioMuted ? '#c0251a' : '#fff');
                 }
                 window.dispatchEvent(new CustomEvent('audioChange'));
             }
-            // Initial hide after 3s
-            setTimeout(() => { 
+            // Initial hide after 3s if no manual interaction
+            setTimeout(() => {
                 const label = document.getElementById('mute-label');
-                if (label) label.style.opacity = '0';
+                if (label && !window.userHasInteracted) label.style.opacity = '0';
             }, 3000);
 
             function advance() {
@@ -1697,6 +1901,7 @@
                         done = true;
                         busy = false;
                         initHomepage();
+                        syncAudio();
                     }
                 });
             }
@@ -1722,6 +1927,7 @@
                         sessionStorage.setItem('maaef-seen', '1');
                         done = true; busy = false;
                         initHomepage();
+                        syncAudio();
                     }
                 });
             };
@@ -1741,6 +1947,7 @@
                 document.body.classList.add('intro-done');
                 done = true;
                 initHomepage();
+                syncAudio();
             }
 
             window.addEventListener('wheel', (e) => {
