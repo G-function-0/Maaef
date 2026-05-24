@@ -48,7 +48,7 @@ NEW_FOOTER = """<footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8
 
         <div class="absolute inset-0 pointer-events-none z-40 bg-[radial-gradient(circle_at_center,transparent_25%,rgba(3,3,3,0.95)_100%)]"></div>
 
-        <h2 class="serif text-[18vw] md:text-[14vw] leading-none text-transparent tracking-tighter
+        <h2 class="maaef-footer-title serif text-[18vw] md:text-[14vw] leading-none text-transparent tracking-tighter
                    transition-all duration-500 relative z-50
                    [-webkit-text-stroke:2px_#C41E3A]
                    group-hover:text-black group-hover:[-webkit-text-stroke:2px_#C41E3A]">
@@ -83,7 +83,22 @@ NEW_FOOTER = """<footer id="main-footer" class="relative bg-[#050505] pt-20 pb-8
             .ct-4 { z-index: 10; clip-path: inset(0 0 0 100%); }
 
             @media (max-width: 1023px) {
-                .concept-tape { opacity: 0.95 !important; filter: blur(0px) !important; }
+                .concept-tape { opacity: 0.95 !important; filter: blur(0px) !important; clip-path: inset(0 0 0 0) !important; }
+            }
+            @media (pointer: coarse) {
+                .concept-tape { opacity: 0.95 !important; filter: blur(0px) !important; clip-path: inset(0 0 0 0) !important; }
+            }
+            @keyframes pulseRedText {
+                0%, 100% { color: transparent; text-shadow: 0 0 0px rgba(196,30,58,0); }
+                50% { color: rgba(196,30,58,0.4); text-shadow: 0 0 35px rgba(196,30,58,0.9); }
+            }
+            .maaef-footer-title {
+                animation: pulseRedText 3s ease-in-out infinite;
+            }
+            .footer-cta-hover:hover .maaef-footer-title {
+                animation: none !important;
+                color: black !important;
+                text-shadow: none !important;
             }
             @media (max-width: 767px) {
                 .marquee-content { font-size: 10px !important; }
