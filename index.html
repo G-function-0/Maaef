@@ -1528,12 +1528,14 @@
                             <h1 className="maaef-h1" style={{
                                 fontSize: 'var(--h1-hero)', color: MAAEF_INK, margin: 0
                             }}>
-                                <span style={{
+                                <a href="https://www.instagram.com/maaef.media" target="_blank" rel="noopener noreferrer" style={{
                                     display: 'inline-block',
-                                    animation: (isLaptop && isHovered) ? 'maaef-glitch 0.2s linear infinite' : 'none'
+                                    animation: (isLaptop && isHovered) ? 'maaef-glitch 0.2s linear infinite' : 'none',
+                                    textDecoration: 'none',
+                                    color: 'inherit'
                                 }}>
                                     {glitchText1}
-                                </span>
+                                </a>
                                 <span className="maaef-h1-italic" style={{
                                     display: 'block', fontSize: 'var(--h1-hero-sub)', color: MAAEF_INK, marginTop: 6, letterSpacing: '0.04em',
                                     animation: (isLaptop && isHovered) ? 'maaef-glow 0.4s ease-in-out infinite' : 'none'
