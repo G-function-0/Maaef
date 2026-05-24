@@ -908,22 +908,23 @@
                 display: flex;
                 pointer-events: none;
                 opacity: 0;
-                transition: opacity 0.5s ease, filter 0.5s ease;
+                transition: opacity 0.6s ease, filter 0.6s ease, clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1);
                 filter: blur(4px);
                 transform-origin: 0% 50%;
                 overflow: hidden;
-                will-change: transform;
+                will-change: transform, clip-path;
             }
             .footer-cta-hover:hover .concept-tape {
                 opacity: 0.95;
                 filter: blur(0px);
+                clip-path: inset(0 0 0 0);
             }
             .marquee-content { display: flex; width: max-content; }
 
-            .ct-1 { z-index: 13; }
-            .ct-2 { z-index: 11; }
-            .ct-3 { z-index: 12; }
-            .ct-4 { z-index: 10; }
+            .ct-1 { z-index: 13; clip-path: inset(0 100% 0 0); }
+            .ct-2 { z-index: 11; clip-path: inset(0 0 0 100%); }
+            .ct-3 { z-index: 12; clip-path: inset(0 100% 0 0); }
+            .ct-4 { z-index: 10; clip-path: inset(0 0 0 100%); }
 
             @media (max-width: 1023px) {
                 .concept-tape { opacity: 0.95 !important; filter: blur(0px) !important; }
