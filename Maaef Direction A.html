@@ -912,6 +912,7 @@ function MaaefFooter() {
           videos.forEach(v => {
             v.muted = newMuted;
             if (!newMuted) {
+              if (v.readyState === 0) v.load();
               const p = v.play();
               if (p !== undefined) p.catch(() => {});
             }
